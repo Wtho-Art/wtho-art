@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>wtho.art — Thorsten Weitz</title>
+  <meta name="description" content="Thorsten Weitz — Synthetischer Expressionismus. Atelier Freiburg. Zeitgenössische Malerei in Öl und Mischtechnik." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta property="og:title" content="wtho.art — Thorsten Weitz" />
+  <meta property="og:description" content="Thorsten Weitz — Synthetischer Expressionismus. Atelier Freiburg." />
+  <meta property="og:image" content="https://wtho.art/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f3ee;
+      --elevated: #ece8e1;
+      --fg: #161412;
+      --muted: #5c574f;
+      --subtle: #8a847a;
+      --accent: #161412;
+      --accent-fg: #ffffff;
+      --border: #e4dfd6;
+      --rupture: #b54432;
+      --sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+      --display: "Cormorant Garamond", ui-serif, Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; color-scheme: light; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: var(--display); font-weight: 500; text-wrap: balance; margin: 0; }
+    p { text-wrap: pretty; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button, select, input, textarea { font-family: inherit; }
+    .wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.25rem; }
+    @media (min-width: 640px) { .wrap { padding: 0 2rem; } }
+    header.site {
+      position: fixed; inset: 0 0 auto; z-index: 40; height: 4.5rem;
+      display: flex; align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: background .2s, border-color .2s;
+    }
+    header.site.scrolled, header.site.open { background: rgba(255,255,255,.94); border-bottom-color: var(--border); }
+    .head-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; }
+    .brand { display: flex; align-items: center; gap: .75rem; letter-spacing: .28em; text-transform: uppercase; font-size: .875rem; font-weight: 500; }
+    .brand .tick { width: 1px; height: 1.5rem; background: var(--rupture); }
+    nav.desk { display: none; align-items: center; gap: 2rem; }
+    nav.desk a { color: var(--muted); font-size: .875rem; }
+    nav.desk a:hover { color: var(--fg); }
+    .lang { display: inline-flex; gap: 2px; border: 1px solid var(--border); padding: 4px; }
+    .lang button {
+      height: 2rem; min-width: 2.5rem; border: 0; background: transparent; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 500; cursor: pointer;
+    }
+    .lang button.on { background: var(--accent); color: var(--accent-fg); }
+    .burger { display: flex; width: 2.75rem; height: 2.75rem; align-items: center; justify-content: center; background: transparent; border: 0; color: var(--fg); cursor: pointer; }
+    .mobile-nav { display: none; background: var(--bg); border-top: 1px solid var(--border); padding: 1.5rem 1.25rem 2rem; }
+    header.site.open .mobile-nav { display: block; }
+    .mobile-nav a { display: flex; min-height: 3rem; align-items: center; font-family: var(--display); font-size: 1.875rem; }
+    .hero { min-height: 100svh; padding-top: 4.5rem; }
+    .hero-grid { display: grid; gap: 2rem; padding: 2.5rem 0 2rem; }
+    .kicker { font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    .hero h1 { font-size: clamp(3.25rem, 8vw, 6.5rem); line-height: .9; letter-spacing: -.03em; margin-top: 1.25rem; }
+    .quote { font-family: var(--display); font-style: italic; font-size: 1.5rem; color: var(--fg); margin: 2rem 0 0; }
+    .lead { color: var(--muted); max-width: 28rem; margin-top: 1.5rem; }
+    .cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; height: 3rem; padding: 0 1.5rem;
+      background: var(--accent); color: var(--accent-fg); border: 1px solid transparent; font-size: .875rem; font-weight: 500; cursor: pointer;
+    }
+    .btn.outline { background: transparent; color: var(--fg); border-color: var(--border); }
+    .btn.outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn.full { width: 100%; }
+    figure.hero-art { margin: 0; }
+    figure.hero-art img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    figcaption { display: flex; justify-content: space-between; margin-top: .75rem; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); }
+    .band { border-top: 1px solid var(--border); }
+    .manifesto { max-width: 56rem; margin: 0 auto; padding: 5rem 1.25rem; text-align: center; }
+    .manifesto .q { font-family: var(--display); font-style: italic; font-size: clamp(1.6rem, 3vw, 2.25rem); color: var(--accent); line-height: 1.3; }
+    .manifesto p { color: var(--muted); max-width: 40rem; margin: 1.5rem auto 0; }
+    .section { padding: 5rem 0; }
+    .section h2 { font-size: clamp(2.5rem, 5vw, 3.75rem); letter-spacing: -.03em; margin-top: 1rem; }
+    .split { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+    .muted { color: var(--muted); }
+    .works { display: grid; grid-template-columns: 1fr; gap: 1.5rem 1.5rem; margin-top: 3.5rem; }
+    .work { background: transparent; border: 0; padding: 0; text-align: left; color: inherit; cursor: pointer; width: 100%; }
+    .work .frame { overflow: hidden; background: var(--surface); }
+    .work img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .work:hover img { transform: scale(1.03); }
+    .portrait { aspect-ratio: 3/4; }
+    .landscape { aspect-ratio: 4/3; }
+    .square { aspect-ratio: 1; }
+    .work-meta { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; margin-top: 1rem; }
+    .work-meta h3 { font-size: 1.5rem; }
+    .work-meta span { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); white-space: nowrap; }
+    .about-grid, .contact-grid { display: grid; gap: 3rem; }
+    blockquote { margin: 2.5rem 0 0; padding-left: 1.25rem; border-left: 2px solid var(--rupture); font-family: var(--display); font-style: italic; font-size: 1.5rem; color: var(--accent); line-height: 1.3; }
+    .atelier { width: 100%; min-height: 20rem; object-fit: cover; }
+    .ex-list { margin-top: 3.5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; list-style: none; }
+    .ex-list li { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    .ex-list li:last-child { border-bottom: 0; }
+    .year { font-family: var(--display); font-size: 1.5rem; color: var(--accent); }
+    form { display: grid; gap: 1.25rem; }
+    label span { display: block; margin-bottom: .5rem; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); }
+    input, select, textarea {
+      width: 100%; height: 2.75rem; border: 1px solid var(--border); background: var(--surface); color: var(--fg);
+      padding: 0 .75rem; font-size: .875rem;
+    }
+    textarea { height: auto; padding: .75rem; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    .two { display: grid; gap: 1.25rem; }
+    .ig { display: inline-flex; align-items: center; gap: .5rem; margin-top: 2rem; color: var(--accent); min-height: 3rem; }
+    footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--muted); font-size: .875rem; }
+    .foot { display: flex; flex-direction: column; gap: 1.5rem; }
+    .skip { position: absolute; left: -999px; }
+    .skip:focus { left: 1rem; top: .75rem; z-index: 50; background: var(--accent); color: var(--accent-fg); padding: .5rem .75rem; }
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(255,255,255,.97); flex-direction: column; }
+    .lightbox.on { display: flex; }
+    .lb-bar { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; }
+    .lb-bar h3 { font-size: 1.5rem; }
+    .iconbtn { width: 2.75rem; height: 2.75rem; border: 1px solid var(--border); background: var(--surface); color: var(--fg); cursor: pointer; }
+    .lb-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+    .lb-img { flex: 1; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .5rem; }
+    .lb-img img { max-height: 52vh; width: auto; max-width: 100%; object-fit: contain; }
+    .lb-side { border-top: 1px solid var(--border); padding: 1.5rem 1.25rem; }
+    .note { font-size: .75rem; color: var(--subtle); }
+    @media (min-width: 768px) {
+      nav.desk { display: flex; }
+      .burger { display: none; }
+      .hero-grid { grid-template-columns: 5fr 7fr; gap: 3rem; align-items: stretch; min-height: calc(100svh - 4.5rem); padding: 0; }
+      .hero-copy { display: flex; flex-direction: column; justify-content: center; padding: 4rem 0; }
+      figure.hero-art img { aspect-ratio: auto; height: 100%; min-height: calc(100svh - 4.5rem); object-fit: cover; }
+      .works { grid-template-columns: 1fr 1fr; }
+      .works .span2 { grid-column: span 2; }
+      .works .span2 .portrait { aspect-ratio: 4/3; }
+      .about-grid, .contact-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
+      .ex-list li { display: grid; grid-template-columns: 3fr 9fr; gap: 1rem; align-items: baseline; }
+      .two { grid-template-columns: 1fr 1fr; }
+      .foot { flex-direction: row; justify-content: space-between; align-items: center; }
+      .lb-body { flex-direction: row; }
+      .lb-img img { max-height: 78vh; }
+      .lb-side { width: 22rem; border-top: 0; border-left: 1px solid var(--border); padding: 2.5rem 2rem; }
+      .hide-desk { display: none !important; }
+    }
+    @media (min-width: 1024px) {
+      .works { grid-template-columns: 1fr 1fr 1fr; }
+      .works .span2 { grid-column: span 2; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main" data-i="skip">Zum Inhalt</a>
+  <header class="site" id="header">
+    <div class="wrap head-inner">
+      <a class="brand" href="#top"><span class="tick"></span><span>wtho.art</span></a>
+      <nav class="desk" aria-label="Primary">
+        <a href="#werke" data-i="navWorks">Werke</a>
+        <a href="#atelier" data-i="navAbout">Atelier</a>
+        <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
+        <a href="#kontakt" data-i="navContact">Kontakt</a>
+        <div class="lang" role="group" aria-label="Sprache">
+          <button type="button" data-lang="de" class="on">DE</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+    <div class="mobile-nav wrap">
+      <a href="#werke" data-i="navWorks">Werke</a>
+      <a href="#atelier" data-i="navAbout">Atelier</a>
+      <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
+      <a href="#kontakt" data-i="navContact">Kontakt</a>
+      <div class="lang" style="margin-top:1rem">
+        <button type="button" data-lang="de" class="on">DE</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="kicker" data-i="kicker">Synthetischer Expressionismus · Freiburg</p>
+          <h1>Thorsten Weitz</h1>
+          <p class="quote" data-i="heroQuote">Alles beginnt mit einem Gefühl.</p>
+          <p class="lead" data-i="heroLead">Die Leinwand als Resonanzraum — innere Emotion, Energie und Transformation in Öl und Mischtechnik. Ein intensiver Dialog zwischen architektonischer Planung und unmittelbarem Impuls.</p>
+          <div class="cta">
+            <a class="btn" href="#werke" data-i="ctaWorks">Werke ansehen</a>
+            <a class="btn outline" href="#kontakt" data-i="ctaContact">Anfrage</a>
+          </div>
+        </div>
+        <figure class="hero-art">
+          <img src="works/dance-of-duality.jpg" alt="The dance of duality — Thorsten Weitz" />
+          <figcaption><span>The dance of duality</span><span>100 × 70 cm</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="manifesto">
+        <p class="q" data-i="manifestoTitle">The feeling of…</p>
+        <p data-i="manifestoBody">Im Stil eines synthetischen Expressionismus verbindet er emotionale Energie mit kontrollierter Abstraktion. Gezielte Interventionen fangen spontane Energien auf und führen sie in ein dynamisches Gleichgewicht.</p>
+      </div>
+    </section>
+
+    <section class="band" id="werke">
+      <div class="wrap section">
+        <p class="kicker" data-i="worksKicker">Galerie</p>
+        <div class="split">
+          <h2 data-i="worksTitle">Werke</h2>
+          <p class="muted" data-i="worksLead">Serie „The feeling of…“ und „Raw power and sensitivity“. Öl auf Leinwand und HDF.</p>
+        </div>
+        <div class="works" id="works"></div>
+      </div>
+    </section>
+
+    <section class="band" id="atelier">
+      <div class="wrap section about-grid">
+        <div>
+          <p class="kicker" data-i="aboutKicker">Der Künstler</p>
+          <h2 data-i="aboutTitle">Atelier Freiburg</h2>
+          <p class="muted" data-i="aboutP1"></p>
+          <p class="muted" data-i="aboutP2"></p>
+          <p class="muted" data-i="aboutP3"></p>
+          <p class="muted" data-i="aboutP4"></p>
+          <blockquote data-i="aboutQuote"></blockquote>
+          <h3 data-i="pathTitle" style="margin-top:3rem;font-size:1.875rem">Werdegang</h3>
+          <ol class="ex-list" id="path"></ol>
+        </div>
+        <div>
+          <img class="atelier" src="images/portrait.jpg" alt="Thorsten Weitz" />
+          <img class="atelier" src="images/atelier.jpg" alt="Atelier Freiburg — Thorsten Weitz" style="margin-top:1rem" />
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="ausstellungen">
+      <div class="wrap section">
+        <p class="kicker" data-i="exhibitionsKicker">Ausstellungen</p>
+        <h2 data-i="exhibitionsTitle">Ausstellungen</h2>
+        <ol class="ex-list" id="exhibits"></ol>
+      </div>
+    </section>
+
+    <section class="band" id="kontakt">
+      <div class="wrap section contact-grid">
+        <div>
+          <p class="kicker" data-i="contactKicker">Sammeln</p>
+          <h2 data-i="contactTitle">Anfrage</h2>
+          <p class="muted" data-i="contactLead">Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.</p>
+          <a class="ig" href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer" data-i="instagram">Instagram @wtho.art</a>
+        </div>
+        <form id="form">
+          <div class="two">
+            <label><span data-i="contactName">Name</span><input name="name" required autocomplete="name" /></label>
+            <label><span data-i="contactEmail">E-Mail</span><input type="email" name="email" required autocomplete="email" /></label>
+          </div>
+          <label>
+            <span data-i="contactWork">Werk (optional)</span>
+            <select name="work" id="workSelect"></select>
+          </label>
+          <label><span data-i="contactMessage">Nachricht</span><textarea name="message" rows="6" required></textarea></label>
+          <div>
+            <button class="btn" type="submit" data-i="contactSend">Nachricht senden</button>
+            <p class="note" id="formNote" data-i="contactNote" style="margin-top:.75rem"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <div class="brand"><span class="tick"></span><span>wtho.art</span></div>
+        <p class="muted" data-i="footerStudio" style="margin:.5rem 0 0">Atelier Freiburg</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:1.5rem">
+        <a href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="#kontakt" data-i="navContact">Kontakt</a>
+        <span data-i="footerRights">Alle Werke © Thorsten Weitz</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lb-bar">
+      <h3 id="lbTitle"></h3>
+      <button class="iconbtn" id="lbClose" aria-label="Close">✕</button>
+    </div>
+    <div class="lb-body">
+      <div class="lb-img">
+        <button class="iconbtn hide-desk" id="lbPrevM">‹</button>
+        <img id="lbImg" alt="" />
+        <button class="iconbtn hide-desk" id="lbNextM">›</button>
+      </div>
+      <aside class="lb-side">
+        <p class="kicker" id="lbMeta"></p>
+        <h3 id="lbTitle2" style="margin-top:.75rem;font-size:1.875rem"></h3>
+        <p class="muted" id="lbMed" style="margin-top:.75rem"></p>
+        <p class="muted" id="lbStmt" style="margin-top:1.25rem"></p>
+        <button class="btn full" id="lbInquire" style="margin-top:2rem" data-i="inquire">Dieses Werk anfragen</button>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const copy = {
+      de: {
+        skip:"Zum Inhalt", navWorks:"Werke", navAbout:"Atelier", navExhibitions:"Ausstellungen", navContact:"Kontakt",
+        kicker:"Synthetischer Expressionismus · Freiburg", heroQuote:"Alles beginnt mit einem Gefühl.",
+        heroLead:"Die Leinwand als Resonanzraum — innere Emotion, Energie und Transformation in Öl und Mischtechnik. Ein intensiver Dialog zwischen architektonischer Planung und unmittelbarem Impuls.",
+        ctaWorks:"Werke ansehen", ctaContact:"Anfrage",
+        manifestoTitle:"The feeling of…",
+        manifestoBody:"Im Stil eines synthetischen Expressionismus verbindet er emotionale Energie mit kontrollierter Abstraktion. Gezielte Interventionen fangen spontane Energien auf und führen sie in ein dynamisches Gleichgewicht.",
+        worksKicker:"Galerie", worksTitle:"Werke",
+        worksLead:"Serie „The feeling of…“ und „Raw power and sensitivity“. Öl auf Leinwand und HDF.",
+        inquire:"Dieses Werk anfragen",
+        aboutKicker:"Der Künstler", aboutTitle:"Atelier Freiburg",
+        aboutP1:"Thorsten Weitz arbeitet als freischaffender Künstler mit dem Schwerpunkt Malerei. Im Zentrum steht die Auseinandersetzung mit menschlichen Emotionen und inneren Spannungsfeldern.",
+        aboutP2:"Er entfaltet seine Werke als intensiven Dialog zwischen architektonischer Planung und unmittelbarem Impuls. In einem präzise definierten strukturellen Gefüge setzt er gezielte Interventionen, die spontane Energien auffangen, lenken und in ein dynamisches Gleichgewicht führen.",
+        aboutP3:"Geprägt von der Ausbildung in Kunst- sowie Theaterpädagogik und Performance, und vom Studium der sweet medicines auf dem Sundance Path in Arizona, begreift er die Leinwand als Resonanzraum, in dem emotionale Prozesse, Energie und Transformation sichtbar werden.",
+        aboutP4:"Vielschichtige Bildräume entstehen durch pastosen Auftrag, Übermalungen, strukturelle Verwerfungen und feine Ausarbeitungen. Der bewusste Bruch klassischer malerischer Konventionen dient der Steigerung des Ausdrucks.",
+        aboutQuote:"Alles beginnt mit einem Gefühl.",
+        pathTitle:"Werdegang",
+        exhibitionsKicker:"Ausstellungen", exhibitionsTitle:"Ausstellungen",
+        contactKicker:"Sammeln", contactTitle:"Anfrage",
+        contactLead:"Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.",
+        contactName:"Name", contactEmail:"E-Mail", contactWork:"Werk (optional)", contactWorkPlaceholder:"Kein bestimmtes Werk",
+        contactMessage:"Nachricht", contactSend:"Nachricht senden",
+        contactNote:"Die Nachricht geht an Wtho.Art@proton.me. Alternativ Instagram.",
+        instagram:"Instagram @wtho.art", footerStudio:"Atelier Freiburg", footerRights:"Alle Werke © Thorsten Weitz",
+        formSent:"Gesendet. Danke.", formFallback:"E-Mail-Programm geöffnet."
+      },
+      en: {
+        skip:"Skip to content", navWorks:"Works", navAbout:"Studio", navExhibitions:"Exhibitions", navContact:"Contact",
+        kicker:"Synthetic Expressionism · Freiburg", heroQuote:"It all starts with a feeling.",
+        heroLead:"The canvas as a resonant space — inner emotion, energy and transformation in oil and mixed media. An intense dialogue between architectural planning and immediate impulse.",
+        ctaWorks:"View works", ctaContact:"Inquiry",
+        manifestoTitle:"The feeling of…",
+        manifestoBody:"In the style of synthetic expressionism he joins emotional energy to controlled abstraction. Targeted interventions catch spontaneous energies and lead them into a dynamic balance.",
+        worksKicker:"Gallery", worksTitle:"Works",
+        worksLead:"The series “The feeling of…” and “Raw power and sensitivity”. Oil on canvas and HDF.",
+        inquire:"Inquire about this work",
+        aboutKicker:"The artist", aboutTitle:"Studio Freiburg",
+        aboutP1:"Thorsten Weitz works as a freelance artist with a focus on painting. At the centre of his practice is the confrontation with human emotion and inner fields of tension.",
+        aboutP2:"He unfolds each work as an intense dialogue between architectural planning and immediate impulse. Inside a precisely defined structure he places targeted interventions that catch, direct and balance spontaneous energies.",
+        aboutP3:"Shaped by training in art and theatre pedagogy and performance, and by study of sweet medicines on the Sundance Path in Arizona, he treats the canvas as a resonant space where emotional process, energy and transformation become visible.",
+        aboutP4:"Layered pictorial spaces grow from impasto, overpainting, structural ruptures and fine working-out. The deliberate break with classical convention is there to heighten expression.",
+        aboutQuote:"It all starts with a feeling.",
+        pathTitle:"Path",
+        exhibitionsKicker:"Exhibitions", exhibitionsTitle:"Exhibitions",
+        contactKicker:"Collecting", contactTitle:"Inquiry",
+        contactLead:"Works are available on request. Write directly, or follow the studio on Instagram.",
+        contactName:"Name", contactEmail:"Email", contactWork:"Work (optional)", contactWorkPlaceholder:"No specific work",
+        contactMessage:"Message", contactSend:"Send message",
+        contactNote:"Messages go to Wtho.Art@proton.me. Instagram is the other door.",
+        instagram:"Instagram @wtho.art", footerStudio:"Studio Freiburg", footerRights:"All works © Thorsten Weitz",
+        formSent:"Sent. Thank you.", formFallback:"Mail app opened."
+      }
+    };
+
+    const works = [
+      { id:"dance-of-duality", image:"works/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
+        title:{de:"The dance of duality",en:"The dance of duality"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Zartes Violett und energische Linien umschlingen sich.", en:"Tender violet and energetic lines entwine."} },
+      { id:"fire-silence", image:"works/fire-silence.jpg", year:"2025", size:"242 × 138 cm", layout:"portrait",
+        title:{de:"Fire Silence",en:"Fire Silence"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Monumentale Intensität: Feuer, das schweigt. Rot, Gelb und ein dunkler Riss.", en:"Monumental intensity: fire that keeps silent. Red, yellow and a dark rift."} },
+      { id:"when-the-cold-hits", image:"works/when-the-cold-hits.jpg", year:"2026", size:"115 × 110 cm", layout:"square",
+        title:{de:"When the cold hits your world",en:"When the cold hits your world"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
+        statement:{de:"Die Kälte liefert die Struktur, das Licht die Bewegung.", en:"Cold supplies the structure, light supplies the movement."} },
+      { id:"dolores-matata", image:"works/dolores-matata.jpg", year:"2026", size:"85 × 68 cm", layout:"portrait",
+        title:{de:"Dolores Matata",en:"Dolores Matata"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
+        statement:{de:"Blaues Chaos, rote Splitter — die ehrliche Seite des Mottos „sorglos“.", en:"Blue chaos, red splinters — the honest side of the worry-free motto."} },
+      { id:"breaking-patterns", image:"works/breaking-patterns.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
+        title:{de:"Breaking Patterns",en:"Breaking Patterns"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Gelbes Licht bricht durch ein Gestrüpp aus Blau.", en:"Yellow light breaks through a thicket of blue."} },
+      { id:"resonanz", image:"works/resonanz.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
+        title:{de:"Resonanz",en:"Resonance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Ein Tanz aus Gelb, Blau und impulsiven Linien.", en:"A dance of yellow, blue and impulsive lines."} },
+      { id:"passion", image:"works/passion.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
+        title:{de:"Passion",en:"Passion"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Rot gegen Tiefblau. Körperliche Energie ohne Figur.", en:"Red against deep blue. Bodily energy without a figure."} },
+      { id:"dance-of-balance", image:"works/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
+        title:{de:"The dance of balance",en:"The dance of balance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Unbändige Kraft und verletzliche Schönheit in einem Bildraum.", en:"Unbridled power and vulnerable beauty in one pictorial space."} },
+      { id:"touched", image:"works/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
+        title:{de:"Touched",en:"Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
+      { id:"unexposed-ego", image:"works/unexposed-ego.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
+        title:{de:"Unexposed Ego",en:"Unexposed Ego"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Was passiert, wenn Masken nicht mehr nur gespielt werden?", en:"What happens when masks are no longer merely played?"} },
+      { id:"agitated", image:"works/agitated.jpg", year:"2026", size:"80 × 60 cm", layout:"portrait",
+        title:{de:"Agitated",en:"Agitated"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Gelber Ausbruch in einem Feld aus Blau.", en:"A yellow outbreak in a field of blue."} },
+      { id:"clarity", image:"works/clarity.jpg", year:"2026", size:"30 × 60 cm", layout:"portrait",
+        title:{de:"Clarity",en:"Clarity"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Helles Blau, weiße Bahnen, goldene Linien.", en:"Pale blue, white paths, golden lines."} },
+      { id:"inner-deep-confrontation", image:"works/inner-deep-confrontation.jpg", year:"2026", size:"50 × 70 cm", layout:"portrait",
+        title:{de:"Inner deep confrontation",en:"Inner deep confrontation"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Rot oben, Blau unten — die innere Konfrontation als Schicht.", en:"Red above, blue below — inner confrontation as a layer."} }
+    ];
+
+    const exhibits = [
+      { year:"2025/26", de:"Galerie Iphofen / Würzburg · Kunstpreis Orangerie Schloss Schwetzingen · Giechburg Bamberg · SchmuckeDinger, Freiburg", en:"Galerie Iphofen / Würzburg · Art prize, Orangery Schloss Schwetzingen · Giechburg Bamberg · SchmuckeDinger, Freiburg" },
+      { year:"2025", de:"Galerie Art-Raum Freiburg — mit P. Paataturashvili", en:"Galerie Art-Raum Freiburg — with P. Paataturashvili" },
+      { year:"2024", de:"Offenes Atelier, Freiburg", en:"Open studio, Freiburg" },
+      { year:"2013", de:"Café Ell, Sankt Blasien „Zwei Welten“ · Bürgeramt Freiburg", en:"Café Ell, Sankt Blasien “Zwei Welten” · Bürgeramt Freiburg" },
+      { year:"2009", de:"Item Kunst Ulm — 2. Platz „Stille in Bewegung“ · Kunstetage Freiburg, Bernd Lafrenz", en:"Item Kunst Ulm — 2nd prize “Stille in Bewegung” · Kunstetage Freiburg, Bernd Lafrenz" },
+      { year:"2006", de:"„Zeit im Blick“, Titelbild PH Freiburg", en:"“Zeit im Blick”, cover image, PH Freiburg" },
+      { year:"1998–2005", de:"Kunst-Ansichten Nördlingen · Werkschau Augsburg · Sparkasse & Volksbank Nördlingen", en:"Kunst-Ansichten Nördlingen · degree show Augsburg · Sparkasse & Volksbank Nördlingen" }
+    ];
+
+    const path = [
+      { year:"seit 2024", de:"Freischaffender Künstler, Schwerpunkt Malerei", en:"Freelance artist, focus on painting" },
+      { year:"seit 2010", de:"Studium der sweet medicines, Sundance Path, Arizona — Übersetzung alten Heilwissens in die Kunst", en:"Study of sweet medicines, Sundance Path, Arizona — bringing old healing knowledge into the work" },
+      { year:"2009–2020", de:"Vermittlung künstlerischer Praxis — Tätigkeit als Kunstlehrer", en:"Teaching artistic practice" },
+      { year:"2008–2011", de:"Ausbildung zum Theaterpädagogen, Spiel-Raum Freiburg (Tanz, Theater, Performance)", en:"Theatre pedagogy training, Spiel-Raum Freiburg (dance, theatre, performance)" },
+      { year:"2001–2007", de:"Studium der Kunst, PH Freiburg (Klant/Brügel), Staatsexamen", en:"Art studies, PH Freiburg (Klant/Brügel), state examination" },
+      { year:"1997–1999", de:"Fachoberschule für Gestaltung & Kommunikations-Design, Augsburg", en:"College of design & communication, Augsburg" }
+    ];
+
+    let lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de";
+    let openIndex = 0;
+
+    function t() { return copy[lang]; }
+
+    function applyLang() {
+      document.documentElement.lang = lang;
+      localStorage.setItem("wtho-lang", lang);
+      document.querySelectorAll("[data-i]").forEach((el) => {
+        const key = el.getAttribute("data-i");
+        if (t()[key]) el.textContent = t()[key];
+      });
+      document.querySelectorAll("[data-lang]").forEach((b) => {
+        b.classList.toggle("on", b.getAttribute("data-lang") === lang);
+      });
+      renderWorks();
+      renderExhibits();
+      renderPath();
+      fillSelect();
+    }
+
+    function renderWorks() {
+      const root = document.getElementById("works");
+      root.innerHTML = works.map((w, i) => `
+        <button class="work ${w.span ? "span2" : ""}" data-i="${i}" type="button">
+          <div class="frame ${w.layout}"><img src="${w.image}" alt="${w.title[lang]}" ${i>2?"loading=lazy":""} /></div>
+          <div class="work-meta"><h3>${w.title[lang]}</h3><span>${w.year}</span></div>
+          <p class="muted" style="margin:.25rem 0 0;font-size:.875rem">${w.medium[lang]}${w.size!=="—" ? " · "+w.size : ""}</p>
+        </button>
+      `).join("");
+      root.querySelectorAll(".work").forEach((btn) => {
+        btn.addEventListener("click", () => openLb(+btn.dataset.i));
+      });
+    }
+
+    function renderExhibits() {
+      document.getElementById("exhibits").innerHTML = exhibits.map((e) =>
+        `<li><span class="year">${e.year}</span><p class="muted" style="margin:0">${e[lang]}</p></li>`
+      ).join("");
+    }
+
+    function renderPath() {
+      document.getElementById("path").innerHTML = path.map((e) =>
+        `<li><span class="year">${e.year}</span><p class="muted" style="margin:0">${e[lang]}</p></li>`
+      ).join("");
+    }
+
+    function fillSelect(selected) {
+      const sel = document.getElementById("workSelect");
+      const current = selected ?? sel.value;
+      sel.innerHTML = `<option value="">${t().contactWorkPlaceholder}</option>` +
+        works.map((w) => `<option value="${w.title.de}">${w.title[lang]}</option>`).join("");
+      sel.value = current || "";
+    }
+
+    function openLb(i) {
+      openIndex = i;
+      const w = works[i];
+      document.getElementById("lbImg").src = w.image;
+      document.getElementById("lbImg").alt = w.title[lang];
+      document.getElementById("lbTitle").textContent = w.title[lang];
+      document.getElementById("lbTitle2").textContent = w.title[lang];
+      document.getElementById("lbMeta").textContent = w.year;
+      document.getElementById("lbMed").textContent = w.medium[lang] + (w.size !== "—" ? " · " + w.size : "");
+      document.getElementById("lbStmt").textContent = w.statement[lang];
+      document.getElementById("lightbox").classList.add("on");
+      document.body.style.overflow = "hidden";
+    }
+    function closeLb() {
+      document.getElementById("lightbox").classList.remove("on");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("lbClose").onclick = closeLb;
+    document.getElementById("lbPrevM").onclick = () => openLb((openIndex - 1 + works.length) % works.length);
+    document.getElementById("lbNextM").onclick = () => openLb((openIndex + 1) % works.length);
+    document.getElementById("lbInquire").onclick = () => {
+      const w = works[openIndex];
+      closeLb();
+      fillSelect(w.title.de);
+      document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
+    };
+    document.addEventListener("keydown", (e) => {
+      if (!document.getElementById("lightbox").classList.contains("on")) return;
+      if (e.key === "Escape") closeLb();
+      if (e.key === "ArrowRight") openLb((openIndex + 1) % works.length);
+      if (e.key === "ArrowLeft") openLb((openIndex - 1 + works.length) % works.length);
+    });
+
+    document.querySelectorAll("[data-lang]").forEach((b) => {
+      b.addEventListener("click", () => { lang = b.getAttribute("data-lang"); applyLang(); });
+    });
+
+    const header = document.getElementById("header");
+    const burger = document.getElementById("burger");
+    burger.addEventListener("click", () => header.classList.toggle("open"));
+    header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
+    window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
+
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const note = document.getElementById("formNote");
+      try {
+        const res = await fetch("contact.php", { method: "POST", body: fd });
+        const data = await res.json();
+        if (data.ok) { note.textContent = t().formSent; e.target.reset(); return; }
+      } catch (_) {}
+      const subject = encodeURIComponent("Anfrage / Inquiry: " + (fd.get("work") || "wtho.art"));
+      const body = encodeURIComponent(`Name: ${fd.get("name")}\nEmail: ${fd.get("email")}\nWerk: ${fd.get("work") || "—"}\n\n${fd.get("message")}`);
+      window.location.href = `mailto:Wtho.Art@proton.me?subject=${subject}&body=${body}`;
+      note.textContent = t().formFallback;
+    });
+
+    applyLang();
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+wtho.art — Dateien für Namecheap Stellar (cPanel)
+=================================================
+
+Diese ZIP enthält die fertige, statische Website (weißes Atelier,
+originale Werke aus dem CV). Kein Node.js, kein Sitejet.
+Einfach nach public_html hochladen.
+
+Kontakt auf der Seite:  Wtho.Art@proton.me  und Instagram @wtho.art
+Keine Straße, keine Telefonnummer.
+
+SCHRITT FÜR SCHRITT — Namecheap Stellar + Sitejet
+-------------------------------------------------
+
+1. Login
+   https://www.namecheap.com  →  Account  →  Hosting List  →  Manage
+   → cPanel (oder Direct cPanel Login).
+
+2. Alte Sitejet-Seite sichern
+   cPanel → File Manager → Ordner public_html
+   Alles markieren → Compress → wtho-backup.zip herunterladen.
+
+3. Sitejet abkoppeln (sonst überschreibt Sitejet die neue Seite)
+   cPanel → Sitejet Website Builder (oder „Sitejet“ in Softaculous /
+   dem Website-Bereich).
+   Für wtho.art: Unpublish / Disconnect / Remove assignment.
+   Die Domain soll NICHT mehr von Sitejet veröffentlicht werden.
+
+4. public_html leeren
+   File Manager → public_html
+   Inhalt löschen. Behalten dürfen Sie:
+   - cgi-bin (falls vorhanden)
+   - .well-known (für SSL)
+   Nicht löschen: die Domain-Zuordnung selbst.
+
+5. Diese ZIP hochladen
+   File Manager → public_html → Upload → wtho-art-namecheap.zip
+   Danach Rechtsklick auf die ZIP → Extract
+   Die Dateien müssen DIREKT in public_html liegen:
+
+     public_html/index.html
+     public_html/.htaccess
+     public_html/contact.php
+     public_html/favicon.svg
+     public_html/og.jpg
+     public_html/works/...
+     public_html/images/portrait.jpg
+     public_html/images/atelier.jpg
+
+   Falls Extract einen Unterordner erzeugt hat (namecheap-export/),
+   alle Dateien eine Ebene nach oben in public_html verschieben.
+
+6. SSL
+   cPanel → SSL/TLS Status → AutoSSL für wtho.art und www.wtho.art
+   ausführen, falls noch nicht aktiv.
+   Die mitgelieferte .htaccess leitet http → https um.
+
+7. Anfragen
+   Das Formular schreibt an Wtho.Art@proton.me (contact.php).
+   PHP mail() auf Stellar ist eingeschränkt — wenn nichts ankommt,
+   öffnet das Formular automatisch das Mail-Programm des Besuchers
+   an dieselbe Adresse. Es muss kein extra Postfach contact@wtho.art
+   angelegt werden.
+
+8. Testen
+   https://wtho.art
+   Handy + Desktop, DE/EN Umschalter, ein Werk antippen, Formular.
+
+DNS
+---
+Domain ist bereits auf Namecheap Hosting (Stellar). Nichts am DNS
+ändern, solange die Website über dasselbe Hosting läuft.
+
+www
+---
+cPanel → Domains / Redirects: www.wtho.art → wtho.art (oder umgekehrt),
+damit beides dieselbe Seite zeigt.
+
+If anything looks wrong after upload, it is almost always:
+- Sitejet still publishing over the files
+- files sitting in a subfolder instead of public_html
+- AutoSSL not issued yet (browser HTTPS warning)
