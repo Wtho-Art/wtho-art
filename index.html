@@ -541,15 +541,20 @@
       e.preventDefault();
       const fd = new FormData(e.target);
       const note = document.getElementById("formNote");
+      note.textContent = "Sende...";
       try {
-        const res = await fetch("contact.php", { method: "POST", body: fd });
-        const data = await res.json();
-        if (data.ok) { note.textContent = t().formSent; e.target.reset(); return; }
+        const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", { 
+          method: "POST", 
+          body: fd,
+          headers: { "Accept": "application/json" }
+        });
+        if (res.ok) { 
+          note.textContent = t().formSent; 
+          e.target.reset(); 
+          return; 
+        }
       } catch (_) {}
-      const subject = encodeURIComponent("Anfrage / Inquiry: " + (fd.get("work") || "wtho.art"));
-      const body = encodeURIComponent(`Name: ${fd.get("name")}\nEmail: ${fd.get("email")}\nWerk: ${fd.get("work") || "—"}\n\n${fd.get("message")}`);
-      window.location.href = `mailto:Wtho.Art@proton.me?subject=${subject}&body=${body}`;
-      note.textContent = t().formFallback;
+      note.textContent = t().formError || "Fehler beim Senden. Versuchen Sie es später erneut.";
     });
 
     applyLang();
