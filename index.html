@@ -267,19 +267,25 @@
           <p class="muted" data-i="contactLead">Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.</p>
           <a class="ig" href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer" data-i="instagram">Instagram @wtho.art</a>
         </div>
+        <div data-fs-success style="display:none;color:var(--success);margin-bottom:1.25rem"></div>
+        <div data-fs-error style="display:none;color:var(--error);margin-bottom:1.25rem"></div>
+        
         <form id="form">
           <div class="two">
-            <label><span data-i="contactName">Name</span><input name="name" required autocomplete="name" /></label>
-            <label><span data-i="contactEmail">E-Mail</span><input type="email" name="email" required autocomplete="email" /></label>
+            <label><span data-i="contactName">Name</span><input name="name" required autocomplete="name" data-fs-field /></label>
+            <span data-fs-error="name" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
+            
+            <label><span data-i="contactEmail">E-Mail</span><input type="email" name="email" required autocomplete="email" data-fs-field /></label>
+            <span data-fs-error="email" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
           </div>
           <label>
             <span data-i="contactWork">Werk (optional)</span>
-            <select name="work" id="workSelect"></select>
+            <select name="work" id="workSelect" data-fs-field></select>
           </label>
-          <label><span data-i="contactMessage">Nachricht</span><textarea name="message" rows="6" required></textarea></label>
+          <label><span data-i="contactMessage">Nachricht</span><textarea name="message" rows="6" required data-fs-field></textarea></label>
+          <span data-fs-error="message" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
           <div>
-            <button class="btn" type="submit" data-i="contactSend">Nachricht senden</button>
-            <p class="note" id="formNote" data-i="contactNote" style="margin-top:.75rem"></p>
+            <button class="btn" type="submit" data-fs-submit-btn data-i="contactSend">Nachricht senden</button>
           </div>
         </form>
       </div>
@@ -537,27 +543,11 @@
     header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
 
-    document.getElementById("form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const note = document.getElementById("formNote");
-      note.textContent = "Sende...";
-      try {
-        const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", { 
-          method: "POST", 
-          body: fd,
-          headers: { "Accept": "application/json" }
-        });
-        if (res.ok) { 
-          note.textContent = t().formSent; 
-          e.target.reset(); 
-          return; 
-        }
-      } catch (_) {}
-      note.textContent = t().formError || "Fehler beim Senden. Versuchen Sie es später erneut.";
-    });
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
 
     applyLang();
   </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
