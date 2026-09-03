@@ -132,8 +132,8 @@
     .lb-bar h3 { font-size: 1.5rem; }
     .iconbtn { width: 2.75rem; height: 2.75rem; border: 1px solid var(--border); background: var(--surface); color: var(--fg); cursor: pointer; }
     .lb-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-    .lb-img { flex: 1; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: 1rem; }
-    .lb-img img { max-height: 52vh; width: auto; max-width: 100%; aspect-ratio: auto; object-fit: contain; }
+    .lb-img { flex: 1; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: 1rem; min-height: 0; }
+    .lb-img img { max-height: 52vh; height: auto; width: auto; max-width: 100%; aspect-ratio: auto; object-fit: contain; }
     .lb-side { border-top: 1px solid var(--border); padding: 1.5rem 1.25rem; }
     .note { font-size: .75rem; color: var(--subtle); }
     @media (min-width: 768px) {
@@ -150,7 +150,7 @@
       .two { grid-template-columns: 1fr 1fr; }
       .foot { flex-direction: row; justify-content: space-between; align-items: center; }
       .lb-body { flex-direction: row; }
-      .lb-img img { max-height: 78vh; aspect-ratio: auto; object-fit: contain; }
+      .lb-img img { max-height: 78vh; height: auto; width: auto; aspect-ratio: auto; object-fit: contain; }
       .lb-side { width: 22rem; border-top: 0; border-left: 1px solid var(--border); padding: 2.5rem 2rem; }
       .hide-desk { display: none !important; }
     }
