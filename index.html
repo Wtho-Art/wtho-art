@@ -154,7 +154,7 @@
       .lb-side { width: 22rem; border-top: 0; border-left: 1px solid var(--border); padding: 2.5rem 2rem; }
       .hide-desk { display: none !important; }
     }
-    .legal-modal { display: none; position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.5); overflow-y: auto; }
+    .legal-modal { display: none; position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.5); overflow-y: auto; }
     .legal-modal.on { display: block; }
     .legal-content { background: var(--bg); max-width: 48rem; margin: 2rem auto; padding: 2rem; border-radius: .5rem; }
     .legal-content h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
@@ -311,8 +311,8 @@
       <div style="display:flex;flex-wrap:wrap;gap:1.5rem">
         <a href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer">Instagram</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
-        <button onclick="openLegal('impressum')" style="background:none;border:none;color:inherit;cursor:pointer;text-decoration:none;padding:0">Impressum</button>
-        <button onclick="openLegal('datenschutz')" style="background:none;border:none;color:inherit;cursor:pointer;text-decoration:none;padding:0">Datenschutz</button>
+        <a href="#legal-impressum" id="open-impressum">Impressum</a>
+        <a href="#legal-datenschutz" id="open-datenschutz">Datenschutz</a>
         <span data-i="footerRights">Alle Werke © Thorsten Weitz</span>
       </div>
     </div>
@@ -625,13 +625,6 @@
       document.body.style.overflow = "";
     }
 
-    document.getElementById("legal-impressum").addEventListener("click", (e) => {
-      if (e.target.id === "legal-impressum") closeLegal();
-    });
-    document.getElementById("legal-datenschutz").addEventListener("click", (e) => {
-      if (e.target.id === "legal-datenschutz") closeLegal();
-    });
-
     document.getElementById("lbClose").onclick = closeLb;
     document.getElementById("lbPrevM").onclick = () => openLb((openIndex - 1 + works.length) % works.length);
     document.getElementById("lbNextM").onclick = () => openLb((openIndex + 1) % works.length);
@@ -661,6 +654,16 @@
     burger.addEventListener("click", () => header.classList.toggle("open"));
     header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
+
+    [["open-impressum", "impressum"], ["open-datenschutz", "datenschutz"]].forEach(([id, type]) => {
+      const link = document.getElementById(id);
+      if (link) {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openLegal(type);
+        });
+      }
+    });
 
     window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
