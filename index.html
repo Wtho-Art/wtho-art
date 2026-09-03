@@ -154,16 +154,6 @@
       .lb-side { width: 22rem; border-top: 0; border-left: 1px solid var(--border); padding: 2.5rem 2rem; }
       .hide-desk { display: none !important; }
     }
-    .legal-modal { display: none; position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.5); overflow-y: auto; }
-    .legal-modal.on { display: block; }
-    .legal-content { background: var(--bg); max-width: 48rem; margin: 2rem auto; padding: 2rem; border-radius: .5rem; }
-    .legal-content h2 { margin-top: 1.5rem; margin-bottom: 0.75rem; }
-    .legal-content h3 { font-size: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-weight: 600; }
-    .legal-content p { margin: 0.5rem 0; }
-    .legal-content ul { margin: 0.5rem 0; padding-left: 1.5rem; }
-    .legal-content li { margin: 0.25rem 0; }
-    .legal-close { background: var(--surface); padding: 1rem 2rem; text-align: center; }
-    .legal-close button { background: var(--accent); color: var(--accent-fg); border: none; padding: 0.75rem 1.5rem; border-radius: 0.25rem; cursor: pointer; font-weight: 500; }
     @media (min-width: 1024px) {
       .works { grid-template-columns: 1fr 1fr 1fr; }
       .works .span2 { grid-column: span 2; }
@@ -311,94 +301,10 @@
       <div style="display:flex;flex-wrap:wrap;gap:1.5rem">
         <a href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer">Instagram</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
-        <a href="#legal-impressum" id="open-impressum">Impressum</a>
-        <a href="#legal-datenschutz" id="open-datenschutz">Datenschutz</a>
         <span data-i="footerRights">Alle Werke © Thorsten Weitz</span>
       </div>
     </div>
   </footer>
-
-  <!-- Impressum Modal -->
-  <div class="legal-modal" id="legal-impressum">
-    <div class="legal-content">
-      <h2>Impressum</h2>
-      <h3>Angaben gemäß § 5 TMG (Telemediengesetz)</h3>
-      <p><strong>Verantwortlich für den Inhalt:</strong></p>
-      <p>
-        Thorsten Weitz<br>
-        Konradstr. 13<br>
-        79100 Freiburg<br>
-        Deutschland
-      </p>
-      <p><strong>Kontaktdaten:</strong></p>
-      <p>
-        E-Mail: <a href="mailto:Wtho.Art@proton.me">Wtho.Art@proton.me</a><br>
-        Telefon: <a href="tel:+4915679829884">+49 (0)15679829884</a>
-      </p>
-      <h3>Haftungsausschluss</h3>
-      <p><strong>Haftung für Inhalte:</strong> Die Inhalte unserer Seiten wurden mit großer Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr. Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 des TMG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.</p>
-      <p><strong>Haftung für Links:</strong> Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
-      <h3>Urheberrecht</h3>
-      <p>© 2026 Thorsten Weitz (wtho.art). Alle Rechte vorbehalten. Die Kunstwerke, Bilder und Texte dieser Website sind urheberrechtlich geschützt und dürfen ohne ausdrückliche Genehmigung nicht vervielfältigt, verbreitet oder für kommerzielle Zwecke verwendet werden.</p>
-      <h3>Bildrechte</h3>
-      <p>Alle auf dieser Website gezeigten Kunstwerke sind Originalwerke von Thorsten Weitz. Das Urheberrecht liegt bei Thorsten Weitz. Eine Verwendung, Vervielfältigung oder Verbreitung dieser Werke ist ohne schriftliche Genehmigung nicht gestattet.</p>
-    </div>
-    <div class="legal-close">
-      <button onclick="closeLegal()">Schließen</button>
-    </div>
-  </div>
-
-  <!-- Datenschutzerklärung Modal -->
-  <div class="legal-modal" id="legal-datenschutz">
-    <div class="legal-content">
-      <h2>Datenschutzerklärung</h2>
-      <h3>1. Verantwortlicher</h3>
-      <p>
-        Thorsten Weitz<br>
-        Konradstr. 13<br>
-        79100 Freiburg<br>
-        E-Mail: <a href="mailto:Wtho.Art@proton.me">Wtho.Art@proton.me</a>
-      </p>
-      <h3>2. Allgemeines zur Datenverarbeitung</h3>
-      <p>Wir verarbeiten personenbezogene Daten nur auf der Rechtsgrundlage von Art. 6 DSGVO. Bei der Nutzung unserer Website werden automatisch bestimmte Daten verarbeitet:</p>
-      <ul>
-        <li><strong>IP-Adressen:</strong> Der Server erfasst automatisch IP-Adressen beim Zugriff.</li>
-        <li><strong>Zugriffsdaten:</strong> Besuchte Seiten, Datum, Uhrzeit, Browser und Betriebssystem.</li>
-        <li><strong>Cookies:</strong> Diese Website verwendet keine Tracking-Cookies. Nur technisch notwendige Session-Cookies werden ggf. verwendet.</li>
-      </ul>
-      <h3>3. Externe Inhalte und Services</h3>
-      <p><strong>Google Fonts:</strong> Diese Website nutzt Google Fonts. Dabei werden IP-Adressen an Google übermittelt. Weitere Informationen finden Sie in der <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Datenschutzerklärung von Google</a>.</p>
-      <p><strong>Formspree:</strong> Das Kontaktformular wird über Formspree verarbeitet. Weitere Informationen finden Sie in der <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noreferrer">Datenschutzerklärung von Formspree</a>.</p>
-      <p><strong>Instagram:</strong> Links zu Instagram können Daten übermitteln. Beachten Sie die <a href="https://help.instagram.com/519522125107165" target="_blank" rel="noreferrer">Instagram-Datenschutzrichtlinie</a>.</p>
-      <p><strong>GitHub Pages:</strong> Diese Website wird auf GitHub Pages gehostet. Beachten Sie die <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noreferrer">Datenschutzerklärung von GitHub</a>.</p>
-      <h3>4. Betroffenenrechte</h3>
-      <p>Sie haben gegenüber uns folgende Rechte:</p>
-      <ul>
-        <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
-        <li>Recht auf Berichtigung (Art. 16 DSGVO)</li>
-        <li>Recht auf Löschung (Art. 17 DSGVO)</li>
-        <li>Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
-        <li>Recht auf Datenportabilität (Art. 20 DSGVO)</li>
-        <li>Recht auf Widerspruch (Art. 21 DSGVO)</li>
-      </ul>
-      <p>Um diese Rechte geltend zu machen, kontaktieren Sie uns unter: <a href="mailto:Wtho.Art@proton.me">Wtho.Art@proton.me</a></p>
-      <h3>5. Dauer der Speicherung</h3>
-      <p>Personenbezogene Daten werden nur solange gespeichert, wie es für die Erfüllung des Zwecks erforderlich ist. Bei Kontaktformularen werden Daten nach Abschluss der Anfrage gelöscht, sofern keine rechtliche Aufbewahrungspflicht besteht.</p>
-      <h3>6. Sicherheit</h3>
-      <p>Wir verwenden angemessene technische und organisatorische Maßnahmen zum Schutz Ihrer persönlichen Daten. Die Übertragung erfolgt über verschlüsselte Verbindungen (SSL/TLS).</p>
-      <h3>7. Datenschutzbeauftragte oder Kontakt</h3>
-      <p>Für Fragen zum Datenschutz kontaktieren Sie uns unter: <a href="mailto:Wtho.Art@proton.me">Wtho.Art@proton.me</a></p>
-      <h3>8. Beschwerde</h3>
-      <p>Sie haben das Recht, sich bei der zuständigen Datenschutzbehörde zu beschweren. In Baden-Württemberg ist dies:</p>
-      <p>
-        Landesbeauftragte für Datenschutz und Informationsfreiheit Baden-Württemberg<br>
-        <a href="https://www.bfdi.bund.de/" target="_blank" rel="noreferrer">https://www.bfdi.bund.de/</a>
-      </p>
-    </div>
-    <div class="legal-close">
-      <button onclick="closeLegal()">Schließen</button>
-    </div>
-  </div>
 
   <script>
     <div class="lb-bar">
@@ -614,17 +520,6 @@
       document.body.style.overflow = "";
     }
 
-    function openLegal(type) {
-      document.getElementById("legal-" + type).classList.add("on");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeLegal() {
-      document.getElementById("legal-impressum").classList.remove("on");
-      document.getElementById("legal-datenschutz").classList.remove("on");
-      document.body.style.overflow = "";
-    }
-
     document.getElementById("lbClose").onclick = closeLb;
     document.getElementById("lbPrevM").onclick = () => openLb((openIndex - 1 + works.length) % works.length);
     document.getElementById("lbNextM").onclick = () => openLb((openIndex + 1) % works.length);
@@ -635,11 +530,7 @@
       document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
     };
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        if (document.getElementById("lightbox").classList.contains("on")) closeLb();
-        if (document.getElementById("legal-impressum").classList.contains("on")) closeLegal();
-        if (document.getElementById("legal-datenschutz").classList.contains("on")) closeLegal();
-      }
+      if (e.key === "Escape") closeLb();
       if (!document.getElementById("lightbox").classList.contains("on")) return;
       if (e.key === "ArrowRight") openLb((openIndex + 1) % works.length);
       if (e.key === "ArrowLeft") openLb((openIndex - 1 + works.length) % works.length);
@@ -654,16 +545,6 @@
     burger.addEventListener("click", () => header.classList.toggle("open"));
     header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
-
-    [["open-impressum", "impressum"], ["open-datenschutz", "datenschutz"]].forEach(([id, type]) => {
-      const link = document.getElementById(id);
-      if (link) {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          openLegal(type);
-        });
-      }
-    });
 
     window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
