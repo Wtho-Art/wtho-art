@@ -447,14 +447,23 @@
       { year:"1997–1999", de:"Fachoberschule für Gestaltung & Kommunikations-Design, Augsburg", en:"College of design & communication, Augsburg" }
     ];
 
-    let lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de";
+    let lang = "de";
+    try {
+      lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de";
+    } catch (error) {
+      // Continue with German when browser storage is blocked.
+    }
     let openIndex = 0;
 
     function t() { return copy[lang]; }
 
     function applyLang() {
       document.documentElement.lang = lang;
-      localStorage.setItem("wtho-lang", lang);
+      try {
+        localStorage.setItem("wtho-lang", lang);
+      } catch (error) {
+        // Language selection still works for the current page view.
+      }
       document.querySelectorAll("[data-i]").forEach((el) => {
         const key = el.getAttribute("data-i");
         if (t()[key]) el.textContent = t()[key];
