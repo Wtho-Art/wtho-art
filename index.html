@@ -529,6 +529,8 @@
       document.body.style.overflow = "";
     }
 
+    applyLang();
+
     document.getElementById("lbClose").onclick = closeLb;
     document.getElementById("lbPrevM").onclick = () => openLb((openIndex - 1 + works.length) % works.length);
     document.getElementById("lbNextM").onclick = () => openLb((openIndex + 1) % works.length);
@@ -558,7 +560,6 @@
     window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
 
-    applyLang();
   </script>
   <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
