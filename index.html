@@ -490,18 +490,16 @@
       root.querySelectorAll(".work").forEach((btn) => {
         btn.addEventListener("click", () => openLb(+btn.dataset.i));
       });
-      syncMatchedArtworkHeight();
+      syncArtworkHeights();
     }
 
-    function syncMatchedArtworkHeight() {
-      const target = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "dance-of-balance") + '"] .frame');
-      const reference = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "touched") + '"] .frame');
-      if (!target || !reference) return;
-      if (window.matchMedia("(min-width: 768px)").matches) {
-        target.style.height = reference.getBoundingClientRect().height + "px";
-      } else {
-        target.style.height = "";
-      }
+    function syncArtworkHeights() {
+      const reference = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "inner-deep-confrontation") + '"] .frame');
+      if (!reference) return;
+      const height = reference.getBoundingClientRect().height + "px";
+      document.querySelectorAll(".work .frame").forEach((frame) => {
+        frame.style.height = height;
+      });
     }
 
     function renderExhibits() {
@@ -569,7 +567,7 @@
     burger.addEventListener("click", () => header.classList.toggle("open"));
     header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
-    window.addEventListener("resize", syncMatchedArtworkHeight, { passive: true });
+    window.addEventListener("resize", syncArtworkHeights, { passive: true });
 
     window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
