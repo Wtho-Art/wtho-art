@@ -100,7 +100,6 @@
     .work img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.22,1,.36,1); }
     .work:hover img { transform: scale(1.03); }
     .portrait { aspect-ratio: 3/4; }
-    .match-span-height { aspect-ratio: 3/4; }
     .landscape { aspect-ratio: 4/3; }
     .square { aspect-ratio: 1; }
     .work-meta { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; margin-top: 1rem; }
@@ -147,7 +146,6 @@
       .works { grid-template-columns: 1fr 1fr; }
       .works .span2 { grid-column: span 2; }
       .works .span2 .portrait { aspect-ratio: 4/3; }
-      .works .match-span-height { aspect-ratio: 2/3; }
       .about-grid, .contact-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
       .ex-list li { display: grid; grid-template-columns: 3fr 9fr; gap: 1rem; align-items: baseline; }
       .two { grid-template-columns: 1fr 1fr; }
@@ -390,7 +388,7 @@
       { id:"touched", image:"works/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
         title:{de:"The raw power and sensitivity - Touched",en:"The raw power and sensitivity - Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
-      { id:"dance-of-balance", image:"works/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"match-span-height",
+      { id:"dance-of-balance", image:"works/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
         title:{de:"The dance of balance",en:"The dance of balance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.", en:"The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space."} },
       { id:"fire-silence", image:"works/fire-silence.jpg", year:"2025", size:"242 × 138 cm", layout:"portrait",
@@ -492,6 +490,18 @@
       root.querySelectorAll(".work").forEach((btn) => {
         btn.addEventListener("click", () => openLb(+btn.dataset.i));
       });
+      syncMatchedArtworkHeight();
+    }
+
+    function syncMatchedArtworkHeight() {
+      const target = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "dance-of-balance") + '"] .frame');
+      const reference = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "touched") + '"] .frame');
+      if (!target || !reference) return;
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        target.style.height = reference.getBoundingClientRect().height + "px";
+      } else {
+        target.style.height = "";
+      }
     }
 
     function renderExhibits() {
@@ -559,6 +569,7 @@
     burger.addEventListener("click", () => header.classList.toggle("open"));
     header.querySelectorAll(".mobile-nav a").forEach((a) => a.addEventListener("click", () => header.classList.remove("open")));
     window.addEventListener("scroll", () => header.classList.toggle("scrolled", window.scrollY > 12), { passive: true });
+    window.addEventListener("resize", syncMatchedArtworkHeight, { passive: true });
 
     window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
     formspree('initForm', { formElement: '#form', formId: 'xjyvwojq' });
