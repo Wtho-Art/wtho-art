@@ -306,7 +306,7 @@
     </div>
   </footer>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <script>
     <div class="lb-bar">
       <h3 id="lbTitle"></h3>
       <button class="iconbtn" id="lbClose" aria-label="Close">✕</button>
@@ -384,9 +384,9 @@
     };
 
     const works = [
-      { id:"dance-of-duality", image:"works/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
-        title:{de:"The dance of duality",en:"The dance of duality"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.", en:"It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement."} },
+      { id:"touched", image:"works/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
+        title:{de:"Touched",en:"Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
       { id:"dance-of-balance", image:"works/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
         title:{de:"The dance of balance",en:"The dance of balance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.", en:"The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space."} },
@@ -408,9 +408,9 @@
       { id:"passion", image:"works/passion.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
         title:{de:"Passion",en:"Passion"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Wo der Ozean den Himmel entzündet. Ein Tanz auf 50 × 40 cm: tiefes Blau trifft auf flammendes Rot.", en:"Where the ocean sets the sky ablaze. A dance on 50 x 40 cm: deep blue meets fiery red."} },
-      { id:"touched", image:"works/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
-        title:{de:"Touched",en:"Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
+      { id:"dance-of-duality", image:"works/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
+        title:{de:"The dance of duality",en:"The dance of duality"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.", en:"It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement."} },
       { id:"unexposed-ego", image:"works/unexposed-ego.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
         title:{de:"Unexposed Ego",en:"Unexposed Ego"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Was passiert, wenn Masken nicht mehr nur gespielt werden?", en:"What happens when masks are no longer merely played?"} },
@@ -423,9 +423,9 @@
      { id:"inner-deep-confrontation", image:"works/inner-deep-confrontation.jpg", year:"2026", size:"70 × 50 cm", layout:"portrait",
         title:{de:"Inner Deep Confrontation",en:"Inner Deep Confrontation"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein neuer, schonungsloser Blick in unser tiefstes Inneres. Dieses Werk visualisiert den ehrlichen, oft konfliktreichen Abgleich unserer ganz subjektiven inneren Realität mit der äußeren Welt. Der explosive Zusammenstoß von Leidenschaft und Kühle, Chaos und Ordnung – ein ehrlicher Spiegel dessen, was in uns vorgeht, wenn unsere subjektiven Welten auf das \"außen\" trifft. Wie viel von eurem \"Inneren\" lasst ihr in eurem \"Äußeren\" sichtbar werden?", en:"A new, unsparing look into our deepest inner self. This work visualizes the honest, often conflicted alignment of our deeply subjective inner reality with the outer world. The explosive collision of passion and coldness, chaos and order — an honest mirror of what happens inside us when our subjective worlds meet the \"outside.\" How much of your \"inner\" do you allow to become visible in your \"outer\"?"} },
-     { id:"voltage-under-control", image:"works/voltage-under-control.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
-        title:{de:"Spannung unter Kontrolle",en:"Voltage Under Control"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.", en:"A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to maintain control. But it has no chance: A dense network of cutting red and yellow lines rushes like an overvoltage through the canvas. It is the moment when inner chaos puts the carefully maintained façade completely under voltage. Control is now merely an illusion."} }
+     { id:"voltage-under-control", image:"works/voltage-under-control.jpg", year:"2026", size:"120 × 80 cm", layout:"portrait",
+        title:{de:"Spannung und Kontrolle",en:"Voltage and Control"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
+        statement:{de:"", en:""} }
     ];
 
     const exhibits = [
@@ -530,8 +530,8 @@
       document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
     };
     document.addEventListener("keydown", (e) => {
-      if (!document.getElementById("lightbox").classList.contains("on")) return;
       if (e.key === "Escape") closeLb();
+      if (!document.getElementById("lightbox").classList.contains("on")) return;
       if (e.key === "ArrowRight") openLb((openIndex + 1) % works.length);
       if (e.key === "ArrowLeft") openLb((openIndex - 1 + works.length) % works.length);
     });
