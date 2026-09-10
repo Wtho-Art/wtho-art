@@ -121,6 +121,9 @@
     }
     textarea { height: auto; padding: .75rem; }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    .chk-label { display: flex; align-items: flex-start; gap: .75rem; cursor: pointer; font-size: .875rem; margin-top: .5rem; }
+    .chk-label span { margin-bottom: 0; text-transform: none; letter-spacing: normal; font-size: .875rem; color: var(--muted); }
+    input[type="checkbox"] { width: 1.125rem; height: 1.125rem; flex-shrink: 0; margin-top: .2rem; cursor: pointer; accent-color: var(--accent); }
     .two { display: grid; gap: 1.25rem; }
     .ig { display: inline-flex; align-items: center; gap: .5rem; margin-top: 2rem; color: var(--accent); min-height: 3rem; }
     footer { border-top: 1px solid var(--border); padding: 2.5rem 0; color: var(--muted); font-size: .875rem; }
@@ -174,6 +177,7 @@
         <a href="#werke" data-i="navWorks">Werke</a>
         <a href="#atelier" data-i="navAbout">Atelier</a>
         <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
+        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
         <div class="lang" role="group" aria-label="Sprache">
           <button type="button" data-lang="de" class="on">DE</button>
@@ -186,6 +190,7 @@
       <a href="#werke" data-i="navWorks">Werke</a>
       <a href="#atelier" data-i="navAbout">Atelier</a>
       <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
+      <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
       <a href="#kontakt" data-i="navContact">Kontakt</a>
       <div class="lang" style="margin-top:1rem">
         <button type="button" data-lang="de" class="on">DE</button>
@@ -260,6 +265,33 @@
       </div>
     </section>
 
+    <section class="band" id="newsletter">
+      <div class="wrap section contact-grid">
+        <div>
+          <p class="kicker" data-i="newsletterKicker">Atelier-Post</p>
+          <h2 data-i="newsletterTitle">Newsletter</h2>
+          <p class="muted" data-i="newsletterLead">Erfahren Sie als Erste von neuen Werken, bevorstehenden Ausstellungen und Einblicken in das Atelier.</p>
+          <p class="note" data-i="newsletterNote" style="margin-top:1.5rem">Der Versand erfolgt DSGVO-konform über Brevo mit Double-Opt-in.</p>
+        </div>
+        <div>
+          <!-- Brevo Newsletter-Anmeldung (Ersetzen Sie 'YOUR_BREVO_FORM_URL' durch Ihre Brevo-Formular-URL) -->
+          <form id="newsletterForm" action="https://sibforms.com/serve/YOUR_BREVO_FORM_URL" method="POST" target="_blank">
+            <div class="two">
+              <label><span data-i="newsletterName">Name (optional)</span><input type="text" name="FIRSTNAME" autocomplete="name" /></label>
+              <label><span data-i="newsletterEmail">E-Mail-Adresse</span><input type="email" name="EMAIL" required autocomplete="email" /></label>
+            </div>
+            <label class="chk-label">
+              <input type="checkbox" name="OPT_IN" required />
+              <span data-i="newsletterConsent">Ich möchte den Newsletter erhalten. Abmeldung jederzeit möglich.</span>
+            </label>
+            <div style="margin-top:1.25rem">
+              <button class="btn" type="submit" data-i="newsletterSubmit">Anmelden</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <section class="band" id="kontakt">
       <div class="wrap section contact-grid">
         <div>
@@ -301,6 +333,7 @@
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:1.5rem">
         <a href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer">Instagram</a>
+        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
         <span data-i="footerRights">Alle Werke © Thorsten Weitz</span>
       </div>
@@ -331,7 +364,7 @@
   <script>
     const copy = {
       de: {
-        skip:"Zum Inhalt", navWorks:"Werke", navAbout:"Atelier", navExhibitions:"Ausstellungen", navContact:"Kontakt",
+        skip:"Zum Inhalt", navWorks:"Werke", navAbout:"Atelier", navExhibitions:"Ausstellungen", navNewsletter:"Newsletter", navContact:"Kontakt",
         kicker:"Synthetischer Expressionismus · Freiburg", heroQuote:"Alles beginnt mit einem Gefühl.",
         heroLead:"Die Leinwand als Resonanzraum — innere Emotion, Energie und Transformation in Öl und Mischtechnik. Ein intensiver Dialog zwischen architektonischer Planung und unmittelbarem Impuls.",
         ctaWorks:"Werke ansehen", ctaContact:"Anfrage",
@@ -348,6 +381,12 @@
         aboutQuote:"Alles beginnt mit einem Gefühl.",
         pathTitle:"Werdegang",
         exhibitionsKicker:"Ausstellungen", exhibitionsTitle:"Ausstellungen",
+        newsletterKicker:"Atelier-Post", newsletterTitle:"Newsletter",
+        newsletterLead:"Erfahren Sie als Erste von neuen Werken, bevorstehenden Ausstellungen und Einblicken in das Atelier.",
+        newsletterName:"Name (optional)", newsletterEmail:"E-Mail-Adresse",
+        newsletterConsent:"Ich möchte den Newsletter erhalten. Abmeldung jederzeit möglich.",
+        newsletterSubmit:"Anmelden",
+        newsletterNote:"Der Versand erfolgt DSGVO-konform über Brevo mit Double-Opt-in.",
         contactKicker:"Sammeln", contactTitle:"Anfrage",
         contactLead:"Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.",
         contactName:"Name", contactEmail:"E-Mail", contactWork:"Werk (optional)", contactWorkPlaceholder:"Kein bestimmtes Werk",
@@ -357,7 +396,7 @@
         formSent:"Gesendet. Danke.", formFallback:"E-Mail-Programm geöffnet."
       },
       en: {
-        skip:"Skip to content", navWorks:"Works", navAbout:"Studio", navExhibitions:"Exhibitions", navContact:"Contact",
+        skip:"Skip to content", navWorks:"Works", navAbout:"Studio", navExhibitions:"Exhibitions", navNewsletter:"Newsletter", navContact:"Contact",
         kicker:"Synthetic Expressionism · Freiburg", heroQuote:"It all starts with a feeling.",
         heroLead:"The canvas as a resonant space — inner emotion, energy and transformation in oil and mixed media. An intense dialogue between architectural planning and immediate impulse.",
         ctaWorks:"View works", ctaContact:"Inquiry",
@@ -374,6 +413,12 @@
         aboutQuote:"It all starts with a feeling.",
         pathTitle:"Path",
         exhibitionsKicker:"Exhibitions", exhibitionsTitle:"Exhibitions",
+        newsletterKicker:"Studio News", newsletterTitle:"Newsletter",
+        newsletterLead:"Be the first to hear about new works, upcoming exhibitions and insights into the studio.",
+        newsletterName:"Name (optional)", newsletterEmail:"Email address",
+        newsletterConsent:"I would like to receive the newsletter. Unsubscribe at any time.",
+        newsletterSubmit:"Subscribe",
+        newsletterNote:"Sent via Brevo in compliance with GDPR and double opt-in.",
         contactKicker:"Collecting", contactTitle:"Inquiry",
         contactLead:"Works are available on request. Write directly, or follow the studio on Instagram.",
         contactName:"Name", contactEmail:"Email", contactWork:"Work (optional)", contactWorkPlaceholder:"No specific work",
