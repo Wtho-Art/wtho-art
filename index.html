@@ -177,8 +177,8 @@
         <a href="#werke" data-i="navWorks">Werke</a>
         <a href="#atelier" data-i="navAbout">Atelier</a>
         <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
-        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
+        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <div class="lang" role="group" aria-label="Sprache">
           <button type="button" data-lang="de" class="on">DE</button>
           <button type="button" data-lang="en">EN</button>
@@ -190,8 +190,8 @@
       <a href="#werke" data-i="navWorks">Werke</a>
       <a href="#atelier" data-i="navAbout">Atelier</a>
       <a href="#ausstellungen" data-i="navExhibitions">Ausstellungen</a>
-      <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
       <a href="#kontakt" data-i="navContact">Kontakt</a>
+      <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
       <div class="lang" style="margin-top:1rem">
         <button type="button" data-lang="de" class="on">DE</button>
         <button type="button" data-lang="en">EN</button>
@@ -265,6 +265,37 @@
       </div>
     </section>
 
+    <section class="band" id="kontakt">
+      <div class="wrap section contact-grid">
+        <div>
+          <p class="kicker" data-i="contactKicker">Sammeln</p>
+          <h2 data-i="contactTitle">Anfrage</h2>
+          <p class="muted" data-i="contactLead">Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.</p>
+          <a class="ig" href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer" data-i="instagram">Instagram @wtho.art</a>
+        </div>
+        <div data-fs-success style="display:none;color:var(--success);margin-bottom:1.25rem"></div>
+        <div data-fs-error style="display:none;color:var(--error);margin-bottom:1.25rem"></div>
+        
+        <form id="form">
+          <div class="two">
+            <label><span data-i="contactName">Name</span><input name="name" required autocomplete="name" data-fs-field /></label>
+            <span data-fs-error="name" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
+            
+            <label><span data-i="contactEmail">E-Mail</span><input type="email" name="email" required autocomplete="email" data-fs-field /></label>
+            <span data-fs-error="email" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
+          </div>
+          <label>
+            <span data-i="contactWork">Werk (optional)</span>
+            <select name="work" id="workSelect" data-fs-field></select>
+          </label>
+          <label><span data-i="contactMessage">Nachricht</span><textarea name="message" rows="6" required data-fs-field></textarea></label>
+          <span data-fs-error="message" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
+          <div>
+            <button class="btn" type="submit" data-fs-submit-btn data-i="contactSend">Nachricht senden</button>
+          </div>
+        </form>
+      </div>
+    </section>
     <section class="band" id="newsletter">
       <div class="wrap section contact-grid">
         <div>
@@ -320,37 +351,6 @@
       </div>
     </section>
 
-    <section class="band" id="kontakt">
-      <div class="wrap section contact-grid">
-        <div>
-          <p class="kicker" data-i="contactKicker">Sammeln</p>
-          <h2 data-i="contactTitle">Anfrage</h2>
-          <p class="muted" data-i="contactLead">Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.</p>
-          <a class="ig" href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer" data-i="instagram">Instagram @wtho.art</a>
-        </div>
-        <div data-fs-success style="display:none;color:var(--success);margin-bottom:1.25rem"></div>
-        <div data-fs-error style="display:none;color:var(--error);margin-bottom:1.25rem"></div>
-        
-        <form id="form">
-          <div class="two">
-            <label><span data-i="contactName">Name</span><input name="name" required autocomplete="name" data-fs-field /></label>
-            <span data-fs-error="name" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
-            
-            <label><span data-i="contactEmail">E-Mail</span><input type="email" name="email" required autocomplete="email" data-fs-field /></label>
-            <span data-fs-error="email" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
-          </div>
-          <label>
-            <span data-i="contactWork">Werk (optional)</span>
-            <select name="work" id="workSelect" data-fs-field></select>
-          </label>
-          <label><span data-i="contactMessage">Nachricht</span><textarea name="message" rows="6" required data-fs-field></textarea></label>
-          <span data-fs-error="message" style="font-size:.75rem;color:var(--error);display:block;margin-top:.25rem"></span>
-          <div>
-            <button class="btn" type="submit" data-fs-submit-btn data-i="contactSend">Nachricht senden</button>
-          </div>
-        </form>
-      </div>
-    </section>
   </main>
 
   <footer>
@@ -361,8 +361,8 @@
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:1.5rem">
         <a href="https://www.instagram.com/wtho.art" target="_blank" rel="noreferrer">Instagram</a>
-        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <a href="#kontakt" data-i="navContact">Kontakt</a>
+        <a href="#newsletter" data-i="navNewsletter">Newsletter</a>
         <span data-i="footerRights">Alle Werke © Thorsten Weitz</span>
       </div>
     </div>
