@@ -96,7 +96,7 @@
     .split { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
     .muted { color: var(--muted); }
     .works { display: grid; grid-template-columns: 1fr; gap: 1.5rem 1.5rem; margin-top: 3.5rem; }
-    .work { background: transparent; border: 0; padding: 0; text-align: left; color: inherit; cursor: pointer; width: 100%; }
+    .work { display: block; background: transparent; border: 0; padding: 0; text-align: left; color: inherit; cursor: pointer; width: 100%; text-decoration: none; }
     .work .frame { overflow: hidden; background: var(--surface); }
     .work img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.22,1,.36,1); }
     .work:hover img { transform: scale(1.03); }
@@ -128,17 +128,8 @@
     .foot { display: flex; flex-direction: column; gap: 1.5rem; }
     .skip { position: absolute; left: -999px; }
     .skip:focus { left: 1rem; top: .75rem; z-index: 50; background: var(--accent); color: var(--accent-fg); padding: .5rem .75rem; }
-    .lightbox { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(255,255,255,.97); flex-direction: column; }
     :where(.sib-form-message-panel) { display: none; margin-bottom: 1rem; padding: .75rem 1rem; }
     :where(.sib-form-message-panel .sib-notification__icon) { width: 20px; height: 20px; }
-    .lightbox.on { display: flex; }
-    .lb-bar { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1rem; }
-    .lb-bar h3 { font-size: 1.5rem; }
-    .iconbtn { width: 2.75rem; height: 2.75rem; border: 1px solid var(--border); background: var(--surface); color: var(--fg); cursor: pointer; }
-    .lb-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-    .lb-img { flex: 1; display: flex; align-items: center; justify-content: center; gap: .5rem; padding: 1rem; min-height: 0; }
-    .lb-img img { max-height: 52vh; height: auto; width: auto; max-width: 100%; aspect-ratio: auto; object-fit: contain; }
-    .lb-side { border-top: 1px solid var(--border); padding: 1.5rem 1.25rem; }
     .note { font-size: .75rem; color: var(--subtle); }
     @media (min-width: 768px) {
       nav.desk { display: flex; }
@@ -153,9 +144,6 @@
       .ex-list li { display: grid; grid-template-columns: 3fr 9fr; gap: 1rem; align-items: baseline; }
       .two { grid-template-columns: 1fr 1fr; }
       .foot { flex-direction: row; justify-content: space-between; align-items: center; }
-      .lb-body { flex-direction: row; }
-      .lb-img img { max-height: 78vh; height: auto; width: auto; aspect-ratio: auto; object-fit: contain; }
-      .lb-side { width: 22rem; border-top: 0; border-left: 1px solid var(--border); padding: 2.5rem 2rem; }
       .hide-desk { display: none !important; }
     }
     @media (min-width: 1024px) {
@@ -374,26 +362,6 @@
     </div>
   </footer>
 
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-    <div class="lb-bar">
-      <h3 id="lbTitle"></h3>
-      <button class="iconbtn" id="lbClose" aria-label="Close">✕</button>
-    </div>
-    <div class="lb-body">
-      <div class="lb-img">
-        <button class="iconbtn hide-desk" id="lbPrevM">‹</button>
-        <img id="lbImg" alt="" />
-        <button class="iconbtn hide-desk" id="lbNextM">›</button>
-      </div>
-      <aside class="lb-side">
-        <p class="kicker" id="lbMeta"></p>
-        <h3 id="lbTitle2" style="margin-top:.75rem;font-size:1.875rem"></h3>
-        <p class="muted" id="lbMed" style="margin-top:.75rem"></p>
-        <p class="muted" id="lbStmt" style="margin-top:1.25rem"></p>
-        <button class="btn full" id="lbInquire" style="margin-top:2rem" data-i="inquire">Dieses Werk anfragen</button>
-      </aside>
-    </div>
-  </div>
 
   <script>
     const copy = {
@@ -468,46 +436,46 @@
     };
 
     const works = [
-      { id:"touched", image:"works/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
+      { id:"touched", image:"works/touched/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
         title:{de:"The raw power and sensitivity - Touched",en:"The raw power and sensitivity - Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
-      { id:"dance-of-balance", image:"works/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
+      { id:"dance-of-balance", image:"works/dance-of-balance/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
         title:{de:"The dance of balance",en:"The dance of balance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.", en:"The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space."} },
-      { id:"fire-silence", image:"works/fire-silence.jpg", year:"2025", size:"242 × 138 cm", layout:"portrait",
+      { id:"fire-silence", image:"works/fire-silence/fire-silence.jpg", year:"2025", size:"242 × 138 cm", layout:"portrait",
         title:{de:"Fire Silence",en:"Fire Silence"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Monumentale Intensität: Feuer, das schweigt. Rot, Gelb und ein dunkler Riss.", en:"Monumental intensity: fire that keeps silent. Red, yellow and a dark rift."} },
-      { id:"unexposed-ego", image:"works/unexposed-ego.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
+      { id:"unexposed-ego", image:"works/unexposed-ego/unexposed-ego.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
         title:{de:"Unexposed Ego",en:"Unexposed Ego"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Was passiert, wenn Masken nicht mehr nur gespielt werden?", en:"What happens when masks are no longer merely played?"} },
-      { id:"dolores-matata", image:"works/dolores-matata.jpg", year:"2026", size:"85 × 68 cm", layout:"portrait",
+      { id:"dolores-matata", image:"works/dolores-matata/dolores-matata.jpg", year:"2026", size:"85 × 68 cm", layout:"portrait",
         title:{de:"Dolores Matata",en:"Dolores Matata"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
         statement:{de:"Blaues Chaos, rote Splitter — die ehrliche Seite des Mottos „sorglos“.", en:"Blue chaos, red splinters — the honest side of the worry-free motto."} },
-      { id:"breaking-patterns", image:"works/breaking-patterns.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
+      { id:"breaking-patterns", image:"works/breaking-patterns/breaking-patterns.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
         title:{de:"Breaking Patterns",en:"Breaking Patterns"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Gelbes Licht bricht durch ein Gestrüpp aus Blau.", en:"Yellow light breaks through a thicket of blue."} },
-      { id:"resonanz", image:"works/resonanz.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
+      { id:"resonanz", image:"works/resonanz/resonanz.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
         title:{de:"Resonanz",en:"Resonance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein Tanz aus Gelb, Blau und impulsiven Linien.", en:"A dance of yellow, blue and impulsive lines."} },
-      { id:"passion", image:"works/passion.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
+      { id:"passion", image:"works/passion/passion.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
         title:{de:"Passion",en:"Passion"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Wo der Ozean den Himmel entzündet. Ein Tanz auf 50 × 40 cm: tiefes Blau trifft auf flammendes Rot.", en:"Where the ocean sets the sky ablaze. A dance on 50 x 40 cm: deep blue meets fiery red."} },
-      { id:"dance-of-duality", image:"works/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
+      { id:"dance-of-duality", image:"works/dance-of-duality/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
         title:{de:"The dance of duality",en:"The dance of duality"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.", en:"It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement."} },
-      { id:"when-the-cold-hits", image:"works/when-the-cold-hits.jpg", year:"2026", size:"115 × 110 cm", layout:"portrait",
+      { id:"when-the-cold-hits", image:"works/when-the-cold-hits/when-the-cold-hits.jpg", year:"2026", size:"115 × 110 cm", layout:"portrait",
         title:{de:"When the cold hits your world",en:"When the cold hits your world"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
         statement:{de:"Die Kälte liefert die Struktur, das Licht die Bewegung.", en:"Cold supplies the structure, light supplies the movement."} },
-      { id:"agitated", image:"works/agitated.jpg", year:"2026", size:"80 × 60 cm", layout:"portrait",
+      { id:"agitated", image:"works/agitated/agitated.jpg", year:"2026", size:"80 × 60 cm", layout:"portrait",
         title:{de:"Agitated",en:"Agitated"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Gelber Ausbruch in einem Feld aus Blau.", en:"A yellow outbreak in a field of blue."} },
-      { id:"clarity", image:"works/clarity.jpg", year:"2026", size:"30 × 60 cm", layout:"portrait",
+      { id:"clarity", image:"works/clarity/clarity.jpg", year:"2026", size:"30 × 60 cm", layout:"portrait",
         title:{de:"Clarity",en:"Clarity"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein Gefühl von Klarheit – wie ein Blitz der Inspiration, der das Chaos durchschneidet.", en:"A sense of clarity – like a flash of inspiration cutting through the chaos."} },
-     { id:"inner-deep-confrontation", image:"works/inner-deep-confrontation.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
+     { id:"inner-deep-confrontation", image:"works/inner-deep-confrontation/inner-deep-confrontation.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
         title:{de:"Shattering Silence",en:"Shattering Silence"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein visuelles Spannungsfeld zwischen architektonischer Ordnung und emotionalem Ausbruch. Im Hintergrund steht das verankerte, rote Rastersystem für Struktur und Kontrolle, das von explosiven blauen und gelben Impulsen durchbrochen wird. Das Werk thematisiert den Moment, in dem aufstauende Emotionen die äußere Form sprengen – eine Entladung von ungebündelter Lebensenergie und roher Sensibilität.", en:"A visual field of tension between architectural order and emotional eruption. In the background, the anchored red grid system stands for structure and control, broken through by explosive blue and yellow impulses. The work explores the moment when accumulating emotions shatter the outer form — a release of unfocused life energy and raw sensitivity."} },
-     { id:"voltage-under-control", image:"works/voltage-under-control.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
+     { id:"voltage-under-control", image:"works/voltage-under-control/voltage-under-control.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
         title:{de:"Voltage Under Control",en:"Voltage Under Control"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
         statement:{de:"Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.", en:"A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion."} }
     ];
@@ -537,7 +505,6 @@
     } catch (error) {
       // Continue with German when browser storage is blocked.
     }
-    let openIndex = 0;
 
     function t() { return copy[lang]; }
 
@@ -563,21 +530,18 @@
 
     function renderWorks() {
       const root = document.getElementById("works");
-      root.innerHTML = works.map((w, i) => `
-        <button class="work ${w.span ? "span2" : ""}" data-i="${i}" type="button">
-          <div class="frame ${w.layout}"><img src="${w.image}" alt="${w.title[lang]}" ${i>2?"loading=lazy":""} /></div>
+      root.innerHTML = works.map((w) => `
+        <a class="work ${w.span ? "span2" : ""}" data-id="${w.id}" href="works/${w.id}/">
+          <div class="frame ${w.layout}"><img src="${w.image}" alt="${w.title[lang]}" loading="lazy" /></div>
           <div class="work-meta"><h3>${w.title[lang]}</h3><span>${w.year}</span></div>
           <p class="muted" style="margin:.25rem 0 0;font-size:.875rem">${w.medium[lang]}${w.size!=="—" ? " · "+w.size : ""}</p>
-        </button>
+        </a>
       `).join("");
-      root.querySelectorAll(".work").forEach((btn) => {
-        btn.addEventListener("click", () => openLb(+btn.dataset.i));
-      });
       syncArtworkHeights();
     }
 
     function syncArtworkHeights() {
-      const reference = document.querySelector('.work[data-i="' + works.findIndex((w) => w.id === "inner-deep-confrontation") + '"] .frame');
+      const reference = document.querySelector('.work[data-id="inner-deep-confrontation"] .frame');
       if (!reference) return;
       const height = reference.getBoundingClientRect().height + "px";
       document.querySelectorAll(".work .frame").forEach((frame) => {
@@ -605,41 +569,19 @@
       sel.value = current || "";
     }
 
-    function openLb(i) {
-      openIndex = i;
-      const w = works[i];
-      document.getElementById("lbImg").src = w.image;
-      document.getElementById("lbImg").alt = w.title[lang];
-      document.getElementById("lbTitle").textContent = w.title[lang];
-      document.getElementById("lbTitle2").textContent = w.title[lang];
-      document.getElementById("lbMeta").textContent = w.year;
-      document.getElementById("lbMed").textContent = w.medium[lang] + (w.size !== "—" ? " · " + w.size : "");
-      document.getElementById("lbStmt").textContent = w.statement[lang];
-      document.getElementById("lightbox").classList.add("on");
-      document.body.style.overflow = "hidden";
-    }
-    function closeLb() {
-      document.getElementById("lightbox").classList.remove("on");
-      document.body.style.overflow = "";
-    }
-
     applyLang();
 
-    document.getElementById("lbClose").onclick = closeLb;
-    document.getElementById("lbPrevM").onclick = () => openLb((openIndex - 1 + works.length) % works.length);
-    document.getElementById("lbNextM").onclick = () => openLb((openIndex + 1) % works.length);
-    document.getElementById("lbInquire").onclick = () => {
-      const w = works[openIndex];
-      closeLb();
-      fillSelect(w.title.de);
-      document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
-    };
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLb();
-      if (!document.getElementById("lightbox").classList.contains("on")) return;
-      if (e.key === "ArrowRight") openLb((openIndex + 1) % works.length);
-      if (e.key === "ArrowLeft") openLb((openIndex - 1 + works.length) % works.length);
-    });
+    // Prefill the contact form's work selector when arriving from a work page's
+    // "Inquire" link (e.g. /?work=touched#kontakt), then clean the URL.
+    const requestedWorkId = new URLSearchParams(window.location.search).get("work");
+    if (requestedWorkId) {
+      const requestedWork = works.find((w) => w.id === requestedWorkId);
+      if (requestedWork) {
+        fillSelect(requestedWork.title.de);
+        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+        document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
+      }
+    }
 
     document.querySelectorAll("[data-lang]").forEach((b) => {
       b.addEventListener("click", () => { lang = b.getAttribute("data-lang"); applyLang(); });
