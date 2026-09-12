@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Impressum — wtho.art</title>
+  <meta name="description" content="Impressum von wtho.art — Thorsten Weitz." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f3ee;
+      --fg: #161412;
+      --muted: #5c574f;
+      --subtle: #8a847a;
+      --accent: #161412;
+      --accent-fg: #ffffff;
+      --border: #e4dfd6;
+      --rupture: #b54432;
+      --sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+      --display: "Cormorant Garamond", ui-serif, Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 46rem; margin: 0 auto; padding: 4rem 1.5rem 6rem; }
+    .tick { display: inline-block; width: 2px; height: 2rem; background: var(--rupture); margin-bottom: 1.5rem; }
+    h1 { font-family: var(--display); font-weight: 500; font-size: clamp(2rem, 5vw, 2.75rem); margin: 0 0 2.5rem; letter-spacing: -.02em; }
+    a.back {
+      display: inline-flex; align-items: center; gap: .5rem; margin-bottom: 2.5rem;
+      color: var(--subtle); text-decoration: none; font-size: .875rem; letter-spacing: .04em;
+    }
+    a.back:hover { color: var(--fg); }
+    .legal-content { color: var(--fg); font-size: .95rem; }
+    .legal-content h1, .legal-content h2, .legal-content h3 { font-family: var(--sans); font-weight: 600; }
+    .legal-content a { color: var(--fg); }
+    .brand { margin-top: 4rem; font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; color: var(--subtle); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/">← Zurück zur Startseite</a>
+    <span class="tick"></span>
+    <h1>Impressum</h1>
+    <div class="legal-content" data-itrk-legaltext-url="https://itrk.legal/1Cpe.0.1bI6-de-iframe.html"></div>
+    <p class="brand">wtho.art — Thorsten Weitz</p>
+  </div>
+  <script src="https://www.it-recht-kanzlei.de/js/itrk-legaltext.js"></script>
+</body>
+</html>
