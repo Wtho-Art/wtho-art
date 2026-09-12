@@ -48,13 +48,12 @@
     .wrap { max-width: 80rem; margin: 0 auto; padding: 0 1.25rem; }
     @media (min-width: 640px) { .wrap { padding: 0 2rem; } }
     header.site {
-      position: fixed; inset: 0 0 auto; z-index: 40; height: 4.5rem;
-      display: flex; align-items: center;
+      position: fixed; inset: 0 0 auto; z-index: 40; max-height: 100vh; overflow-y: auto;
       border-bottom: 1px solid transparent;
       transition: background .2s, border-color .2s;
     }
     header.site.scrolled, header.site.open { background: rgba(255,255,255,.94); border-bottom-color: var(--border); }
-    .head-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; }
+    .head-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; height: 4.5rem; }
     .brand { display: flex; align-items: center; gap: .75rem; letter-spacing: .28em; text-transform: uppercase; font-size: .875rem; font-weight: 500; }
     .brand .tick { width: 1px; height: 1.5rem; background: var(--rupture); }
     nav.desk { display: none; align-items: center; gap: 2rem; }
