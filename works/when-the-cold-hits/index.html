@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>When the cold hits your world — wtho.art</title>
+  <meta name="description" content="When the cold hits your world — Öl auf HDF, 115 × 110 cm. Thorsten Weitz, wtho.art." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="canonical" href="https://wtho.art/works/when-the-cold-hits/" />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="When the cold hits your world — wtho.art" />
+  <meta property="og:description" content="Öl auf HDF, 115 × 110 cm" />
+  <meta property="og:image" content="https://wtho.art/works/when-the-cold-hits/when-the-cold-hits.jpg" />
+  <meta property="og:url" content="https://wtho.art/works/when-the-cold-hits/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f6f3ee;
+      --fg: #161412;
+      --muted: #5c574f;
+      --subtle: #8a847a;
+      --accent: #161412;
+      --accent-fg: #ffffff;
+      --border: #e4dfd6;
+      --rupture: #b54432;
+      --sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+      --display: "Cormorant Garamond", ui-serif, Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .topbar { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem; max-width: 72rem; margin: 0 auto; }
+    a.back {
+      display: inline-flex; align-items: center; gap: .5rem;
+      color: var(--subtle); text-decoration: none; font-size: .875rem; letter-spacing: .04em;
+    }
+    a.back:hover { color: var(--fg); }
+    .lang { display: flex; gap: .25rem; border: 1px solid var(--border); border-radius: 999px; padding: .2rem; }
+    .lang button {
+      border: 0; background: transparent; padding: .3rem .8rem; border-radius: 999px; font-size: .75rem;
+      letter-spacing: .08em; cursor: pointer; color: var(--subtle); font-family: var(--sans);
+    }
+    .lang button.on { background: var(--accent); color: var(--accent-fg); }
+    .wrap { max-width: 72rem; margin: 0 auto; padding: 1rem 1.5rem 6rem; }
+    .layout { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+    @media (min-width: 900px) {
+      .layout { grid-template-columns: 1.3fr 1fr; align-items: start; }
+    }
+    .gallery-main { background: var(--surface); overflow: hidden; }
+    .gallery-main img { width: 100%; height: auto; display: block; }
+    .thumbs { display: flex; gap: .75rem; margin-top: .75rem; flex-wrap: wrap; }
+    .thumbs button { padding: 0; border: 1px solid var(--border); background: none; cursor: pointer; width: 4.5rem; height: 4.5rem; overflow: hidden; }
+    .thumbs button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumbs button.on { border-color: var(--accent); }
+    .thumbs { display: none; }
+    .thumbs.show { display: flex; }
+    .kicker { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); margin: 0 0 .75rem; }
+    h1 { font-family: var(--display); font-weight: 500; font-size: clamp(2rem, 4vw, 2.75rem); margin: 0 0 1rem; letter-spacing: -.02em; }
+    .muted { color: var(--muted); }
+    .statement { margin-top: 1.5rem; font-size: 1.0625rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; height: 3rem; padding: 0 1.75rem;
+      margin-top: 2.5rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent);
+      font-size: .875rem; letter-spacing: .04em; text-decoration: none; cursor: pointer; font-family: var(--sans);
+    }
+    footer { border-top: 1px solid var(--border); margin-top: 3rem; }
+    .foot { max-width: 72rem; margin: 0 auto; padding: 2rem 1.5rem; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--subtle); text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <a class="back" href="/#werke" data-i="back">← Zurück zu allen Werken</a>
+    <div class="lang" role="group" aria-label="Sprache">
+      <button type="button" data-lang="de" class="on">DE</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="layout">
+      <div>
+        <div class="gallery-main"><img id="mainImg" src="works/when-the-cold-hits/when-the-cold-hits.jpg" alt="When the cold hits your world" /></div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div>
+        <p class="kicker" id="metaYear">2026</p>
+        <h1 id="title">When the cold hits your world</h1>
+        <p class="muted" id="metaMedium">Öl auf HDF · 115 × 110 cm</p>
+        <p class="statement" id="statement">Die Kälte liefert die Struktur, das Licht die Bewegung.</p>
+        <a class="btn" id="inquire" href="/?work=when-the-cold-hits#kontakt" data-i="inquire">Dieses Werk anfragen</a>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot">wtho.art — Thorsten Weitz</div>
+  </footer>
+  <script>
+    const images = ["when-the-cold-hits.jpg"];
+    const copy = {
+      de: { back:"← Zurück zu allen Werken", inquire:"Dieses Werk anfragen", title:"When the cold hits your world", medium:"\u00d6l auf HDF" + " · " + "115 \u00d7 110 cm", statement:"Die K\u00e4lte liefert die Struktur, das Licht die Bewegung." },
+      en: { back:"← Back to all works", inquire:"Inquire about this work", title:"When the cold hits your world", medium:"Oil on HDF" + " · " + "115 \u00d7 110 cm", statement:"Cold supplies the structure, light supplies the movement." }
+    };
+    let lang = "de";
+    try { lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de"; } catch (e) {}
+
+    function apply() {
+      document.documentElement.lang = lang;
+      const c = copy[lang];
+      document.querySelector('[data-i="back"]').textContent = c.back;
+      document.querySelector('[data-i="inquire"]').textContent = c.inquire;
+      document.getElementById("title").textContent = c.title;
+      document.getElementById("metaMedium").textContent = c.medium;
+      document.getElementById("statement").textContent = c.statement;
+      document.getElementById("mainImg").alt = c.title;
+      document.title = c.title + " — wtho.art";
+      document.querySelectorAll("[data-lang]").forEach((b) => b.classList.toggle("on", b.getAttribute("data-lang") === lang));
+    }
+
+    document.querySelectorAll("[data-lang]").forEach((b) => {
+      b.addEventListener("click", () => {
+        lang = b.getAttribute("data-lang");
+        try { localStorage.setItem("wtho-lang", lang); } catch (e) {}
+        apply();
+      });
+    });
+
+    if (images.length > 1) {
+      const thumbs = document.getElementById("thumbs");
+      thumbs.classList.add("show");
+      thumbs.innerHTML = images.map((src, i) => `<button type="button" data-src="${src}" class="${i===0?'on':''}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
+      thumbs.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.getElementById("mainImg").src = btn.dataset.src;
+          thumbs.querySelectorAll("button").forEach((b) => b.classList.remove("on"));
+          btn.classList.add("on");
+        });
+      });
+    }
+
+    apply();
+  </script>
+</body>
+</html>
