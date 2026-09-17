@@ -104,50 +104,7 @@
   <footer>
     <div class="foot">wtho.art — Thorsten Weitz</div>
   </footer>
-  <script>
-    const images = ["voltage-under-control.jpg"];
-    const copy = {
-      de: { back:"← Zurück zu allen Werken", inquire:"Dieses Werk anfragen", title:"Voltage Under Control", medium:"\u00d6l auf Leinwand" + " · " + "60 \u00d7 80 cm", statement:"Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das k\u00fchle, fl\u00e4chige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine \u00dcberspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die m\u00fchsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion." },
-      en: { back:"← Back to all works", inquire:"Inquire about this work", title:"Voltage Under Control", medium:"Oil on canvas" + " · " + "60 \u00d7 80 cm", statement:"A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained fa\u00e7ade completely under power. From now on, control is merely an illusion." }
-    };
-    let lang = "de";
-    try { lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de"; } catch (e) {}
-
-    function apply() {
-      document.documentElement.lang = lang;
-      const c = copy[lang];
-      document.querySelector('[data-i="back"]').textContent = c.back;
-      document.querySelector('[data-i="inquire"]').textContent = c.inquire;
-      document.getElementById("title").textContent = c.title;
-      document.getElementById("metaMedium").textContent = c.medium;
-      document.getElementById("statement").textContent = c.statement;
-      document.getElementById("mainImg").alt = c.title;
-      document.title = c.title + " — wtho.art";
-      document.querySelectorAll("[data-lang]").forEach((b) => b.classList.toggle("on", b.getAttribute("data-lang") === lang));
-    }
-
-    document.querySelectorAll("[data-lang]").forEach((b) => {
-      b.addEventListener("click", () => {
-        lang = b.getAttribute("data-lang");
-        try { localStorage.setItem("wtho-lang", lang); } catch (e) {}
-        apply();
-      });
-    });
-
-    if (images.length > 1) {
-      const thumbs = document.getElementById("thumbs");
-      thumbs.classList.add("show");
-      thumbs.innerHTML = images.map((src, i) => `<button type="button" data-src="${src}" class="${i===0?'on':''}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
-      thumbs.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.getElementById("mainImg").src = btn.dataset.src;
-          thumbs.querySelectorAll("button").forEach((b) => b.classList.remove("on"));
-          btn.classList.add("on");
-        });
-      });
-    }
-
-    apply();
-  </script>
+  <script src="../../js/content.js"></script>
+  <script src="../../js/work-page.js"></script>
 </body>
 </html>

@@ -104,50 +104,7 @@
   <footer>
     <div class="foot">wtho.art — Thorsten Weitz</div>
   </footer>
-  <script>
-    const images = ["dance-of-balance.jpg"];
-    const copy = {
-      de: { back:"← Zurück zu allen Werken", inquire:"Dieses Werk anfragen", title:"The dance of balance", medium:"\u00d6l auf Leinwand" + " · " + "120 \u00d7 100 cm", statement:"Das Gef\u00fchl von roher Kraft und Zartheit \u2013 ein Werk \u00fcber die Suche nach Balance. Unb\u00e4ndige Kraft und verletzliche Sch\u00f6nheit in einem Bildraum." },
-      en: { back:"← Back to all works", inquire:"Inquire about this work", title:"The dance of balance", medium:"Oil on canvas" + " · " + "120 \u00d7 100 cm", statement:"The feeling of the dance of raw power and sensitivity \u2013 a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space." }
-    };
-    let lang = "de";
-    try { lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de"; } catch (e) {}
-
-    function apply() {
-      document.documentElement.lang = lang;
-      const c = copy[lang];
-      document.querySelector('[data-i="back"]').textContent = c.back;
-      document.querySelector('[data-i="inquire"]').textContent = c.inquire;
-      document.getElementById("title").textContent = c.title;
-      document.getElementById("metaMedium").textContent = c.medium;
-      document.getElementById("statement").textContent = c.statement;
-      document.getElementById("mainImg").alt = c.title;
-      document.title = c.title + " — wtho.art";
-      document.querySelectorAll("[data-lang]").forEach((b) => b.classList.toggle("on", b.getAttribute("data-lang") === lang));
-    }
-
-    document.querySelectorAll("[data-lang]").forEach((b) => {
-      b.addEventListener("click", () => {
-        lang = b.getAttribute("data-lang");
-        try { localStorage.setItem("wtho-lang", lang); } catch (e) {}
-        apply();
-      });
-    });
-
-    if (images.length > 1) {
-      const thumbs = document.getElementById("thumbs");
-      thumbs.classList.add("show");
-      thumbs.innerHTML = images.map((src, i) => `<button type="button" data-src="${src}" class="${i===0?'on':''}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
-      thumbs.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.getElementById("mainImg").src = btn.dataset.src;
-          thumbs.querySelectorAll("button").forEach((b) => b.classList.remove("on"));
-          btn.classList.add("on");
-        });
-      });
-    }
-
-    apply();
-  </script>
+  <script src="../../js/content.js"></script>
+  <script src="../../js/work-page.js"></script>
 </body>
 </html>

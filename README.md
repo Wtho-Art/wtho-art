@@ -7,6 +7,13 @@ Instagram: [@wtho.art](https://www.instagram.com/wtho.art)
 
 This repository is the static Namecheap Stellar package (`index.html`, works, images, `contact.php`, `.htaccess`).
 
+Paintings and site text live in JSON so they can be edited without touching HTML:
+
+- `data/works.json` — titles, sizes, statements, extra photos
+- `data/site.json` — hero work, about, exhibitions, nav labels
+
+See `MAINTAIN.md` for the laptop + AI workflow.
+
 ## Contact
 
 Inquiries: Wtho.Art@proton.me  

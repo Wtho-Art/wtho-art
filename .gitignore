@@ -1,0 +1,6 @@
+.DS_Store
+originals/
+*.tif
+*.tiff
+*.psd
+*.psb

@@ -104,50 +104,7 @@
   <footer>
     <div class="foot">wtho.art — Thorsten Weitz</div>
   </footer>
-  <script>
-    const images = ["breaking-patterns.jpg"];
-    const copy = {
-      de: { back:"← Zurück zu allen Werken", inquire:"Dieses Werk anfragen", title:"Breaking Patterns", medium:"\u00d6l auf Leinwand" + " · " + "60 \u00d7 80 cm", statement:"Gelbes Licht bricht durch ein Gestr\u00fcpp aus Blau." },
-      en: { back:"← Back to all works", inquire:"Inquire about this work", title:"Breaking Patterns", medium:"Oil on canvas" + " · " + "60 \u00d7 80 cm", statement:"Yellow light breaks through a thicket of blue." }
-    };
-    let lang = "de";
-    try { lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de"; } catch (e) {}
-
-    function apply() {
-      document.documentElement.lang = lang;
-      const c = copy[lang];
-      document.querySelector('[data-i="back"]').textContent = c.back;
-      document.querySelector('[data-i="inquire"]').textContent = c.inquire;
-      document.getElementById("title").textContent = c.title;
-      document.getElementById("metaMedium").textContent = c.medium;
-      document.getElementById("statement").textContent = c.statement;
-      document.getElementById("mainImg").alt = c.title;
-      document.title = c.title + " — wtho.art";
-      document.querySelectorAll("[data-lang]").forEach((b) => b.classList.toggle("on", b.getAttribute("data-lang") === lang));
-    }
-
-    document.querySelectorAll("[data-lang]").forEach((b) => {
-      b.addEventListener("click", () => {
-        lang = b.getAttribute("data-lang");
-        try { localStorage.setItem("wtho-lang", lang); } catch (e) {}
-        apply();
-      });
-    });
-
-    if (images.length > 1) {
-      const thumbs = document.getElementById("thumbs");
-      thumbs.classList.add("show");
-      thumbs.innerHTML = images.map((src, i) => `<button type="button" data-src="${src}" class="${i===0?'on':''}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
-      thumbs.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.getElementById("mainImg").src = btn.dataset.src;
-          thumbs.querySelectorAll("button").forEach((b) => b.classList.remove("on"));
-          btn.classList.add("on");
-        });
-      });
-    }
-
-    apply();
-  </script>
+  <script src="../../js/content.js"></script>
+  <script src="../../js/work-page.js"></script>
 </body>
 </html>

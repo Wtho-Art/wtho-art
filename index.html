@@ -200,8 +200,8 @@
           </div>
         </div>
         <figure class="hero-art">
-          <img src="works/dance-of-balance/dance-of-balance.jpg" alt="The dance of balance — Thorsten Weitz" />
-          <figcaption><span>The dance of duality</span><span>100 × 70 cm</span></figcaption>
+          <img id="heroImg" src="works/dance-of-duality/dance-of-duality.jpg" alt="The dance of duality — Thorsten Weitz" />
+          <figcaption><span id="heroTitle">The dance of duality</span><span id="heroSize">100 × 70 cm</span></figcaption>
         </figure>
       </div>
     </section>
@@ -362,141 +362,13 @@
   </footer>
 
 
+  <script src="js/content.js"></script>
   <script>
-    const copy = {
-      de: {
-        skip:"Zum Inhalt", navWorks:"Werke", navAbout:"Künstler/Atelier", navExhibitions:"Ausstellungen", navNewsletter:"Newsletter", navContact:"Kontakt",
-        kicker:"Synthetischer Expressionismus · Freiburg", heroQuote:"Alles beginnt mit einem Gefühl.",
-        heroLead:"Die Leinwand als Resonanzraum — innere Emotion, Energie und Transformation in Öl und Mischtechnik. Ein intensiver Dialog zwischen architektonischer Planung und unmittelbarem Impuls.",
-        ctaWorks:"Werke ansehen", ctaContact:"Anfrage",
-        manifestoTitle:"The feeling of…",
-        manifestoBody:"Im Stil eines synthetischen Expressionismus verbindet er emotionale Energie mit kontrollierter Abstraktion. Gezielte Interventionen fangen spontane Energien auf und führen sie in ein dynamisches Gleichgewicht.",
-        worksKicker:"Galerie", worksTitle:"Werke",
-        worksLead:"Serie „The feeling of…“ und „Raw power and sensitivity“. Öl auf Leinwand und HDF.",
-        inquire:"Dieses Werk anfragen",
-        aboutKicker:"Der Künstler", aboutTitle:"Atelier Freiburg",
-        aboutP1:"Thorsten Weitz arbeitet als freischaffender Künstler. Im Zentrum steht die Auseinandersetzung mit menschlichen Emotionen und inneren Spannungsfeldern.",
-        aboutP2:"Er entfaltet seine Werke als intensiven Dialog zwischen architektonischer Planung und unmittelbarem Impuls. In einem präzise definierten strukturellen Gefüge setzt er gezielte Interventionen, die spontane Energien auffangen, lenken und in ein dynamisches Gleichgewicht führen.",
-        aboutP3:"Geprägt von der Ausbildung in Kunst- sowie Theaterpädagogik und Performance, und vom Studium der sweet medicines auf dem Sundance Path in Arizona, begreift er die Leinwand als Resonanzraum, in dem emotionale Prozesse, Energie und Transformation sichtbar werden.",
-        aboutP4:"Vielschichtige Bildräume entstehen durch pastosen Auftrag, Übermalungen, strukturelle Verwerfungen und feine Ausarbeitungen. Der bewusste Bruch klassischer malerischer Konventionen dient der Steigerung des Ausdrucks.",
-        aboutQuote:"Alles beginnt mit einem Gefühl.",
-        pathTitle:"Werdegang",
-        exhibitionsKicker:"Ausstellungen", exhibitionsTitle:"Ausstellungen",
-        newsletterKicker:"Atelier-Post", newsletterTitle:"Newsletter",
-        newsletterLead:"Erfahren Sie als Erste von neuen Werken, bevorstehenden Ausstellungen und Einblicken in das Atelier.",
-        newsletterEmail:"E-Mail-Adresse",
-        newsletterConsent:"Ja, ich möchte — jederzeit widerruflich — regelmäßig über Ausstellungen und neue Werke per E-Mail-Newsletter informiert werden.",
-        newsletterSubmit:"Anmelden",
-        newsletterNote:"Der Versand erfolgt über Brevo mit Double-Opt-in gemäß Datenschutz.",
-        newsletterError:"Deine Anmeldung konnte nicht gespeichert werden. Bitte versuche es erneut.",
-        newsletterSuccess:"Deine Anmeldung war erfolgreich.",
-        contactKicker:"Sammeln", contactTitle:"Anfrage",
-        contactLead:"Werke sind auf Anfrage erhältlich. Schreiben Sie direkt, oder folgen Sie dem Atelier auf Instagram.",
-        contactName:"Name", contactEmail:"E-Mail", contactWork:"Werk (optional)", contactWorkPlaceholder:"Kein bestimmtes Werk",
-        contactMessage:"Nachricht", contactSend:"Nachricht senden",
-        contactNote:"Die Nachricht geht an Wtho.Art@proton.me. Alternativ Instagram.",
-        instagram:"Instagram @wtho.art", footerStudio:"Atelier Freiburg", footerRights:"Alle Werke © Thorsten Weitz", navPrivacy:"Datenschutz", navImprint:"Impressum",
-        formSent:"Gesendet. Danke.", formFallback:"E-Mail-Programm geöffnet."
-      },
-      en: {
-        skip:"Skip to content", navWorks:"Works", navAbout:"Artist/Studio", navExhibitions:"Exhibitions", navNewsletter:"Newsletter", navContact:"Contact",
-        kicker:"Synthetic Expressionism · Freiburg", heroQuote:"It all starts with a feeling.",
-        heroLead:"The canvas as a resonant space — inner emotion, energy and transformation in oil and mixed media. An intense dialogue between architectural planning and immediate impulse.",
-        ctaWorks:"View works", ctaContact:"Inquiry",
-        manifestoTitle:"The feeling of…",
-        manifestoBody:"In the style of synthetic expressionism he joins emotional energy to controlled abstraction. Targeted interventions catch spontaneous energies and lead them into a dynamic balance.",
-        worksKicker:"Gallery", worksTitle:"Works",
-        worksLead:"The series “The feeling of…” and “Raw power and sensitivity”. Oil on canvas and HDF.",
-        inquire:"Inquire about this work",
-        aboutKicker:"The artist", aboutTitle:"Studio Freiburg",
-        aboutP1:"Thorsten Weitz works as a freelance artist. His practice centres on human emotion and inner fields of tension.",
-        aboutP2:"He unfolds each work as an intense dialogue between architectural planning and immediate impulse. Inside a precisely defined structure he places targeted interventions that catch, direct and balance spontaneous energies.",
-        aboutP3:"Shaped by training in art and theatre pedagogy and performance, and by study of sweet medicines on the Sundance Path in Arizona, he treats the canvas as a resonant space where emotional process, energy and transformation become visible.",
-        aboutP4:"Layered pictorial spaces grow from impasto, overpainting, structural ruptures and fine working-out. The deliberate break with classical convention is there to heighten expression.",
-        aboutQuote:"It all starts with a feeling.",
-        pathTitle:"Path",
-        exhibitionsKicker:"Exhibitions", exhibitionsTitle:"Exhibitions",
-        newsletterKicker:"Studio News", newsletterTitle:"Newsletter",
-        newsletterLead:"Be the first to hear about new works, upcoming exhibitions and insights into the studio.",
-        newsletterEmail:"Email address",
-        newsletterConsent:"Yes, I would like to receive — revocable at any time — regular updates about exhibitions and new works by email newsletter.",
-        newsletterSubmit:"Subscribe",
-        newsletterNote:"Sent via Brevo with double opt-in, in line with data protection.",
-        newsletterError:"Your signup could not be saved. Please try again.",
-        newsletterSuccess:"Your signup was successful.",
-        contactKicker:"Collecting", contactTitle:"Inquiry",
-        contactLead:"Works are available on request. Write directly, or follow the studio on Instagram.",
-        contactName:"Name", contactEmail:"Email", contactWork:"Work (optional)", contactWorkPlaceholder:"No specific work",
-        contactMessage:"Message", contactSend:"Send message",
-        contactNote:"Messages go to Wtho.Art@proton.me. Instagram is the other door.",
-        instagram:"Instagram @wtho.art", footerStudio:"Studio Freiburg", footerRights:"All works © Thorsten Weitz", navPrivacy:"Privacy", navImprint:"Imprint",
-        formSent:"Sent. Thank you.", formFallback:"Mail app opened."
-      }
-    };
-
-    const works = [
-      { id:"touched", image:"works/touched/touched.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait", span:true,
-        title:{de:"The raw power and sensitivity - Touched",en:"The raw power and sensitivity - Touched"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Violett und Blau in einem Sog der Berührung.", en:"Violet and blue in a current of contact."} },
-      { id:"dance-of-balance", image:"works/dance-of-balance/dance-of-balance.jpg", year:"2026", size:"120 × 100 cm", layout:"portrait",
-        title:{de:"The dance of balance",en:"The dance of balance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.", en:"The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space."} },
-      { id:"fire-silence", image:"works/fire-silence/fire-silence.jpg", year:"2025", size:"242 × 138 cm", layout:"portrait",
-        title:{de:"Fire Silence",en:"Fire Silence"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Monumentale Intensität: Feuer, das schweigt. Rot, Gelb und ein dunkler Riss.", en:"Monumental intensity: fire that keeps silent. Red, yellow and a dark rift."} },
-      { id:"unexposed-ego", image:"works/unexposed-ego/unexposed-ego.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
-        title:{de:"Unexposed Ego",en:"Unexposed Ego"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Was passiert, wenn Masken nicht mehr nur gespielt werden?", en:"What happens when masks are no longer merely played?"} },
-      { id:"dolores-matata", image:"works/dolores-matata/dolores-matata.jpg", year:"2026", size:"85 × 68 cm", layout:"portrait",
-        title:{de:"Dolores Matata",en:"Dolores Matata"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
-        statement:{de:"Blaues Chaos, rote Splitter — die ehrliche Seite des Mottos „sorglos“.", en:"Blue chaos, red splinters — the honest side of the worry-free motto."} },
-      { id:"breaking-patterns", image:"works/breaking-patterns/breaking-patterns.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
-        title:{de:"Breaking Patterns",en:"Breaking Patterns"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Gelbes Licht bricht durch ein Gestrüpp aus Blau.", en:"Yellow light breaks through a thicket of blue."} },
-      { id:"resonanz", image:"works/resonanz/resonanz.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
-        title:{de:"Resonanz",en:"Resonance"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein Tanz aus Gelb, Blau und impulsiven Linien.", en:"A dance of yellow, blue and impulsive lines."} },
-      { id:"passion", image:"works/passion/passion.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
-        title:{de:"Passion",en:"Passion"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Wo der Ozean den Himmel entzündet. Ein Tanz auf 50 × 40 cm: tiefes Blau trifft auf flammendes Rot.", en:"Where the ocean sets the sky ablaze. A dance on 50 x 40 cm: deep blue meets fiery red."} },
-      { id:"dance-of-duality", image:"works/dance-of-duality/dance-of-duality.jpg", year:"2026", size:"100 × 70 cm", layout:"portrait",
-        title:{de:"The dance of duality",en:"The dance of duality"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.", en:"It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement."} },
-      { id:"when-the-cold-hits", image:"works/when-the-cold-hits/when-the-cold-hits.jpg", year:"2026", size:"115 × 110 cm", layout:"portrait",
-        title:{de:"When the cold hits your world",en:"When the cold hits your world"}, medium:{de:"Öl auf HDF",en:"Oil on HDF"},
-        statement:{de:"Die Kälte liefert die Struktur, das Licht die Bewegung.", en:"Cold supplies the structure, light supplies the movement."} },
-      { id:"agitated", image:"works/agitated/agitated.jpg", year:"2026", size:"80 × 60 cm", layout:"portrait",
-        title:{de:"Agitated",en:"Agitated"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Gelber Ausbruch in einem Feld aus Blau.", en:"A yellow outbreak in a field of blue."} },
-      { id:"clarity", image:"works/clarity/clarity.jpg", year:"2026", size:"30 × 60 cm", layout:"portrait",
-        title:{de:"Clarity",en:"Clarity"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein Gefühl von Klarheit – wie ein Blitz der Inspiration, der das Chaos durchschneidet.", en:"A sense of clarity – like a flash of inspiration cutting through the chaos."} },
-     { id:"inner-deep-confrontation", image:"works/inner-deep-confrontation/inner-deep-confrontation.jpg", year:"2026", size:"50 × 40 cm", layout:"portrait",
-        title:{de:"Shattering Silence",en:"Shattering Silence"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein visuelles Spannungsfeld zwischen architektonischer Ordnung und emotionalem Ausbruch. Im Hintergrund steht das verankerte, rote Rastersystem für Struktur und Kontrolle, das von explosiven blauen und gelben Impulsen durchbrochen wird. Das Werk thematisiert den Moment, in dem aufstauende Emotionen die äußere Form sprengen – eine Entladung von ungebündelter Lebensenergie und roher Sensibilität.", en:"A visual field of tension between architectural order and emotional eruption. In the background, the anchored red grid system stands for structure and control, broken through by explosive blue and yellow impulses. The work explores the moment when accumulating emotions shatter the outer form — a release of unfocused life energy and raw sensitivity."} },
-     { id:"voltage-under-control", image:"works/voltage-under-control/voltage-under-control.jpg", year:"2026", size:"60 × 80 cm", layout:"portrait",
-        title:{de:"Voltage Under Control",en:"Voltage Under Control"}, medium:{de:"Öl auf Leinwand",en:"Oil on canvas"},
-        statement:{de:"Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.", en:"A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion."} }
-    ];
-
-    const exhibits = [
-      { year:"2025/26", de:"Galerie Iphofen / Würzburg · Kunstpreis Orangerie Schloss Schwetzingen · Giechburg Bamberg · SchmuckeDinger, Freiburg · Offenes Atelier, Freiburg", en:"Galerie Iphofen / Würzburg · Art prize, Orangery Schloss Schwetzingen · Giechburg Bamberg · SchmuckeDinger, Freiburg · Open studio, Freiburg" },
-      { year:"2025", de:"Galerie Art-Raum Freiburg — mit P. Paataturashvili", en:"Galerie Art-Raum Freiburg — with P. Paataturashvili" },
-      { year:"2024", de:"Offenes Atelier, Freiburg", en:"Open studio, Freiburg" },
-      { year:"2013", de:"Café Ell, Sankt Blasien „Zwei Welten“ · Bürgeramt Freiburg", en:"Café Ell, Sankt Blasien “Zwei Welten” · Bürgeramt Freiburg" },
-      { year:"2009", de:"Item Kunst Ulm — 2. Platz „Stille in Bewegung“ · Kunstetage Freiburg, Bernd Lafrenz", en:"Item Kunst Ulm — 2nd prize “Stille in Bewegung” · Kunstetage Freiburg, Bernd Lafrenz" },
-      { year:"2006", de:"„Zeit im Blick“, Titelbild PH Freiburg", en:"“Zeit im Blick”, cover image, PH Freiburg" },
-      { year:"1998–2005", de:"Kunst-Ansichten Nördlingen · Werkschau Augsburg · Sparkasse & Volksbank Nördlingen", en:"Kunst-Ansichten Nördlingen · degree show Augsburg · Sparkasse & Volksbank Nördlingen" }
-    ];
-
-    const path = [
-      { year:"seit 2024", de:"Freischaffender Künstler, Schwerpunkt Malerei", en:"Freelance artist, focus on painting" },
-      { year:"seit 2010", de:"Studium der sweet medicines, Sundance Path, Arizona — Übersetzung alten Heilwissens in die Kunst", en:"Study of sweet medicines, Sundance Path, Arizona — bringing old healing knowledge into the work" },
-      { year:"2009–2020", de:"Vermittlung künstlerischer Praxis — Tätigkeit als Kunstlehrer", en:"Teaching artistic practice" },
-      { year:"2008–2011", de:"Ausbildung zum Theaterpädagogen, Spiel-Raum Freiburg (Tanz, Theater, Performance)", en:"Theatre pedagogy training, Spiel-Raum Freiburg (dance, theatre, performance)" },
-      { year:"2001–2007", de:"Studium der Kunst, PH Freiburg (Klant/Brügel), Staatsexamen", en:"Art studies, PH Freiburg (Klant/Brügel), state examination" },
-      { year:"1997–1999", de:"Fachoberschule für Gestaltung & Kommunikations-Design, Augsburg", en:"College of design & communication, Augsburg" }
-    ];
+    let copy = { de: {}, en: {} };
+    let works = [];
+    let exhibits = [];
+    let path = [];
+    let site = null;
 
     let lang = "de";
     try {
@@ -531,7 +403,7 @@
       const root = document.getElementById("works");
       root.innerHTML = works.map((w) => `
         <a class="work ${w.span ? "span2" : ""}" data-id="${w.id}" href="works/${w.id}/">
-          <div class="frame ${w.layout}"><img src="${w.image}" alt="${w.title[lang]}" loading="lazy" /></div>
+          <div class="frame ${w.layout}"><img src="${WthoContent.workCover(w)}" alt="${w.title[lang]}" loading="lazy" /></div>
           <div class="work-meta"><h3>${w.title[lang]}</h3><span>${w.year}</span></div>
           <p class="muted" style="margin:.25rem 0 0;font-size:.875rem">${w.medium[lang]}${w.size!=="—" ? " · "+w.size : ""}</p>
         </a>
@@ -568,19 +440,47 @@
       sel.value = current || "";
     }
 
-    applyLang();
-
-    // Prefill the contact form's work selector when arriving from a work page's
-    // "Inquire" link (e.g. /?work=touched#kontakt), then clean the URL.
-    const requestedWorkId = new URLSearchParams(window.location.search).get("work");
-    if (requestedWorkId) {
-      const requestedWork = works.find((w) => w.id === requestedWorkId);
-      if (requestedWork) {
-        fillSelect(requestedWork.title.de);
-        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
-        document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
+    function renderHero() {
+      if (!site) return;
+      const hero = WthoContent.heroWork(site, works);
+      if (!hero) return;
+      const img = document.getElementById("heroImg");
+      const title = document.getElementById("heroTitle");
+      const size = document.getElementById("heroSize");
+      if (img) {
+        img.src = WthoContent.workCover(hero);
+        img.alt = hero.title[lang] + " — Thorsten Weitz";
       }
+      if (title) title.textContent = hero.title[lang];
+      if (size) size.textContent = hero.size || "";
     }
+
+    const _applyLang = applyLang;
+    applyLang = function () {
+      _applyLang();
+      renderHero();
+    };
+
+    WthoContent.load("data/").then((data) => {
+      site = data.site;
+      copy = data.site.copy;
+      works = data.works;
+      exhibits = data.site.exhibits;
+      path = data.site.path;
+      applyLang();
+
+      const requestedWorkId = new URLSearchParams(window.location.search).get("work");
+      if (requestedWorkId) {
+        const requestedWork = works.find((w) => w.id === requestedWorkId);
+        if (requestedWork) {
+          fillSelect(requestedWork.title.de);
+          window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+          document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }).catch((err) => {
+      console.error(err);
+    });
 
     document.querySelectorAll("[data-lang]").forEach((b) => {
       b.addEventListener("click", () => { lang = b.getAttribute("data-lang"); applyLang(); });
