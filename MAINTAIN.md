@@ -53,16 +53,15 @@ The first file is the cover (homepage + first view). The rest become thumbnails 
 
 ## Publish
 
-On the laptop, in GitHub Desktop / Fork:
+On the laptop, in Git Cola or GitHub Desktop:
 
 1. Pull
 2. Commit a short message (`Add detail shot for Duality`)
-3. Push `main`
+3. Push `main` (SSH key, no token needed once `ssh -T git@github.com` works)
 
-Then upload the same files to Namecheap, or wait for the deploy action if one is connected.
+GitHub is the source of truth. Do not edit the site through a hosting control panel.
 
 ## Do not
 
 - Put master TIFFs in Git (GitHub limit 100 MB per file; repo gets slow).
-- Edit live files in cPanel and the laptop copy on the same day.
 - Change `index.html` for a new painting — JSON is enough.
