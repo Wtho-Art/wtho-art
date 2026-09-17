@@ -4,3 +4,6 @@ originals/
 *.tiff
 *.psd
 *.psb
+admin/config.php
+data/backups/*.json
+data/*.tmp

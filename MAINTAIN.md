@@ -66,3 +66,19 @@ Then upload the same files to Namecheap, or wait for the deploy action if one is
 - Put master TIFFs in Git (GitHub limit 100 MB per file; repo gets slow).
 - Edit live files in cPanel and the laptop copy on the same day.
 - Change `index.html` for a new painting — JSON is enough.
+
+## Admin on Namecheap (`/admin`)
+
+After the `admin/` folder is uploaded to `public_html`:
+
+1. Open https://wtho.art/admin/
+2. First visit: set a password (min. 10 characters). This writes `admin/config.php` on the server only.
+3. Log in.
+4. **Werke** — reorder, set the homepage painting, add/edit a work, upload web JPEGs.
+5. **Texte & Ausstellungen** — bio, manifesto, exhibitions, Werdegang.
+
+The public site reads `data/works.json` and `data/site.json`. Saving in admin updates those files immediately. No Git needed for day-to-day edits.
+
+Keep master TIFFs off the server. Upload only web-sized JPG/PNG/WebP (under 8 MB).
+
+The laptop Git repo will drift from the live site if you only use admin. Periodically download `data/works.json` and `data/site.json` from cPanel into the laptop repo and commit.
