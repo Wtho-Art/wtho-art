@@ -1,0 +1,5 @@
+# llms.txt: https://wtho.art/llms.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://wtho.art/sitemap.xml
