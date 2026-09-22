@@ -4,3 +4,6 @@ originals/
 *.tiff
 *.psd
 *.psb
+
+# Local studio. Stays on the laptop and is not part of the public site.
+studio/

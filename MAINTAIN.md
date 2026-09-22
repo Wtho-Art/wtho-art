@@ -1,7 +1,20 @@
 # How to change text and pictures
 
-You do **not** need to edit HTML for normal updates.
-You do **not** need an admin site.
+## Studio on this laptop
+
+The studio edits the texts and pictures in the browser, resizes new photos, and publishes by pushing `main`. GitHub Pages then updates wtho.art.
+
+```
+cd ~/wtho-website
+ssh-add -l
+studio/.venv/bin/python studio/app.py
+```
+
+Open the address it prints. It listens only on this computer. The first launch prints a password. Edits stay on the laptop until you choose Veröffentlichen.
+
+The `studio/` folder stays on the laptop. It is not part of the public site.
+
+You do not need to edit HTML for a new painting. The manual path below still works.
 
 ## Files that matter
 
