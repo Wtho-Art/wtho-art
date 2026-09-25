@@ -153,6 +153,8 @@
     .about-grid > div, .contact-grid > div { min-width: 0; }
     blockquote { margin: 2.5rem 0 0; padding-left: 1.25rem; border-left: 2px solid var(--rupture); font-family: var(--display); font-style: italic; font-size: 1.5rem; color: var(--accent); line-height: 1.3; }
     .atelier { width: 100%; min-height: 20rem; object-fit: cover; }
+    .about-portrait-mobile { margin-top: 2.5rem; }
+    .hide-mobile { display: none; }
     .ex-list { margin-top: 3.5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0; list-style: none; }
     .ex-list li { padding: 2rem 0; border-bottom: 1px solid var(--border); }
     .ex-list li:last-child { border-bottom: 0; }
@@ -184,6 +186,8 @@
       .works .span2 { grid-column: span 2; }
       .works .span2 .portrait { aspect-ratio: 4/3; }
       .about-grid, .contact-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
+      .hide-mobile { display: block; }
+      .about-photos .atelier + .atelier { margin-top: 1rem; }
       .ex-list li { display: grid; grid-template-columns: 3fr 9fr; gap: 1rem; align-items: baseline; }
       .two { grid-template-columns: 1fr 1fr; }
       .foot { flex-direction: row; justify-content: space-between; align-items: center; }
@@ -278,12 +282,13 @@
           <p class="muted" data-i="aboutP3"></p>
           <p class="muted" data-i="aboutP4"></p>
           <blockquote data-i="aboutQuote"></blockquote>
+          <img class="atelier about-portrait-mobile hide-desk" src="images/portrait.jpg" alt="Thorsten Weitz" />
           <h3 data-i="pathTitle" style="margin-top:3rem;font-size:1.875rem">Werdegang</h3>
           <ol class="ex-list" id="path"></ol>
         </div>
-        <div>
-          <img class="atelier" src="images/portrait.jpg" alt="Thorsten Weitz" />
-          <img class="atelier" src="images/atelier.jpg" alt="Atelier Freiburg — Thorsten Weitz" style="margin-top:1rem" />
+        <div class="about-photos">
+          <img class="atelier hide-mobile" src="images/portrait.jpg" alt="Thorsten Weitz" />
+          <img class="atelier" src="images/atelier.jpg" alt="Atelier Freiburg — Thorsten Weitz" />
         </div>
       </div>
     </section>
