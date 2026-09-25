@@ -80,4 +80,9 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://wtho.art/works/the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
