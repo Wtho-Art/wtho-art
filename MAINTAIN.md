@@ -4,13 +4,18 @@
 
 The studio edits the texts and pictures in the browser, resizes new photos, and publishes by pushing `main`. GitHub Pages then updates wtho.art.
 
+It runs as a user service. It listens only on this computer, starts when you log in, and stops when you log out.
+
 ```
-cd ~/wtho-website
-ssh-add -l
-studio/.venv/bin/python studio/app.py
+systemctl --user enable --now wtho-studio.service
+systemctl --user status wtho-studio.service
+journalctl --user -u wtho-studio.service -e
 ```
 
-Open the address it prints. It listens only on this computer. The first launch prints a password. Edits stay on the laptop until you choose Veröffentlichen.
+Editor: http://127.0.0.1:8787/
+Preview: http://127.0.0.1:8788/
+
+The first launch prints a password in that journal. Edits stay on the laptop until you choose Veröffentlichen. Publishing uses the GNOME keyring SSH socket, so the GitHub key must be unlocked in this session.
 
 The `studio/` folder stays on the laptop. It is not part of the public site.
 

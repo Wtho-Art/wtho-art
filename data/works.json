@@ -31,7 +31,11 @@
     "span": false,
     "hero": false,
     "images": [
-      "dance-of-balance.jpg"
+      "dance-of-balance.jpg",
+      "dance-of-balance-2.jpg",
+      "dance-of-balance-3.jpg",
+      "dance-of-balance-4.jpg",
+      "dance-of-balance-5.jpg"
     ],
     "title": {
       "de": "The dance of balance",
@@ -42,8 +46,8 @@
       "en": "Oil on canvas"
     },
     "statement": {
-      "de": "Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.",
-      "en": "The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space."
+      "de": "Das Gefühl von roher Kraft und Zartheit – ein Werk über die Suche nach Balance. Unbändige Kraft und verletzliche Schönheit in einem Bildraum.\r\n\r\nEin Werk über das Streben nach Balance.\r\n​Hier tanzen Gegensätze: Architektonische Planung und raue, impulsive Power (männlich) begegnen einer weiblichen Sensibilität in ausgearbeiteten Details.\r\n\r\nDabei verwischen die Grenzen:\r\nDunkle Preußisch-Blau- und Schwarztöne erden als männliche Kraft, können aber auch eine tiefe weibliche Urkraft bergen.\r\n\r\nUmgekehrt fordern Hellblau und Rosa unsere Sichtweise heraus – einst vor Jahren als maskuline Farben gelesen, stehen sie heute für eine fließende, weibliche Zartheit.\r\n\r\n​Ein Tanz, der Identität und Form hinterfragt.",
+      "en": "The feeling of the dance of raw power and sensitivity – a work about the quest for balance. Unbridled power and vulnerable beauty in one pictorial space.\r\n\r\n“The feeling of the dance of raw power and sensitivity” – A work about the quest for balance.\r\nHere, opposites dance:\r\narchitectural planning and raw, impulsive power (masculine) encounter a feminine sensitivity in crafted details.\r\n\r\nIn the process, the boundaries blur:\r\ndark Prussian blue and black tones ground us as masculine strength, yet can also harbour a deep feminine primal force. Conversely, light blue and pink challenge our perspective – once interpreted as masculine colours years ago, today they represent a fluid, feminine delicacy.\r\n\r\nA dance that questions identity and form."
     }
   },
   {
@@ -65,8 +69,8 @@
       "en": "Oil on canvas"
     },
     "statement": {
-      "de": "Monumentale Intensität: Feuer, das schweigt. Rot, Gelb und ein dunkler Riss.",
-      "en": "Monumental intensity: fire that keeps silent. Red, yellow and a dark rift."
+      "de": "​Ein monumentales Paradoxon auf über zwei Metern Leinwand:\r\n\r\nDer Moment, in dem der ohrenbetäubende Lärm einer inneren Explosion in eine tiefe, fast heilige Stille umschlägt.\r\n\r\n​Unten lodert ein viszerales Scharlachrot – ein emotionales Magma, das von einer dunklen, tiefblauen Verwerfungslinie im Zaum gehalten wird.\r\n\r\nNach oben hin transformiert sich die Hitze: Die feinen Linien fasern in die kreative Leere eines lichten, cremeweißen Hintergrunds aus und finden dort ihren Frieden.\r\n\r\n​Ein psychischer Resonanzraum über die gewaltige Kraft der Transformation.\r\n\r\n\r\n\r\n(Hinweis. Räumlichkeiten in Bild mit KI erstellt)\r\nUmgekehrt fordern Hellblau und Rosa unsere Sichtweise heraus – einst vor Jahren als maskuline Farben gelesen, stehen sie heute für eine fließende, weibliche Zartheit.\r\n\r\n​Ein Tanz, der Identität und Form hinterfragt.",
+      "en": "A monumental paradox across more than two metres of canvas:\r\n\r\nThe moment when the deafening roar of an internal explosion gives way to a deep, almost sacred silence.\r\n\r\n​At the bottom, a visceral scarlet blazes – an emotional magma held in check by a dark, deep-blue fault line.\r\n\r\nTowards the top, the heat transforms: the fine lines fade into the creative void of a light, creamy-white background, where they find their peace.\r\n\r\n​A psychological resonance chamber exploring the immense power of transformation."
     }
   },
   {
@@ -77,7 +81,9 @@
     "span": false,
     "hero": false,
     "images": [
-      "unexposed-ego.jpg"
+      "unexposed-ego.jpg",
+      "unexposed-ego-2.jpg",
+      "unexposed-ego-3.jpg"
     ],
     "title": {
       "de": "Unexposed Ego",
