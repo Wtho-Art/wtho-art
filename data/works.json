@@ -363,7 +363,12 @@
     "layout": "portrait",
     "span": false,
     "hero": false,
-    "images": [],
+    "images": [
+      "the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp.jpg",
+      "the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp-2.jpg",
+      "the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp-3.jpg",
+      "the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp-4.jpg"
+    ],
     "title": {
       "de": "The Dance of Raw Power and Sensitivity ​- Der universelle Schoßraum",
       "en": "The dance of raw power and sensitivity - The universal womb space"
