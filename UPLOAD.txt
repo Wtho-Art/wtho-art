@@ -43,8 +43,8 @@ SCHRITT FÜR SCHRITT — Namecheap Stellar + Sitejet
      public_html/favicon.svg
      public_html/og.jpg
      public_html/works/...
-     public_html/images/portrait.jpg
-     public_html/images/atelier.jpg
+     public_html/images/portrait/
+     public_html/images/atelier/
 
    Falls Extract einen Unterordner erzeugt hat (namecheap-export/),
    alle Dateien eine Ebene nach oben in public_html verschieben.

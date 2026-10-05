@@ -184,5 +184,39 @@
       "de": "Fachoberschule für Gestaltung & Kommunikations-Design, Augsburg",
       "en": "College of design & communication, Augsburg"
     }
+  ],
+  "places": [
+    {
+      "id": "portrait",
+      "title": {
+        "de": "Porträt",
+        "en": "Portrait"
+      },
+      "text": {
+        "de": "Porträt im Atelier Freiburg. Dieser Text ist ein Platzhalter.",
+        "en": "Portrait in the Freiburg studio. This text is a placeholder."
+      },
+      "images": [
+        "portrait.jpg",
+        "portrait-2.jpg",
+        "portrait-3.jpg"
+      ]
+    },
+    {
+      "id": "atelier",
+      "title": {
+        "de": "Atelier Freiburg",
+        "en": "Freiburg studio"
+      },
+      "text": {
+        "de": "Blick ins Atelier in Freiburg. Dieser Text ist ein Platzhalter.",
+        "en": "A view of the studio in Freiburg. This text is a placeholder."
+      },
+      "images": [
+        "atelier.jpg",
+        "atelier-2.jpg",
+        "atelier-3.jpg"
+      ]
+    }
   ]
 }

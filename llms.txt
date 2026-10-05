@@ -10,6 +10,8 @@ Instagram: https://www.instagram.com/wtho.art
 ## Site
 - [Homepage](https://wtho.art/): Artist, studio, works, exhibitions, contact
 - [Instagram](https://www.instagram.com/wtho.art): Process and new paintings
+- [Portrait](https://wtho.art/images/portrait/): Portrait in the Freiburg studio. This text is a placeholder.
+- [Freiburg studio](https://wtho.art/images/atelier/): A view of the studio in Freiburg. This text is a placeholder.
 
 ## Works
 - [The raw power and sensitivity - Touched](https://wtho.art/works/touched/): Oil on canvas, 100 × 70 cm, 2026
