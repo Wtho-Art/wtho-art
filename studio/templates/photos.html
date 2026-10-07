@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Bilder{% endblock %}
+{% block body %}
+  <p class="kicker">Atelier</p>
+  <h1>Bilder</h1>
+  <p class="lead">Porträt und Atelier haben eine eigene Seite. Das erste Bild ist das Titelbild auf der Startseite. Lange Kante höchstens 2000 Pixel, Ortsdaten werden entfernt.</p>
+  {% for place in places %}
+    <article class="work-row">
+      {% if place.exists %}
+        <img class="thumb" src="{{ url_for('media', relpath='images/' ~ place.id ~ '/' ~ place.cover) }}" alt="">
+      {% else %}
+        <span class="thumb empty"></span>
+      {% endif %}
+      <div class="grow">
+        <a href="{{ url_for('place_edit', place_id=place.id) }}"><strong>{{ place.title.de or place.id }}</strong></a>
+        <p class="meta">/images/{{ place.id }}/ · {{ place.count }} Bilder</p>
+      </div>
+    </article>
+  {% endfor %}
+{% endblock %}

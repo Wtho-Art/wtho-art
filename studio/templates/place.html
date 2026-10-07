@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}{{ place.title.de or place.id }}{% endblock %}
+{% block body %}
+  <p class="kicker"><a href="{{ url_for('photos') }}">Bilder</a></p>
+  <h1>{{ place.title.de }}</h1>
+  <p class="meta">Adresse: /images/{{ place.id }}/</p>
+
+  <form method="post" class="stack" action="{{ url_for('place_edit', place_id=place.id) }}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="pair">
+      <label>Titel Deutsch
+        <input name="title_de" value="{{ place.title.de }}" required>
+      </label>
+      <label>Titel Englisch
+        <input name="title_en" value="{{ place.title.en }}" required>
+      </label>
+    </div>
+    <div class="pair">
+      <label>Text Deutsch
+        <textarea name="text_de" rows="5">{{ place.text.de }}</textarea>
+      </label>
+      <label>Text Englisch
+        <textarea name="text_en" rows="5">{{ place.text.en }}</textarea>
+      </label>
+    </div>
+    <div class="bar">
+      <button type="submit">Text speichern</button>
+    </div>
+  </form>
+
+  <section>
+    <h2>Bilder</h2>
+    <p class="lead">Das erste Bild ist das Titelbild auf der Startseite und auf dieser Seite. Es bleibt mindestens ein Bild.</p>
+    {% if place.images %}
+    <form method="post" action="{{ url_for('place_image_order', place_id=place.id) }}">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div data-sortable>
+        {% for name in place.images %}
+          <article class="work-row" data-row>
+            <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+            <input type="hidden" name="image" value="{{ name }}">
+            <img class="thumb" src="{{ url_for('media', relpath='images/' ~ place.id ~ '/' ~ name) }}" alt="">
+            <div class="grow"><p class="meta">{{ name }}{% if loop.first %} · Titelbild{% endif %}</p></div>
+            <div class="row-actions">
+              <button type="button" data-move="up">Hoch</button>
+              <button type="button" data-move="down">Runter</button>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+      <div class="bar"><button type="submit">Bildreihenfolge speichern</button></div>
+    </form>
+    {% for name in place.images %}
+      <form method="post" action="{{ url_for('place_image_delete', place_id=place.id) }}" class="inline-delete">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <input type="hidden" name="name" value="{{ name }}">
+        <button type="submit">„{{ name }}“ entfernen</button>
+      </form>
+    {% endfor %}
+    {% endif %}
+    <form method="post" action="{{ url_for('place_upload', place_id=place.id) }}" enctype="multipart/form-data" class="stack">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>Neue Bilder
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/tiff" multiple required>
+      </label>
+      <button type="submit">Hochladen</button>
+    </form>
+  </section>
+{% endblock %}

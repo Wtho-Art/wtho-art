@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Texte{% endblock %}
+{% block body %}
+  <p class="kicker">Startseite</p>
+  <h1>Texte</h1>
+  <p class="lead">Deutsch und Englisch stehen nebeneinander. Die Seite schaltet die Sprache im Browser um.</p>
+  <form method="post" class="stack">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="bar"><button type="submit">Texte speichern</button></div>
+    <section>
+      <h2>Kontakt</h2>
+      <div class="pair">
+        <label>E-Mail für Anfragen
+          <input name="contactEmail" type="email" value="{{ site.contactEmail }}" required>
+        </label>
+        <label>Instagram-Adresse
+          <input name="instagram" type="url" value="{{ site.instagram }}" required>
+        </label>
+      </div>
+    </section>
+    {% for group in groups %}
+      <section>
+        <h2>{{ group.title }}</h2>
+        {% for field in group.fields %}
+          <fieldset>
+            <legend>{{ field.label }}</legend>
+            <div class="pair">
+              <label>Deutsch
+                {% if field.long %}
+                  <textarea name="de__{{ field.key }}" rows="4">{{ field.de }}</textarea>
+                {% else %}
+                  <input name="de__{{ field.key }}" value="{{ field.de }}">
+                {% endif %}
+              </label>
+              <label>Englisch
+                {% if field.long %}
+                  <textarea name="en__{{ field.key }}" rows="4">{{ field.en }}</textarea>
+                {% else %}
+                  <input name="en__{{ field.key }}" value="{{ field.en }}">
+                {% endif %}
+              </label>
+            </div>
+          </fieldset>
+        {% endfor %}
+      </section>
+    {% endfor %}
+    <div class="bar"><button type="submit">Texte speichern</button></div>
+  </form>
+{% endblock %}

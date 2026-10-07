@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Ausstellungen{% endblock %}
+{% block body %}
+  <p class="kicker">Lebenslauf</p>
+  <h1>Ausstellungen und Werdegang</h1>
+  <form method="post" class="stack">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <section>
+      <h2>Ausstellungen</h2>
+      <div id="exhibits" data-sortable>
+        {% for row in site.exhibits %}
+          <article class="grow-row" data-row>
+            <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+            <label>Jahr <input name="ex_year" value="{{ row.year }}"></label>
+            <label>Deutsch <textarea name="ex_de" rows="2">{{ row.de }}</textarea></label>
+            <label>Englisch <textarea name="ex_en" rows="2">{{ row.en }}</textarea></label>
+            <div class="row-actions">
+              <button type="button" data-move="up">Hoch</button>
+              <button type="button" data-move="down">Runter</button>
+              <label class="check"><input type="checkbox" name="ex_drop_{{ loop.index0 }}"> Entfernen</label>
+            </div>
+          </article>
+        {% endfor %}
+        <article class="grow-row" data-row>
+          <label>Jahr <input name="ex_year" placeholder="Neue Zeile"></label>
+          <label>Deutsch <textarea name="ex_de" rows="2"></textarea></label>
+          <label>Englisch <textarea name="ex_en" rows="2"></textarea></label>
+        </article>
+      </div>
+      <button type="button" data-add="ex-template" data-target="exhibits">Weitere Ausstellung</button>
+    </section>
+    <section>
+      <h2>Werdegang</h2>
+      <div id="path" data-sortable>
+        {% for row in site.path %}
+          <article class="grow-row" data-row>
+            <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+            <label>Jahr <input name="path_year" value="{{ row.year }}"></label>
+            <label>Deutsch <textarea name="path_de" rows="2">{{ row.de }}</textarea></label>
+            <label>Englisch <textarea name="path_en" rows="2">{{ row.en }}</textarea></label>
+            <div class="row-actions">
+              <button type="button" data-move="up">Hoch</button>
+              <button type="button" data-move="down">Runter</button>
+              <label class="check"><input type="checkbox" name="path_drop_{{ loop.index0 }}"> Entfernen</label>
+            </div>
+          </article>
+        {% endfor %}
+        <article class="grow-row" data-row>
+          <label>Jahr <input name="path_year" placeholder="Neue Zeile"></label>
+          <label>Deutsch <textarea name="path_de" rows="2"></textarea></label>
+          <label>Englisch <textarea name="path_en" rows="2"></textarea></label>
+        </article>
+      </div>
+      <button type="button" data-add="path-template" data-target="path">Weitere Station</button>
+    </section>
+    <div class="bar"><button type="submit">Speichern</button></div>
+  </form>
+  <template id="ex-template">
+    <article class="grow-row" data-row>
+      <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+      <label>Jahr <input name="ex_year"></label>
+      <label>Deutsch <textarea name="ex_de" rows="2"></textarea></label>
+      <label>Englisch <textarea name="ex_en" rows="2"></textarea></label>
+      <div class="row-actions">
+        <button type="button" data-move="up">Hoch</button>
+        <button type="button" data-move="down">Runter</button>
+        <button type="button" data-remove-row>Entfernen</button>
+      </div>
+    </article>
+  </template>
+  <template id="path-template">
+    <article class="grow-row" data-row>
+      <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+      <label>Jahr <input name="path_year"></label>
+      <label>Deutsch <textarea name="path_de" rows="2"></textarea></label>
+      <label>Englisch <textarea name="path_en" rows="2"></textarea></label>
+      <div class="row-actions">
+        <button type="button" data-move="up">Hoch</button>
+        <button type="button" data-move="down">Runter</button>
+        <button type="button" data-remove-row>Entfernen</button>
+      </div>
+    </article>
+  </template>
+{% endblock %}

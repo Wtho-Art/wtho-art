@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Veröffentlichen{% endblock %}
+{% block body %}
+  <p class="kicker">GitHub</p>
+  <h1>Veröffentlichen</h1>
+  <p class="lead">Schickt die Änderungen nach <code>main</code>. Die öffentliche Seite folgt über GitHub Pages. Es gibt kein Force-Push.</p>
+  <section>
+    <h2>Schlüssel</h2>
+    {% if ssh_ok %}
+      <p>GitHub nimmt den Schlüssel an{% if account %} ({{ account }}){% endif %}.</p>
+    {% else %}
+      <p class="error-text">{{ ssh_message }}</p>
+    {% endif %}
+    {% if author[0] %}
+      <p class="meta">Commits als {{ author[0] }} &lt;{{ author[1] }}&gt;</p>
+    {% endif %}
+  </section>
+  <section>
+    <h2>Dateien</h2>
+    {% if report.error %}
+      <p class="error-text">{{ report.error }}</p>
+    {% elif report.allowed %}
+      <ul>
+        {% for path in report.allowed %}
+          <li><code>{{ path }}</code></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Keine Änderungen zum Veröffentlichen.</p>
+    {% endif %}
+    {% if report.blocked %}
+      <h3>Bleibt auf dem Laptop</h3>
+      <ul>
+        {% for path in report.blocked %}
+          <li><code>{{ path }}</code></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if report.too_big %}
+      <p class="error-text">{{ report.too_big }}</p>
+    {% endif %}
+  </section>
+  <form method="post" class="stack">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Kurze Nachricht
+      <input name="message" maxlength="200" required placeholder="Neues Bild für Duality" {% if not ssh_ok or not report.allowed or report.too_big %}disabled{% endif %}>
+    </label>
+    <button type="submit" {% if not ssh_ok or not report.allowed or report.too_big %}disabled{% endif %}>Veröffentlichen</button>
+  </form>
+  <p class="meta"><a href="{{ preview_origin }}" target="_blank" rel="noopener">Vorschau der lokalen Seite</a></p>
+{% endblock %}

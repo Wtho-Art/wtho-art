@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Werke{% endblock %}
+{% block body %}
+  <div class="head">
+    <div>
+      <p class="kicker">Galerie</p>
+      <h1>Werke</h1>
+    </div>
+    <a class="button" href="{{ url_for('work_new') }}">Neues Werk</a>
+  </div>
+  <p class="lead">Die Reihenfolge ist die Reihenfolge auf der Startseite. Das erste Bild eines Werks ist das Titelbild.</p>
+  {% if works %}
+  <form method="post" action="{{ url_for('works_reorder') }}" id="order-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div id="work-list" data-sortable>
+      {% for work in works %}
+        <article class="work-row" data-row draggable="false">
+          <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+          <input type="hidden" name="id" value="{{ work.id }}">
+          {% set cover = (work.images[0] if work.images else '') %}
+          {% if cover %}
+            <img class="thumb" src="{{ url_for('media', relpath='works/' ~ work.id ~ '/' ~ cover) }}" alt="">
+          {% else %}
+            <span class="thumb empty"></span>
+          {% endif %}
+          <div class="grow">
+            <a href="{{ url_for('work_edit', work_id=work.id) }}"><strong>{{ work.title.de }}</strong></a>
+            <p class="meta">{{ work.year }} · {{ work.size }}{% if work.id == hero_id %} · Startseite{% endif %}</p>
+          </div>
+          <div class="row-actions">
+            <button type="button" data-move="up">Hoch</button>
+            <button type="button" data-move="down">Runter</button>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    <div class="bar">
+      <button type="submit">Reihenfolge speichern</button>
+    </div>
+  </form>
+  <div class="hero-forms">
+    {% for work in works %}
+      <form method="post" action="{{ url_for('works_hero') }}">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <input type="hidden" name="id" value="{{ work.id }}">
+        <button type="submit" {% if work.id == hero_id %}disabled{% endif %}>
+          {% if work.id == hero_id %}Startbild: {{ work.title.de }}{% else %}„{{ work.title.de }}“ auf die Startseite{% endif %}
+        </button>
+      </form>
+    {% endfor %}
+  </div>
+  {% else %}
+    <p>Noch keine Werke.</p>
+  {% endif %}
+{% endblock %}

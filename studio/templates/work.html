@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}{% if creating %}Neues Werk{% else %}{{ work.title.de or work.id }}{% endif %}{% endblock %}
+{% block body %}
+  <p class="kicker"><a href="{{ url_for('works_list') }}">Werke</a></p>
+  <h1>{% if creating %}Neues Werk{% else %}{{ work.title.de }}{% endif %}</h1>
+  {% if not creating %}<p class="meta">Adresse: /works/{{ work.id }}/</p>{% endif %}
+
+  <form method="post" class="stack" action="{% if creating %}{{ url_for('work_new') }}{% else %}{{ url_for('work_edit', work_id=work.id) }}{% endif %}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="pair">
+      <label>Titel Deutsch
+        <input name="title_de" value="{{ work.title.de }}" required>
+      </label>
+      <label>Titel Englisch
+        <input name="title_en" value="{{ work.title.en }}" required>
+      </label>
+    </div>
+    <div class="pair">
+      <label>Jahr
+        <input name="year" value="{{ work.year }}" required>
+      </label>
+      <label>Maße
+        <input name="size" value="{{ work.size }}" placeholder="100 × 70 cm">
+      </label>
+    </div>
+    <div class="pair">
+      <label>Material Deutsch
+        <input name="medium_de" value="{{ work.medium.de }}" required>
+      </label>
+      <label>Material Englisch
+        <input name="medium_en" value="{{ work.medium.en }}" required>
+      </label>
+    </div>
+    <div class="pair">
+      <label>Text Deutsch
+        <textarea name="statement_de" rows="5">{{ work.statement.de }}</textarea>
+      </label>
+      <label>Text Englisch
+        <textarea name="statement_en" rows="5">{{ work.statement.en }}</textarea>
+      </label>
+    </div>
+    <div class="pair">
+      <label>Format in der Galerie
+        <select name="layout">
+          <option value="portrait" {% if work.layout == 'portrait' %}selected{% endif %}>Hochformat</option>
+          <option value="landscape" {% if work.layout == 'landscape' %}selected{% endif %}>Querformat</option>
+        </select>
+      </label>
+      <label class="check">
+        <input type="checkbox" name="span" value="yes" {% if work.span %}checked{% endif %}>
+        Breite Kachel in der Galerie
+      </label>
+    </div>
+    <div class="bar">
+      <button type="submit">{% if creating %}Werk anlegen{% else %}Text speichern{% endif %}</button>
+    </div>
+  </form>
+
+  {% if not creating %}
+    <section>
+      <h2>Bilder</h2>
+      <p class="lead">Das erste Bild ist das Titelbild. Lange Kante höchstens 2000 Pixel, als JPEG.</p>
+      {% if work.images %}
+      <form method="post" action="{{ url_for('work_image_order', work_id=work.id) }}">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <div data-sortable>
+          {% for name in work.images %}
+            <article class="work-row" data-row>
+              <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+              <input type="hidden" name="image" value="{{ name }}">
+              <img class="thumb" src="{{ url_for('media', relpath='works/' ~ work.id ~ '/' ~ name) }}" alt="">
+              <div class="grow"><p class="meta">{{ name }}{% if loop.first %} · Titelbild{% endif %}</p></div>
+              <div class="row-actions">
+                <button type="button" data-move="up">Hoch</button>
+                <button type="button" data-move="down">Runter</button>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+        <div class="bar"><button type="submit">Bildreihenfolge speichern</button></div>
+      </form>
+      {% for name in work.images %}
+        <form method="post" action="{{ url_for('work_image_delete', work_id=work.id) }}" class="inline-delete">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <input type="hidden" name="name" value="{{ name }}">
+          <button type="submit">„{{ name }}“ entfernen</button>
+        </form>
+      {% endfor %}
+      {% endif %}
+      <form method="post" action="{{ url_for('work_upload', work_id=work.id) }}" enctype="multipart/form-data" class="stack">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <label>Neue Bilder
+          <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/tiff" multiple required>
+        </label>
+        <button type="submit">Hochladen</button>
+      </form>
+    </section>
+
+    <section class="danger">
+      <h2>Werk entfernen</h2>
+      <form method="post" action="{{ url_for('work_delete', work_id=work.id) }}" class="stack">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <label class="check">
+          <input type="checkbox" name="confirm" value="yes" required>
+          Dieses Werk, seine Texte und seine Bilder entfernen
+        </label>
+        <button type="submit">Werk löschen</button>
+      </form>
+    </section>
+  {% endif %}
+{% endblock %}

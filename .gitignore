@@ -5,5 +5,9 @@ originals/
 *.psd
 *.psb
 
-# Local studio. Stays on the laptop and is not part of the public site.
-studio/
+# Studio source is in the repo. Secrets, the virtualenv, and bytecode stay local.
+studio/.auth/
+studio/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
