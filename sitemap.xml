@@ -6,17 +6,22 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wtho.art/works/touched/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://wtho.art/works/dance-of-balance/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://wtho.art/works/touched/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wtho.art/works/the-dance-of-raw-power-and-sensitivity-the-dance-of-balance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wtho.art/works/the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -77,11 +82,6 @@
   </url>
   <url>
     <loc>https://wtho.art/works/voltage-under-control/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wtho.art/works/the-dance-of-raw-power-and-sensitivity-the-universal-womb-sp/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
