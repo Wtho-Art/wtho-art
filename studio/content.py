@@ -417,6 +417,24 @@ def _replace_id_text(html: str, element_id: str, value: str) -> str:
     return _sub_once(pattern, lambda match: match.group(1) + escaped + match.group(3), html, element_id)
 
 
+def _ensure_statement_pre_wrap(html: str) -> str:
+    pattern = r"\.statement\s*\{([^}]*)\}"
+
+    def repl(match):
+        body = match.group(1)
+        if re.search(r"white-space\s*:", body):
+            return match.group(0)
+        body = body.rstrip()
+        if body and not body.endswith(";"):
+            body += ";"
+        return ".statement {" + body + " white-space: pre-wrap; }"
+
+    updated, count = re.subn(pattern, repl, html, count=1)
+    if count != 1:
+        raise ContentError("Die Werkseite hat keine Statement-Regel.")
+    return updated
+
+
 def _esc(value: str) -> str:
     return (
         value.replace("&", "&amp;")
@@ -530,6 +548,7 @@ def render_work_html(html: str, work: dict) -> str:
     html = _replace_id_text(html, "metaMedium", medium_line)
     html = _replace_id_text(html, "statement", work["statement"]["de"])
     html = _set_href(html, "inquire", f"/?work={work['id']}#kontakt")
+    html = _ensure_statement_pre_wrap(html)
     return html
 
 

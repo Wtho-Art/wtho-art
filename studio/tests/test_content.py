@@ -41,6 +41,18 @@ def test_render_real_work_page_keeps_design():
     assert "--rupture: #b54432" in html
     assert "\\u003c" not in html or "<b>" not in html.split("application/ld+json", 1)[1].split("</script>", 1)[0]
     assert '"name": "Neuer Titel"' in html
+    assert "white-space: pre-wrap" in html
+
+
+def test_render_keeps_statement_line_breaks():
+    donor = (REPO / "studio" / "fallback_work.html").read_text(encoding="utf-8")
+    donor = donor.replace(" white-space: pre-wrap;", "")
+    works = json.loads((REPO / "data" / "works.json").read_text(encoding="utf-8"))
+    work = json.loads(json.dumps(next(item for item in works if item["id"] == "touched")))
+    work["statement"]["de"] = "Erste Zeile.\r\n\r\nZweite Zeile."
+    html = content.render_work_html(donor, work)
+    assert ".statement { margin-top: 1.5rem; font-size: 1.0625rem; white-space: pre-wrap; }" in html
+    assert "Erste Zeile.\r\n\r\nZweite Zeile." in html
 
 
 def test_rejects_path_escape():
