@@ -32,7 +32,7 @@
     "year": "2026",
     "size": "100 × 70 cm",
     "layout": "portrait",
-    "span": true,
+    "span": false,
     "hero": false,
     "images": [
       "touched.jpg",
@@ -200,7 +200,7 @@
   {
     "id": "resonanz",
     "year": "2026",
-    "size": "60 × 80 cm",
+    "size": "60 × 80 cm [SOLD]",
     "layout": "portrait",
     "span": false,
     "hero": false,
@@ -210,8 +210,8 @@
       "resonanz-3.jpg"
     ],
     "title": {
-      "de": "Resonanz   [SOLD]",
-      "en": "Resonance    [SOLD]"
+      "de": "Resonanz",
+      "en": "Resonance"
     },
     "medium": {
       "de": "Öl auf Leinwand",
