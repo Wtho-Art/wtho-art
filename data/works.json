@@ -382,5 +382,32 @@
       "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.",
       "en": "A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion."
     }
+  },
+  {
+    "id": "focus-and-expansion",
+    "year": "2026",
+    "size": "120 x 80",
+    "layout": "portrait",
+    "span": true,
+    "hero": false,
+    "images": [
+      "focus-and-expansion.jpg",
+      "focus-and-expansion-2.jpg",
+      "focus-and-expansion-3.jpg",
+      "focus-and-expansion-4.jpg",
+      "focus-and-expansion-5.jpg"
+    ],
+    "title": {
+      "de": "Focus and Expansion",
+      "en": "Focus and Expansion"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
+      "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
+    }
   }
 ]
