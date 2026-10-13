@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://wtho.art/works/resonanz/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wtho.art/works/touched/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -42,11 +47,6 @@
   </url>
   <url>
     <loc>https://wtho.art/works/breaking-patterns/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wtho.art/works/resonanz/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
