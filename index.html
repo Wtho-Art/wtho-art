@@ -136,6 +136,7 @@
     .btn.outline:hover { border-color: var(--accent); color: var(--accent); }
     .btn.full { width: 100%; }
     figure.hero-art { margin: 0; }
+    figure.hero-art a { display: block; height: 100%; color: inherit; }
     figure.hero-art img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
     figcaption { display: flex; justify-content: space-between; margin-top: .75rem; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); }
     .band { border-top: 1px solid var(--border); }
@@ -259,7 +260,9 @@
           </div>
         </div>
         <figure class="hero-art">
-          <img id="heroImg" src="works/dance-of-duality/dance-of-duality.jpg" alt="The dance of duality — Thorsten Weitz" />
+          <a id="heroLink" href="works/dance-of-duality/">
+            <img id="heroImg" src="works/dance-of-duality/dance-of-duality.jpg" alt="The dance of duality — Thorsten Weitz" />
+          </a>
           <figcaption><span id="heroTitle">The dance of duality</span><span id="heroSize">100 × 70 cm</span></figcaption>
         </figure>
       </div>
@@ -511,8 +514,10 @@
       const hero = WthoContent.heroWork(site, works);
       if (!hero) return;
       const img = document.getElementById("heroImg");
+      const link = document.getElementById("heroLink");
       const title = document.getElementById("heroTitle");
       const size = document.getElementById("heroSize");
+      if (link) link.href = "works/" + hero.id + "/";
       if (img) {
         img.src = WthoContent.workCover(hero);
         img.alt = hero.title[lang] + " — Thorsten Weitz";
