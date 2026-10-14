@@ -465,5 +465,28 @@
       "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. \r\n\r\nDas kühle, flächige Blau im Hintergrund will die Kontrolle behalten. \r\nDoch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. \r\n\r\nEs ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist nur noch eine Illusion.\r\n\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
       "en": "A new, charged moment from the Raw Power and Sensitivity series. \r\n\r\nThe cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge.\r\n\r\nIt is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion.\r\n\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
     }
+  },
+  {
+    "id": "when-blue-touches-the-dance-of-red-and-white",
+    "year": "2025",
+    "size": "30 x 30 cm    ·",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "when-blue-touches-the-dance-of-red-and-white.jpg"
+    ],
+    "title": {
+      "de": "When blue touches the dance of red and white",
+      "en": "When blue touches the dance of red and white"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "When blue touches the dance of red and white",
+      "en": "When blue touches the dance of red and white"
+    }
   }
 ]
