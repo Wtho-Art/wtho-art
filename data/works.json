@@ -166,6 +166,31 @@
     }
   },
   {
+    "id": "rupture",
+    "year": "2026",
+    "size": "70 x 50 cm · Verfügbar/Available",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "rupture.jpg",
+      "rupture-2.jpg",
+      "rupture-3.jpg"
+    ],
+    "title": {
+      "de": "Der Riss",
+      "en": "Rupture"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "Der Riss in der Wand unserer Gewohnheiten\r\n\r\n​Wir bauen unsere Fassaden so präzise auf, dass wir oft vergessen, wer darunter eigentlich atmet.\r\nIn einer Welt, die Perfektion und ständiges Funktionieren verlangt, ist dieser rote Strich kein Fehler. \r\n\r\nEr ist ein radikaler, notwendiger Akt der Befreiung.\r\n\r\n​Hier trifft die Wucht der Emotion auf die Struktur des Alltags.\r\nDer rote Riss bricht durch die blaue Architektur – er ist der Moment, in dem die Maske fällt und wir uns selbst wieder begegnen.\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
+      "en": "The crack in the wall of our habits\r\n\r\n​We construct our façades so meticulously that we often forget who is actually breathing beneath them.\r\nIn a world that demands perfection and constant functionality, this red line is not a mistake.\r\n\r\nIt is a radical, necessary act of liberation.\r\n\r\n​Here, the force of emotion collides with the structure of everyday life.\r\nThe red crack breaks through the blue architecture – it is the moment when the mask falls and we encounter ourselves once more.\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
+    }
+  },
+  {
     "id": "fire-silence",
     "year": "2025",
     "size": "242 × 138 cm   ·    Verfügbar/Available",
@@ -436,30 +461,6 @@
     "statement": {
       "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. \r\n\r\nDas kühle, flächige Blau im Hintergrund will die Kontrolle behalten. \r\nDoch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. \r\n\r\nEs ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist nur noch eine Illusion.\r\n\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
       "en": "A new, charged moment from the Raw Power and Sensitivity series. \r\n\r\nThe cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge.\r\n\r\nIt is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion.\r\n\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
-    }
-  },
-  {
-    "id": "rupture",
-    "year": "2026",
-    "size": "70 x 50 cm · Verfügbar/Available",
-    "layout": "portrait",
-    "span": false,
-    "hero": false,
-    "images": [
-      "rupture.jpg",
-      "rupture-2.jpg"
-    ],
-    "title": {
-      "de": "Der Riss",
-      "en": "Rupture"
-    },
-    "medium": {
-      "de": "Öl auf Leinwand",
-      "en": "Oil on canvas"
-    },
-    "statement": {
-      "de": "Der Riss in der Wand unserer Gewohnheiten\r\n\r\n​Wir bauen unsere Fassaden so präzise auf, dass wir oft vergessen, wer darunter eigentlich atmet.\r\nIn einer Welt, die Perfektion und ständiges Funktionieren verlangt, ist dieser rote Strich kein Fehler. \r\n\r\nEr ist ein radikaler, notwendiger Akt der Befreiung.\r\n\r\n​Hier trifft die Wucht der Emotion auf die Struktur des Alltags.\r\nDer rote Riss bricht durch die blaue Architektur – er ist der Moment, in dem die Maske fällt und wir uns selbst wieder begegnen.\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
-      "en": "The crack in the wall of our habits\r\n\r\n​We construct our façades so meticulously that we often forget who is actually breathing beneath them.\r\nIn a world that demands perfection and constant functionality, this red line is not a mistake.\r\n\r\nIt is a radical, necessary act of liberation.\r\n\r\n​Here, the force of emotion collides with the structure of everyday life.\r\nThe red crack breaks through the blue architecture – it is the moment when the mask falls and we encounter ourselves once more.\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
     }
   }
 ]

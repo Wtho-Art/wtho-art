@@ -36,6 +36,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://wtho.art/works/rupture/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://wtho.art/works/fire-silence/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -87,11 +92,6 @@
   </url>
   <url>
     <loc>https://wtho.art/works/voltage-under-control/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://wtho.art/works/rupture/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
