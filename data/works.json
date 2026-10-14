@@ -422,7 +422,9 @@
     "hero": false,
     "images": [
       "voltage-under-control.jpg",
-      "voltage-under-control-2.jpg"
+      "voltage-under-control-2.jpg",
+      "voltage-under-control-3.jpg",
+      "voltage-under-control-4.jpg"
     ],
     "title": {
       "de": "Voltage Under Control",
