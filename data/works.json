@@ -438,6 +438,31 @@
     }
   },
   {
+    "id": "voltage-under-control",
+    "year": "2026",
+    "size": "60 × 80 cm    ·    Verfügbar/Available",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "voltage-under-control.jpg",
+      "voltage-under-control-2.jpg",
+      "voltage-under-control-3.jpg"
+    ],
+    "title": {
+      "de": "Voltage Under Control",
+      "en": "Voltage Under Control"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. \r\n\r\nDas kühle, flächige Blau im Hintergrund will die Kontrolle behalten. \r\nDoch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. \r\n\r\nEs ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist nur noch eine Illusion.\r\n\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
+      "en": "A new, charged moment from the Raw Power and Sensitivity series. \r\n\r\nThe cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge.\r\n\r\nIt is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion.\r\n\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
+    }
+  },
+  {
     "id": "focus-and-expansion",
     "year": "2026",
     "size": "120 x 80 cm [VERKAUFT/SOLD] Privatsammlung Freiburg",
@@ -462,31 +487,6 @@
     "statement": {
       "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
       "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
-    }
-  },
-  {
-    "id": "voltage-under-control",
-    "year": "2026",
-    "size": "60 × 80 cm    ·    Verfügbar/Available",
-    "layout": "portrait",
-    "span": false,
-    "hero": false,
-    "images": [
-      "voltage-under-control.jpg",
-      "voltage-under-control-2.jpg",
-      "voltage-under-control-3.jpg"
-    ],
-    "title": {
-      "de": "Voltage Under Control",
-      "en": "Voltage Under Control"
-    },
-    "medium": {
-      "de": "Öl auf Leinwand",
-      "en": "Oil on canvas"
-    },
-    "statement": {
-      "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. \r\n\r\nDas kühle, flächige Blau im Hintergrund will die Kontrolle behalten. \r\nDoch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. \r\n\r\nEs ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist nur noch eine Illusion.\r\n\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
-      "en": "A new, charged moment from the Raw Power and Sensitivity series. \r\n\r\nThe cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge.\r\n\r\nIt is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion.\r\n\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
     }
   }
 ]
