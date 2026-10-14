@@ -248,12 +248,15 @@
   {
     "id": "dance-of-duality",
     "year": "2026",
-    "size": "100 × 70 cm",
+    "size": "100 × 70 cm   ·    Verfügbar/Available",
     "layout": "portrait",
     "span": false,
     "hero": true,
     "images": [
-      "dance-of-duality.jpg"
+      "dance-of-duality.jpg",
+      "dance-of-duality-2.jpg",
+      "dance-of-duality-3.jpg",
+      "dance-of-duality-4.jpg"
     ],
     "title": {
       "de": "The dance of duality",
@@ -264,8 +267,8 @@
       "en": "Oil on canvas"
     },
     "statement": {
-      "de": "Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.",
-      "en": "It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement."
+      "de": "Ein Hauch der Unendlichkeit. Das Verborgene trifft auf das Offenbarte, weiche Flächen kollidieren mit messerscharfen Impulsen. Ein Tanz, der die Grenze zwischen zwei Welten verwischt und das Geheimnis der Dualität in einer einzigen, leidenschaftlichen Bewegung einfängt.\r\n\r\nPreis 1700€ (inkl. MwSt./ exkl. Versand)",
+      "en": "It is an erotic mystery: the hidden meets the revealed, soft surfaces collide with razor-sharp impulses. A dance that blurs the boundary between two worlds and captures the mystery of duality in a single, passionate movement.\r\n\r\nPreis 1700€ (inkl. MwSt./ exkl. Versand)"
     }
   },
   {
@@ -361,29 +364,6 @@
     }
   },
   {
-    "id": "voltage-under-control",
-    "year": "2026",
-    "size": "60 × 80 cm",
-    "layout": "portrait",
-    "span": false,
-    "hero": false,
-    "images": [
-      "voltage-under-control.jpg"
-    ],
-    "title": {
-      "de": "Voltage Under Control",
-      "en": "Voltage Under Control"
-    },
-    "medium": {
-      "de": "Öl auf Leinwand",
-      "en": "Oil on canvas"
-    },
-    "statement": {
-      "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.",
-      "en": "A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion."
-    }
-  },
-  {
     "id": "focus-and-expansion",
     "year": "2026",
     "size": "120 x 80 cm [VERKAUFT/SOLD] Privatsammlung Freiburg",
@@ -408,6 +388,29 @@
     "statement": {
       "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
       "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
+    }
+  },
+  {
+    "id": "voltage-under-control",
+    "year": "2026",
+    "size": "60 × 80 cm",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "voltage-under-control.jpg"
+    ],
+    "title": {
+      "de": "Voltage Under Control",
+      "en": "Voltage Under Control"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "Ein neuer, geladener Moment aus der Serie Raw Power and Sensitivity. Das kühle, flächige Blau im Hintergrund will die Kontrolle behalten. Doch es hat keine Chance: Ein dichtes Netz aus schneidenden roten und gelben Linien jagt wie eine Überspannung durch die Leinwand. Es ist der Moment, in dem das innere Chaos die mühsam gewahrte Fassade komplett unter Strom setzt. Die Kontrolle ist ab jetzt nur noch eine Illusion.",
+      "en": "A new, charged moment from the Raw Power and Sensitivity series. The cool, flat blue in the background wants to remain in control. But it has no chance: a dense network of cutting red and yellow lines races across the canvas like an electrical surge. It is the moment when inner chaos puts the carefully maintained façade completely under power. From now on, control is merely an illusion."
     }
   }
 ]
