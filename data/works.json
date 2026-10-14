@@ -374,7 +374,9 @@
     "span": false,
     "hero": false,
     "images": [
-      "clarity.jpg"
+      "clarity.jpg",
+      "clarity-2.jpg",
+      "clarity-3.jpg"
     ],
     "title": {
       "de": "Clarity",
