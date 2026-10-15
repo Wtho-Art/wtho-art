@@ -197,6 +197,12 @@
     :where(.sib-form-message-panel) { display: none; margin-bottom: 1rem; padding: .75rem 1rem; }
     :where(.sib-form-message-panel .sib-notification__icon) { width: 20px; height: 20px; }
     .note { font-size: .75rem; color: var(--subtle); }
+    @media (max-width: 767px) {
+      figure.hero-art a { height: auto; }
+      figure.hero-art figcaption { flex-wrap: wrap; row-gap: .35rem; }
+      #heroTitle, #heroSize { min-width: 0; max-width: 100%; }
+      #heroSize { margin-left: auto; text-align: right; }
+    }
     @media (max-width: 767px) and (orientation: portrait) {
       .works { gap: 0; }
       .work {
