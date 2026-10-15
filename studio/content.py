@@ -65,6 +65,7 @@ COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
             ("aboutP3", "Absatz 3", True),
             ("aboutP4", "Absatz 4", True),
             ("aboutQuote", "Zitat", True),
+            ("aboutQuoteLink", "Link unter dem Zitat", False),
             ("pathTitle", "Überschrift Werdegang", False),
         ],
     ),
