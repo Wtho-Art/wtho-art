@@ -113,6 +113,7 @@ COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
         [
             ("footerStudio", "Atelier", False),
             ("footerRights", "Rechte", False),
+            ("footerCredit", "Gestaltung", False),
         ],
     ),
 ]
