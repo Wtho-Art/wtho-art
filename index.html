@@ -136,7 +136,7 @@
     .btn.outline:hover { border-color: var(--accent); color: var(--accent); }
     .btn.full { width: 100%; }
     figure.hero-art { margin: 0; }
-    figure.hero-art a { display: block; height: 100%; color: inherit; }
+    figure.hero-art a { display: block; position: relative; height: 100%; color: inherit; }
     figure.hero-art img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
     figcaption { display: flex; justify-content: space-between; margin-top: .75rem; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); }
     .band { border-top: 1px solid var(--border); }
@@ -149,20 +149,30 @@
     .muted { color: var(--muted); }
     .works { display: grid; grid-template-columns: 1fr; gap: 1.5rem 1.5rem; margin-top: 3.5rem; }
     .work { display: block; background: transparent; border: 0; padding: 0; text-align: left; color: inherit; cursor: pointer; width: 100%; text-decoration: none; }
-    .work .frame { overflow: hidden; background: var(--surface); }
+    .work .frame { position: relative; overflow: hidden; background: var(--surface); }
     .work img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.22,1,.36,1); }
     .work:hover img { transform: scale(1.03); }
+    .more {
+      position: absolute; right: .65rem; bottom: .65rem; z-index: 1;
+      padding: .3rem .45rem; background: rgba(22, 20, 18, .72); color: var(--accent-fg);
+      font-size: .75rem; letter-spacing: .14em; line-height: 1; pointer-events: none;
+    }
     .portrait { aspect-ratio: 3/4; }
     .landscape { aspect-ratio: 4/3; }
     .square { aspect-ratio: 1; }
-    .work-meta { display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; margin-top: 1rem; }
+    .work-meta { position: relative; display: flex; justify-content: space-between; gap: .75rem; align-items: baseline; margin-top: 1.55rem; }
     .work-meta h3 { font-size: 1.5rem; }
     .work-meta span { font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); white-space: nowrap; }
+    .work-meta .more {
+      position: absolute; right: 0; bottom: calc(100% + .28rem); z-index: auto;
+      padding: 0; background: none; color: var(--subtle);
+      font-size: .75rem; letter-spacing: .18em; line-height: 1;
+    }
     .about-grid, .contact-grid { display: grid; gap: 3rem; }
     .about-grid > div, .contact-grid > div { min-width: 0; }
     blockquote { margin: 2.5rem 0 0; padding-left: 1.25rem; border-left: 2px solid var(--rupture); font-family: var(--display); font-style: italic; font-size: 1.5rem; color: var(--accent); line-height: 1.3; }
     .atelier { width: 100%; min-height: 20rem; object-fit: cover; }
-    a.about-photo { display: block; }
+    a.about-photo { display: block; position: relative; }
     a.about-photo.hide-mobile { display: none; }
     .about-portrait-mobile { margin-top: 2.5rem; }
     .hide-mobile { display: none; }
@@ -481,12 +491,43 @@
       fillSelect();
     }
 
+    function imageCount(item) {
+      const images = item && item.images;
+      return images && images.length ? images.length : 1;
+    }
+
+    function countLabel(count) {
+      return lang === "en"
+        ? "1 of " + count + " images"
+        : "1 von " + count + " Bildern";
+    }
+
+    function countBadge(count) {
+      if (count < 2) return "";
+      return `<span class="more" aria-label="${countLabel(count)}">1/${count}</span>`;
+    }
+
+    function setCountBadge(parent, count) {
+      let badge = parent.querySelector(".more");
+      if (count < 2) {
+        if (badge) badge.remove();
+        return;
+      }
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "more";
+        parent.appendChild(badge);
+      }
+      badge.textContent = "1/" + count;
+      badge.setAttribute("aria-label", countLabel(count));
+    }
+
     function renderWorks() {
       const root = document.getElementById("works");
       root.innerHTML = works.map((w) => `
         <a class="work ${w.span ? "span2" : ""}" data-id="${w.id}" href="works/${w.id}/">
           <div class="frame ${w.layout}"><img src="${WthoContent.workCover(w)}" alt="${w.title[lang]}" loading="lazy" /></div>
-          <div class="work-meta"><h3>${w.title[lang]}</h3><span>${w.year}</span></div>
+          <div class="work-meta"><h3>${w.title[lang]}</h3>${countBadge(imageCount(w))}<span>${w.year}</span></div>
           <p class="muted" style="margin:.25rem 0 0;font-size:.875rem">${w.medium[lang]}${w.size!=="—" ? " · "+w.size : ""}</p>
         </a>
       `).join("");
@@ -530,7 +571,10 @@
       const link = document.getElementById("heroLink");
       const title = document.getElementById("heroTitle");
       const size = document.getElementById("heroSize");
-      if (link) link.href = "works/" + hero.id + "/";
+      if (link) {
+        link.href = "works/" + hero.id + "/";
+        setCountBadge(link, imageCount(hero));
+      }
       if (img) {
         img.src = WthoContent.workCover(hero);
         img.alt = hero.title[lang] + " — Thorsten Weitz";
@@ -539,10 +583,20 @@
       if (size) size.textContent = hero.size || "";
     }
 
+    function renderPlaceCounts() {
+      if (!site || !site.places) return;
+      site.places.forEach((place) => {
+        document.querySelectorAll('a.about-photo[href="images/' + place.id + '/"]').forEach((link) => {
+          setCountBadge(link, imageCount(place));
+        });
+      });
+    }
+
     const _applyLang = applyLang;
     applyLang = function () {
       _applyLang();
       renderHero();
+      renderPlaceCounts();
     };
 
     WthoContent.load("data/").then((data) => {
