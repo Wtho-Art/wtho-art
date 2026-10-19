@@ -23,18 +23,13 @@
     const images = place.images && place.images.length ? place.images : [place.id + ".jpg"];
     document.getElementById("mainImg").src = images[0];
     const thumbs = document.getElementById("thumbs");
-    if (images.length < 2) return;
-    thumbs.classList.add("show");
-    thumbs.innerHTML = images.map((src, index) =>
-      `<button type="button" data-src="${src}" class="${index === 0 ? "on" : ""}"><img src="${src}" alt="" loading="lazy" /></button>`
-    ).join("");
-    thumbs.querySelectorAll("button").forEach((button) => {
-      button.addEventListener("click", () => {
-        document.getElementById("mainImg").src = button.dataset.src;
-        thumbs.querySelectorAll("button").forEach((item) => item.classList.remove("on"));
-        button.classList.add("on");
-      });
-    });
+    if (images.length > 1) {
+      thumbs.classList.add("show");
+      thumbs.innerHTML = images.map((src, index) =>
+        `<button type="button" data-src="${src}" class="${index === 0 ? "on" : ""}"><img src="${src}" alt="" loading="lazy" /></button>`
+      ).join("");
+    }
+    WthoContent.bindGallery(images);
   }
 
   document.querySelectorAll("[data-lang]").forEach((button) => {

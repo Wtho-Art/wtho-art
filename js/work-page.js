@@ -34,14 +34,8 @@
       thumbs.innerHTML = images.map((src, i) =>
         `<button type="button" data-src="${src}" class="${i === 0 ? "on" : ""}"><img src="${src}" alt="" loading="lazy" /></button>`
       ).join("");
-      thumbs.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document.getElementById("mainImg").src = btn.dataset.src;
-          thumbs.querySelectorAll("button").forEach((b) => b.classList.remove("on"));
-          btn.classList.add("on");
-        });
-      });
     }
+    WthoContent.bindGallery(images);
   }
 
   document.querySelectorAll("[data-lang]").forEach((b) => {
