@@ -101,11 +101,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wtho.art/works/444/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://wtho.art/images/portrait/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
