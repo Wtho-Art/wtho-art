@@ -279,7 +279,11 @@
     "span": false,
     "hero": false,
     "images": [
-      "breaking-patterns.jpg"
+      "breaking-patterns.jpg",
+      "breaking-patterns-2.jpg",
+      "breaking-patterns-3.jpg",
+      "breaking-patterns-4.jpg",
+      "breaking-patterns-5.jpg"
     ],
     "title": {
       "de": "Breaking Patterns",
