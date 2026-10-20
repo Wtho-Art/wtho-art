@@ -496,5 +496,31 @@
       "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
       "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
     }
+  },
+  {
+    "id": "444",
+    "year": "2026",
+    "size": "",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "444.jpg",
+      "444-2.jpg",
+      "444-3.jpg",
+      "444-4.jpg"
+    ],
+    "title": {
+      "de": "The lines of light",
+      "en": "The lines of light"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "",
+      "en": ""
+    }
   }
 ]
