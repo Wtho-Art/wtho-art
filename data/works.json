@@ -108,6 +108,34 @@
     }
   },
   {
+    "id": "focus-and-expansion",
+    "year": "2026",
+    "size": "120 x 80 cm [VERKAUFT/SOLD] Privatsammlung Freiburg",
+    "layout": "portrait",
+    "span": true,
+    "hero": false,
+    "images": [
+      "focus-and-expansion.jpg",
+      "focus-and-expansion-2.jpg",
+      "focus-and-expansion-3.jpg",
+      "focus-and-expansion-4.jpg",
+      "focus-and-expansion-5.jpg",
+      "focus-and-expansion-6.jpg"
+    ],
+    "title": {
+      "de": "Focus and Expansion",
+      "en": "Focus and Expansion"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
+      "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
+    }
+  },
+  {
     "id": "unexposed-ego",
     "year": "2026  RESERVED",
     "size": "100 × 70 cm       ·    Verfügbar/Available",
@@ -133,35 +161,6 @@
     "statement": {
       "de": "Was passiert, wenn Masken nicht mehr nur gespielt werden?\r\n\r\n​The Dance of Raw Power and Sensitivity – 'The Feeling of an Unexposed Ego'\r\n​Dieses Werk ist eine radikale Entblößung im Stil des synthetischen Expressionismus.\r\n\r\n​Es zeigt visuell abstrakt, was passiert, wenn wir Masken nicht mehr nur spielen, sondern ausschließlich zu ihnen werden.\r\n​\r\nWas passiert, wenn das wahre, verletzliche Ich unter dieser starren Maske erstickt?\r\n\r\n​Die messerscharfen Linien fangen genau diesen inneren Konflikt und die Frage ein, wie viel von unserer eigenen Sensibilität wir opfern, um die perfekte Fassade im Außen aufrechtzuerhalten.\r\n\r\n​Während mein Körper nackt im Raum steht, zeigt das Bild den emotionalen Preis dieser Performance – ein geschütztes Inneres, das darum kämpft, nicht an den eigenen Schutzschilden zu zerbrechen.\r\n\r\nPreis 1700€ (inkl. MwSt./ exkl. Versand)",
       "en": "What happens when masks are no longer merely played?\r\n\r\n​This work is a radical exposure in the style of synthetic expressionism.\r\n​It depicts, in an abstract visual manner, what happens when we no longer merely wear masks, but become nothing but them.\r\n\r\nWhat happens when the true, vulnerable self is suffocated beneath this rigid mask?\r\n\r\n​The razor-sharp lines capture precisely this inner conflict and the question of how much of our own sensitivity we sacrifice in order to maintain the perfect mask on the outside.\r\n\r\n​Whilst my body stands naked in the space, the image reveals the emotional cost of this performance – a protected inner self struggling not to shatter against its own defences.\r\n​How far do you allow others to see behind your masks and make yourself vulnerable to the world?\r\n\r\nPrice 1700€ (inkl. VAT./ excl. Shipping)"
-    }
-  },
-  {
-    "id": "focus-and-expansion",
-    "year": "2026",
-    "size": "120 x 80 cm [VERKAUFT/SOLD] Privatsammlung Freiburg",
-    "layout": "portrait",
-    "span": true,
-    "hero": false,
-    "images": [
-      "focus-and-expansion.jpg",
-      "focus-and-expansion-2.jpg",
-      "focus-and-expansion-3.jpg",
-      "focus-and-expansion-4.jpg",
-      "focus-and-expansion-5.jpg",
-      "focus-and-expansion-6.jpg",
-      "focus-and-expansion-7.jpg"
-    ],
-    "title": {
-      "de": "Focus and Expansion",
-      "en": "Focus and Expansion"
-    },
-    "medium": {
-      "de": "Öl auf Leinwand",
-      "en": "Oil on canvas"
-    },
-    "statement": {
-      "de": "Unser Weg zu Licht, innerem Frieden und Glück. Das Erkennen der eigenen Muster und Glaubenssätze, der Gedankenwolken, der unruhigen Gewässer.\r\nDein Fokus liegt darauf, dies anzunehmen und dich auf ein strahlenderes Wesen auszurichten.\r\nDeinen eigenen Himmelsdrachen in deinen unruhigen Wolken zu finden. Das ist das Abenteuer unseres Lebens.",
-      "en": "Our path to light, inner peace and happiness. Recognising your own patterns and belief systems, clouds of thoughts, turbulent waters.\r\nYour focus is on accepting this and aligning yourself with a more luminous being.\r\nFinding your own dragon of sky in your turbulent clouds. This is the adventure of our life."
     }
   },
   {
@@ -195,6 +194,29 @@
     }
   },
   {
+    "id": "when-blue-touches-the-dance-of-red-and-white",
+    "year": "2025",
+    "size": "30 x 30 cm    · [VERKAUFT/SOLD] Privatsammlung Freiburg",
+    "layout": "portrait",
+    "span": false,
+    "hero": false,
+    "images": [
+      "when-blue-touches-the-dance-of-red-and-white.jpg"
+    ],
+    "title": {
+      "de": "When blue touches the dance of red and white",
+      "en": "When blue touches the dance of red and white"
+    },
+    "medium": {
+      "de": "Öl auf Leinwand",
+      "en": "Oil on canvas"
+    },
+    "statement": {
+      "de": "When blue touches the dance of red and white",
+      "en": "When blue touches the dance of red and white"
+    }
+  },
+  {
     "id": "rupture",
     "year": "2026",
     "size": "70 x 50 cm · Verfügbar/Available",
@@ -218,29 +240,6 @@
     "statement": {
       "de": "Der Riss in der Wand unserer Gewohnheiten\r\n\r\n​Wir bauen unsere Fassaden so präzise auf, dass wir oft vergessen, wer darunter eigentlich atmet.\r\nIn einer Welt, die Perfektion und ständiges Funktionieren verlangt, ist dieser rote Strich kein Fehler. \r\n\r\nEr ist ein radikaler, notwendiger Akt der Befreiung.\r\n\r\n​Hier trifft die Wucht der Emotion auf die Struktur des Alltags.\r\nDer rote Riss bricht durch die blaue Architektur – er ist der Moment, in dem die Maske fällt und wir uns selbst wieder begegnen.\r\n\r\nPreis 1200€ (inkl. MwSt./ exkl. Versand)",
       "en": "The crack in the wall of our habits\r\n\r\n​We construct our façades so meticulously that we often forget who is actually breathing beneath them.\r\nIn a world that demands perfection and constant functionality, this red line is not a mistake.\r\n\r\nIt is a radical, necessary act of liberation.\r\n\r\n​Here, the force of emotion collides with the structure of everyday life.\r\nThe red crack breaks through the blue architecture – it is the moment when the mask falls and we encounter ourselves once more.\r\n\r\nPrice 1200€ (inkl. VAT./ excl. Shipping)"
-    }
-  },
-  {
-    "id": "when-blue-touches-the-dance-of-red-and-white",
-    "year": "2025",
-    "size": "30 x 30 cm    · [VERKAUFT/SOLD] Privatsammlung Freiburg",
-    "layout": "portrait",
-    "span": false,
-    "hero": false,
-    "images": [
-      "when-blue-touches-the-dance-of-red-and-white.jpg"
-    ],
-    "title": {
-      "de": "When blue touches the dance of red and white",
-      "en": "When blue touches the dance of red and white"
-    },
-    "medium": {
-      "de": "Öl auf Leinwand",
-      "en": "Oil on canvas"
-    },
-    "statement": {
-      "de": "When blue touches the dance of red and white",
-      "en": "When blue touches the dance of red and white"
     }
   },
   {
