@@ -414,10 +414,26 @@ def _sub_once(pattern: str, repl, text: str, slot: str) -> str:
     return updated
 
 
+_BOLD = re.compile(r"\*\*(.+?)\*\*")
+
+
+def _strip_inline(value: str) -> str:
+    return _BOLD.sub(r"\1", value or "")
+
+
+def _format_inline(value: str) -> str:
+    return _BOLD.sub(r"<strong>\1</strong>", _esc(value or ""))
+
+
 def _replace_id_text(html: str, element_id: str, value: str) -> str:
     pattern = rf'(id="{re.escape(element_id)}"[^>]*>)(.*?)(</)'
     escaped = _esc(value)
     return _sub_once(pattern, lambda match: match.group(1) + escaped + match.group(3), html, element_id)
+
+
+def _replace_id_html(html: str, element_id: str, value: str) -> str:
+    pattern = rf'(id="{re.escape(element_id)}"[^>]*>)(.*?)(</p>)'
+    return _sub_once(pattern, lambda match: match.group(1) + _format_inline(value) + match.group(3), html, element_id)
 
 
 def _ensure_statement_pre_wrap(html: str) -> str:
@@ -433,6 +449,21 @@ def _ensure_statement_pre_wrap(html: str) -> str:
         return ".statement {" + body + " white-space: pre-wrap; }"
 
     updated, count = re.subn(pattern, repl, html, count=1)
+    if count != 1:
+        raise ContentError("Die Werkseite hat keine Statement-Regel.")
+    return updated
+
+
+def _ensure_statement_strong(html: str) -> str:
+    if re.search(r"\.statement\s+strong\s*\{", html):
+        return html
+    pattern = r"(\.statement\s*\{[^}]*\})"
+    updated, count = re.subn(
+        pattern,
+        r"\1\n    .statement strong { font-weight: 600; }",
+        html,
+        count=1,
+    )
     if count != 1:
         raise ContentError("Die Werkseite hat keine Statement-Regel.")
     return updated
@@ -549,9 +580,10 @@ def render_work_html(html: str, work: dict) -> str:
     html = _replace_id_text(html, "metaYear", year)
     html = _replace_id_text(html, "title", title_de)
     html = _replace_id_text(html, "metaMedium", medium_line)
-    html = _replace_id_text(html, "statement", work["statement"]["de"])
+    html = _replace_id_html(html, "statement", work["statement"]["de"])
     html = _set_href(html, "inquire", f"/?work={work['id']}#kontakt")
     html = _ensure_statement_pre_wrap(html)
+    html = _ensure_statement_strong(html)
     return html
 
 
@@ -615,7 +647,7 @@ def render_place_html(html: str, place: dict) -> str:
     title_de = place["title"]["de"]
     text_de = (place.get("text") or {}).get("de") or ""
     page_title = f"{title_de} — wtho.art"
-    description = " ".join((text_de or title_de).split())
+    description = " ".join((_strip_inline(text_de) or title_de).split())
     image = (place.get("images") or [f"{place['id']}.jpg"])[0]
     canonical = f"https://wtho.art/images/{place['id']}/"
     image_url = f"https://wtho.art/images/{place['id']}/{image}"
@@ -652,7 +684,8 @@ def render_place_html(html: str, place: dict) -> str:
     )
     html = _set_img(html, image, title_de)
     html = _replace_id_text(html, "title", title_de)
-    html = _replace_id_text(html, "statement", text_de)
+    html = _replace_id_html(html, "statement", text_de)
+    html = _ensure_statement_strong(html)
     return html
 
 
@@ -784,7 +817,7 @@ def _place_llms_lines(site: dict | None) -> str:
         if place_id not in PLACE_IDS:
             continue
         title = (place.get("title") or {}).get("en") or (place.get("title") or {}).get("de") or place_id
-        text = " ".join(((place.get("text") or {}).get("en") or "").split())
+        text = " ".join(_strip_inline((place.get("text") or {}).get("en") or "").split())
         lines.append(f"- [{title}](https://wtho.art/images/{place_id}/): {text}")
     return "\n".join(lines)
 

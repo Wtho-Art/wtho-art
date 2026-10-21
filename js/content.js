@@ -10,6 +10,12 @@
     return cache[url];
   }
 
+  function formatInline(text) {
+    const node = document.createElement("div");
+    node.textContent = text || "";
+    return node.innerHTML.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  }
+
   function workCover(work) {
     const file = (work.images && work.images[0]) || work.id + ".jpg";
     return "works/" + work.id + "/" + file;
@@ -283,6 +289,7 @@
         return { site: pair[0], works: pair[1] };
       });
     },
+    formatInline: formatInline,
     workCover: workCover,
     heroWork: heroWork,
     galleryCommit: galleryCommit,

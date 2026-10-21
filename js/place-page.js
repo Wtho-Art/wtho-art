@@ -11,7 +11,7 @@
     document.getElementById("kicker").textContent = lang === "en" ? "Studio" : "Atelier";
     document.querySelector('[data-i="back"]').textContent = lang === "en" ? "← Artist / studio" : "← Künstler/Atelier";
     document.getElementById("title").textContent = place.title[lang];
-    document.getElementById("statement").textContent = place.text[lang] || "";
+    document.getElementById("statement").innerHTML = WthoContent.formatInline(place.text[lang] || "");
     document.getElementById("mainImg").alt = place.title[lang];
     document.title = place.title[lang] + " — wtho.art";
     document.querySelectorAll("[data-lang]").forEach((button) => {

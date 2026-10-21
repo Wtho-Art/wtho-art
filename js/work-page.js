@@ -16,7 +16,7 @@
     document.getElementById("metaYear").textContent = work.year;
     document.getElementById("metaMedium").textContent =
       work.medium[lang] + (work.size && work.size !== "—" ? " · " + work.size : "");
-    document.getElementById("statement").textContent = work.statement[lang];
+    document.getElementById("statement").innerHTML = WthoContent.formatInline(work.statement[lang] || "");
     document.getElementById("mainImg").alt = work.title[lang];
     document.title = work.title[lang] + " — wtho.art";
     document.getElementById("inquire").href = "/?work=" + work.id + "#kontakt";

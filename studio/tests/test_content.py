@@ -161,6 +161,32 @@ def _place_root(tmp_path, images):
     return place, folder
 
 
+def test_format_inline_bold_and_escape():
+    assert content._format_inline("**Hallo**") == "<strong>Hallo</strong>"
+    assert content._format_inline("A <b> & **B**") == "A &lt;b&gt; &amp; <strong>B</strong>"
+    assert content._strip_inline("**Hallo** Welt") == "Hallo Welt"
+
+
+def test_render_place_statement_bold():
+    place = {
+        "id": "portrait",
+        "title": {"de": "Porträt", "en": "Portrait"},
+        "text": {"de": "**Besuch:**\r\n\r\nHallo <tag>", "en": "A line."},
+        "images": ["portrait.jpg"],
+    }
+    html = content.render_place_html(content.FALLBACK_PLACE.read_text(encoding="utf-8"), place)
+    statement = html.split('id="statement"', 1)[1].split("</p>", 1)[0]
+    assert "<strong>Besuch:</strong>" in statement
+    assert "Hallo &lt;tag&gt;" in statement
+    assert "**" not in statement
+    meta = html.split('name="description"', 1)[1].split(">", 1)[0]
+    assert "**" not in meta
+    assert "Besuch:" in meta
+    assert ".statement strong { font-weight: 600; }" in html
+    again = content.render_place_html(html, place)
+    assert again == html
+
+
 def test_render_place_page_keeps_slots():
     place = {
         "id": "portrait",
