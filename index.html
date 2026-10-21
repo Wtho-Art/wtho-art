@@ -638,14 +638,25 @@
       path = data.site.path;
       applyLang();
 
-      const requestedWorkId = new URLSearchParams(window.location.search).get("work");
+      const params = new URLSearchParams(window.location.search);
+      const requestedWorkId = params.get("work");
+      const requestedVisit = params.get("visit");
+      let jumped = false;
       if (requestedWorkId) {
         const requestedWork = works.find((w) => w.id === requestedWorkId);
         if (requestedWork) {
           fillSelect(requestedWork.title.de);
-          window.history.replaceState({}, "", window.location.pathname + window.location.hash);
-          document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
+          jumped = true;
         }
+      }
+      if (requestedVisit === "atelier") {
+        const message = document.querySelector('#form textarea[name="message"]');
+        if (message && !message.value) message.value = t().visitPrefill || "";
+        jumped = true;
+      }
+      if (jumped) {
+        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+        document.getElementById("kontakt").scrollIntoView({ behavior: "smooth" });
       }
     }).catch((err) => {
       console.error(err);

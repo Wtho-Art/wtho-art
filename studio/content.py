@@ -52,6 +52,7 @@ COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
             ("worksTitle", "Überschrift", False),
             ("worksLead", "Einleitung", True),
             ("inquire", "Schaltfläche auf der Werkseite", False),
+            ("inquireVisit", "Schaltfläche auf der Atelierseite", False),
             ("worksBack", "Zurück-Link auf der Werkseite", False),
         ],
     ),
@@ -102,6 +103,7 @@ COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
             ("contactWork", "Feld Werk", False),
             ("contactWorkPlaceholder", "Platzhalter Werk", False),
             ("contactMessage", "Feld Nachricht", False),
+            ("visitPrefill", "Vorbelegung Nachricht Atelierbesuch", True),
             ("contactSend", "Schaltfläche", False),
             ("contactNote", "Hinweis", True),
             ("instagram", "Beschriftung Instagram", False),
@@ -469,6 +471,25 @@ def _ensure_statement_strong(html: str) -> str:
     return updated
 
 
+_PLACE_BTN_CSS = (
+    "    .btn {\n"
+    "      display: inline-flex; align-items: center; justify-content: center; height: 3rem; padding: 0 1.75rem;\n"
+    "      margin-top: 2.5rem; background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent);\n"
+    "      font-size: .875rem; letter-spacing: .04em; text-decoration: none; cursor: pointer; font-family: var(--sans);\n"
+    "    }"
+)
+
+
+def _ensure_place_btn(html: str) -> str:
+    if re.search(r"(?m)^\s*\.btn\s*\{", html):
+        return html
+    pattern = r"(\.statement strong\s*\{[^}]*\}|\.statement\s*\{[^}]*\})"
+    updated, count = re.subn(pattern, r"\1\n" + _PLACE_BTN_CSS, html, count=1)
+    if count != 1:
+        raise ContentError("Die Atelierseite hat keine Statement-Regel.")
+    return updated
+
+
 def _esc(value: str) -> str:
     return (
         value.replace("&", "&amp;")
@@ -685,6 +706,10 @@ def render_place_html(html: str, place: dict) -> str:
     html = _set_img(html, image, title_de)
     html = _replace_id_text(html, "title", title_de)
     html = _replace_id_html(html, "statement", text_de)
+    if re.search(r'\bid="inquireVisit"', html):
+        html = _set_href(html, "inquireVisit", "/?visit=atelier#kontakt")
+        html = _replace_id_text(html, "inquireVisit", "Termin anfragen")
+        html = _ensure_place_btn(html)
     html = _ensure_statement_strong(html)
     return html
 

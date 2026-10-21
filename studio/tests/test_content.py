@@ -187,6 +187,29 @@ def test_render_place_statement_bold():
     assert again == html
 
 
+def test_render_place_keeps_visit_button():
+    donor = content.FALLBACK_PLACE.read_text(encoding="utf-8")
+    donor = donor.replace(
+        '<p class="statement" id="statement">Porträt im Atelier Freiburg.</p>',
+        '<p class="statement" id="statement">Porträt im Atelier Freiburg.</p>\n'
+        '        <a class="btn" id="inquireVisit" href="/old">Alt</a>',
+        1,
+    )
+    place = {
+        "id": "atelier",
+        "title": {"de": "Atelier", "en": "Studio"},
+        "text": {"de": "Ein Satz.", "en": "A line."},
+        "images": ["atelier.jpg"],
+    }
+    html = content.render_place_html(donor, place)
+    assert 'id="inquireVisit"' in html
+    assert 'href="/?visit=atelier#kontakt"' in html
+    assert ">Termin anfragen</a>" in html
+    assert ".btn {" in html
+    again = content.render_place_html(html, place)
+    assert again == html
+
+
 def test_render_place_page_keeps_slots():
     place = {
         "id": "portrait",

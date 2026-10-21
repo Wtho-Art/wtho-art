@@ -2,11 +2,13 @@
   const id = location.pathname.replace(/\/+$/, "").split("/").pop();
 
   let place = null;
+  let site = null;
   let lang = "de";
   try { lang = localStorage.getItem("wtho-lang") === "en" ? "en" : "de"; } catch (e) {}
 
   function apply() {
     if (!place) return;
+    const ui = (site && site.copy && site.copy[lang]) || {};
     document.documentElement.lang = lang;
     document.getElementById("kicker").textContent = lang === "en" ? "Studio" : "Atelier";
     document.querySelector('[data-i="back"]').textContent = lang === "en" ? "← Artist / studio" : "← Künstler/Atelier";
@@ -14,6 +16,15 @@
     document.getElementById("statement").innerHTML = WthoContent.formatInline(place.text[lang] || "");
     document.getElementById("mainImg").alt = place.title[lang];
     document.title = place.title[lang] + " — wtho.art";
+    const visit = document.getElementById("inquireVisit");
+    if (visit) {
+      const show = place.id === "atelier";
+      visit.hidden = !show;
+      if (show) {
+        visit.textContent = ui.inquireVisit || "Termin anfragen";
+        visit.href = "/?visit=atelier#kontakt";
+      }
+    }
     document.querySelectorAll("[data-lang]").forEach((button) => {
       button.classList.toggle("on", button.getAttribute("data-lang") === lang);
     });
@@ -41,6 +52,7 @@
   });
 
   WthoContent.load("../../data/").then((data) => {
+    site = data.site;
     place = (data.site.places || []).find((item) => item.id === id);
     if (!place) {
       document.getElementById("title").textContent = "Not found";
