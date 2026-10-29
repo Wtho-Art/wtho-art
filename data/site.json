@@ -18,7 +18,7 @@
     "de": {
       "skip": "Zum Inhalt",
       "navWorks": "Werke",
-      "navAbout": "Künstler/Atelier",
+      "navAbout": "Künstler/Atelier/Residenzen",
       "navExhibitions": "Ausstellungen",
       "navNewsletter": "Newsletter",
       "navContact": "Kontakt",
@@ -80,7 +80,7 @@
     "en": {
       "skip": "Skip to content",
       "navWorks": "Works",
-      "navAbout": "Artist/Studio",
+      "navAbout": "Artist/Studio/Residencies",
       "navExhibitions": "Exhibitions",
       "navNewsletter": "Newsletter",
       "navContact": "Contact",
