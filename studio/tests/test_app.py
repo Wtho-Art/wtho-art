@@ -74,7 +74,7 @@ def test_place_page_saves_text(tmp_path):
     page = client.get("/bilder/portrait")
     assert page.status_code == 200
     html = page.get_data(as_text=True)
-    assert "Porträt im Atelier Freiburg" in html
+    assert "Thorsten Weitz (*1978)" in html
     response = client.post(
         "/bilder/portrait",
         data={
@@ -112,7 +112,7 @@ def test_edit_reorder_upload_and_publish_stays_local_until_post(tmp_path):
     edit = client.get("/werke/touched")
     html = edit.get_data(as_text=True)
     token = _csrf(html)
-    assert "Violett und Blau" in html
+    assert "Macht trifft Sensibilität" in html
     response = client.post(
         "/werke/touched",
         data={
@@ -141,7 +141,8 @@ def test_edit_reorder_upload_and_publish_stays_local_until_post(tmp_path):
     works = client.get("/werke").get_data(as_text=True)
     order_form = re.search(r'id="order-form".*?</form>', works, re.S).group(0)
     ids = re.findall(r'name="id" value="([^"]+)"', order_form)
-    assert ids[0] == "touched"
+    saved_ids = [work["id"] for work in json.loads((root / "data" / "works.json").read_text(encoding="utf-8"))]
+    assert ids == saved_ids
     token = _csrf(works)
     flipped = list(reversed(ids))
     client.post("/werke/reihenfolge", data={"csrf": token, "id": flipped}, follow_redirects=True)
@@ -194,3 +195,82 @@ def test_edit_reorder_upload_and_publish_stays_local_until_post(tmp_path):
     assert "Veröffentlicht" in published.get_data(as_text=True)
     pushes = [command for command in calls[before:] if command[1:2] == ["push"]]
     assert pushes == [["git", "push", "origin", "main"]]
+
+
+def test_cities_can_be_added_edited_and_removed(tmp_path):
+    client, root, _calls = _site(tmp_path)
+    _login(client)
+    page = client.get("/staedte")
+    html = page.get_data(as_text=True)
+    assert page.status_code == 200
+    assert "London" in html
+    token = _csrf(html)
+    created = client.post(
+        "/staedte/hinzufuegen",
+        data={
+            "csrf": token,
+            "title_de": "Paris",
+            "title_en": "Paris",
+            "text_de": "Ein Satz.",
+            "text_en": "A line.",
+        },
+        follow_redirects=True,
+    )
+    assert created.status_code == 200
+    assert "Paris" in created.get_data(as_text=True)
+    site = json.loads((root / "data" / "site.json").read_text(encoding="utf-8"))
+    assert [city["id"] for city in site["commissions"]["cities"]] == ["london", "paris"]
+    public = (root / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
+    assert "<h2>Paris</h2>" in public
+    assert "London" in public
+
+    edit = client.get("/staedte/paris")
+    token = _csrf(edit.get_data(as_text=True))
+    saved = client.post(
+        "/staedte/paris",
+        data={
+            "csrf": token,
+            "title_de": "Paris",
+            "title_en": "Paris",
+            "text_de": "Neuer Stadttext.",
+            "text_en": "New city text.",
+        },
+        follow_redirects=True,
+    )
+    assert saved.status_code == 200
+    site = json.loads((root / "data" / "site.json").read_text(encoding="utf-8"))
+    paris = next(city for city in site["commissions"]["cities"] if city["id"] == "paris")
+    assert paris["text"]["de"] == "Neuer Stadttext."
+    assert "Neuer Stadttext." in (root / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
+
+    buffer = io.BytesIO()
+    Image.new("RGB", (120, 80), (20, 30, 40)).save(buffer, format="PNG")
+    token = _csrf(saved.get_data(as_text=True))
+    uploaded = client.post(
+        "/staedte/paris/bilder",
+        data={"csrf": token, "image": (io.BytesIO(buffer.getvalue()), "paris.png")},
+        follow_redirects=True,
+    )
+    assert uploaded.status_code == 200
+    assert (root / "images" / "commissions" / "paris" / "paris.jpg").is_file()
+
+    listing = client.get("/staedte").get_data(as_text=True)
+    ids = re.findall(r'name="id" value="([^"]+)"', listing)
+    assert ids[:2] == ["london", "paris"]
+    token = _csrf(listing)
+    client.post("/staedte/reihenfolge", data={"csrf": token, "id": ["paris", "london"]}, follow_redirects=True)
+    site = json.loads((root / "data" / "site.json").read_text(encoding="utf-8"))
+    assert [city["id"] for city in site["commissions"]["cities"]] == ["paris", "london"]
+
+    token = _csrf(client.get("/staedte/paris").get_data(as_text=True))
+    removed = client.post(
+        "/staedte/paris/loeschen",
+        data={"csrf": token, "confirm": "yes"},
+        follow_redirects=True,
+    )
+    assert removed.status_code == 200
+    site = json.loads((root / "data" / "site.json").read_text(encoding="utf-8"))
+    assert [city["id"] for city in site["commissions"]["cities"]] == ["london"]
+    assert not (root / "images" / "commissions" / "paris").exists()
+    assert "London" in (root / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
+    assert "https://wtho.art/images/commissions/" in (root / "sitemap.xml").read_text(encoding="utf-8")

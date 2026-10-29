@@ -53,13 +53,16 @@
     document.head.appendChild(style);
   }
 
-  function bindGallery(images) {
-    const frame = document.querySelector(".gallery-main");
-    const main = document.getElementById("mainImg");
-    const thumbs = document.getElementById("thumbs");
+  function bindGallery(images, options) {
+    const opts = options || {};
+    const frame = opts.frame || document.querySelector(".gallery-main");
+    const main = opts.main || document.getElementById("mainImg");
+    const thumbs = opts.thumbs || document.getElementById("thumbs");
+    const localKeys = opts.keys === "local";
     if (!frame || !main || !images || images.length < 2) return;
     if (frame.dataset.swipeBound) return;
     frame.dataset.swipeBound = "1";
+    if (localKeys && frame.tabIndex < 0) frame.tabIndex = 0;
     ensureGalleryStyles();
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -265,7 +268,8 @@
       });
     }
 
-    document.addEventListener("keydown", (event) => {
+    const keyTarget = localKeys ? frame : document;
+    keyTarget.addEventListener("keydown", (event) => {
       if (event.altKey || event.ctrlKey || event.metaKey) return;
       const tag = event.target && event.target.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (event.target && event.target.isContentEditable)) return;

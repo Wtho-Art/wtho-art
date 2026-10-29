@@ -320,6 +320,112 @@ def create_app(site_root: Path, auth_dir: Path, preview_origin: str = "http://12
             flash("Bild entfernt. Noch nicht veröffentlicht.")
         return redirect(url_for("place_edit", place_id=place_id))
 
+    @app.route("/staedte", methods=["GET"])
+    def cities():
+        site = content.load_site(_root())
+        page = content.commissions_view(site)
+        return render_template("cities.html", page=page, rows=_city_rows())
+
+    @app.post("/staedte/titel")
+    def cities_title():
+        root = _root()
+        site = content.load_site(root)
+        try:
+            content.apply_commissions_title(site, request.form)
+            content.save_commissions(root, site)
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("Gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("cities"))
+
+    @app.post("/staedte/reihenfolge")
+    def cities_reorder():
+        try:
+            content.reorder_cities(_root(), request.form.getlist("id"))
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("Reihenfolge gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("cities"))
+
+    @app.post("/staedte/hinzufuegen")
+    def cities_add():
+        try:
+            city = content.add_city(_root(), request.form)
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+            return redirect(url_for("cities"))
+        flash("Stadt hinzugefügt. Noch nicht veröffentlicht.")
+        return redirect(url_for("city_edit", city_id=city["id"]))
+
+    @app.route("/staedte/<city_id>", methods=["GET", "POST"])
+    def city_edit(city_id):
+        city = _load_city(city_id)
+        if request.method == "POST":
+            try:
+                content.apply_city_fields(city, request.form)
+                content.upsert_city(_root(), city)
+            except content.ContentError as exc:
+                flash(str(exc), "error")
+                return render_template("city.html", city=city), 400
+            flash("Gespeichert. Noch nicht veröffentlicht.")
+            return redirect(url_for("city_edit", city_id=city_id))
+        return render_template("city.html", city=city)
+
+    @app.post("/staedte/<city_id>/bilder")
+    def city_upload(city_id):
+        city = _load_city(city_id)
+        saved = 0
+        for storage in request.files.getlist("image"):
+            if not storage or not storage.filename:
+                continue
+            try:
+                jpeg = images.prepare_jpeg(storage.read())
+                content.add_city_jpeg(_root(), city, jpeg)
+                city = _load_city(city_id)
+                saved += 1
+            except (images.ImageError, content.ContentError) as exc:
+                flash(f"{storage.filename}: {exc}", "error")
+        if saved:
+            flash(f"{saved} Bild(er) gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("city_edit", city_id=city_id))
+
+    @app.post("/staedte/<city_id>/bilder/reihenfolge")
+    def city_image_order(city_id):
+        city = _load_city(city_id)
+        try:
+            content.reorder_city_images(_root(), city, request.form.getlist("image"))
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("Bilder neu sortiert. Noch nicht veröffentlicht.")
+        return redirect(url_for("city_edit", city_id=city_id))
+
+    @app.post("/staedte/<city_id>/bilder/entfernen")
+    def city_image_delete(city_id):
+        city = _load_city(city_id)
+        try:
+            content.remove_city_image(_root(), city, request.form.get("name") or "")
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("Bild entfernt. Noch nicht veröffentlicht.")
+        return redirect(url_for("city_edit", city_id=city_id))
+
+    @app.post("/staedte/<city_id>/loeschen")
+    def city_delete(city_id):
+        if request.form.get("confirm") != "yes":
+            flash("Zum Löschen die Bestätigung ankreuzen.", "error")
+            return redirect(url_for("city_edit", city_id=city_id))
+        try:
+            content.delete_city(_root(), city_id)
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+            return redirect(url_for("cities"))
+        flash("Stadt entfernt. Noch nicht veröffentlicht.")
+        return redirect(url_for("cities"))
+
     @app.route("/veroeffentlichen", methods=["GET", "POST"])
     def publish():
         root = _root()
@@ -453,6 +559,35 @@ def _work_from_post() -> dict:
         work["layout"] = request.form.get("layout") or "portrait"
         work["span"] = request.form.get("span") == "yes"
     return work
+
+
+def _load_city(city_id: str) -> dict:
+    if not content.ID_RE.fullmatch(city_id or ""):
+        abort(404)
+    city = content.find_city(content.load_site(_root()), city_id)
+    if not city:
+        abort(404)
+    return city
+
+
+def _city_rows() -> list[dict]:
+    root = _root()
+    rows = []
+    site = content.load_site(root)
+    for city in content.commissions_view(site)["cities"]:
+        images_ = list(city.get("images") or [])
+        cover = images_[0] if images_ else ""
+        path = root / "images" / "commissions" / city["id"] / cover if cover else None
+        rows.append(
+            {
+                "id": city["id"],
+                "title": city.get("title") or {},
+                "cover": cover,
+                "count": len(images_),
+                "exists": bool(path and path.is_file()),
+            }
+        )
+    return rows
 
 
 def _load_place(place_id: str) -> dict:

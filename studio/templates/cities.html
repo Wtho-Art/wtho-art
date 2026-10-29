@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Städte{% endblock %}
+{% block body %}
+  <p class="kicker">Aufträge</p>
+  <h1>Städte</h1>
+  <p class="lead">Jede Stadt hat einen eigenen Text und eigene Bilder. Auf der Seite stehen die Bilder links und der Text rechts. Die Reihenfolge hier ist die Reihenfolge auf der Seite.</p>
+
+  <form method="post" action="{{ url_for('cities_title') }}" class="stack">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="pair">
+      <label>Seitentitel Deutsch
+        <input name="title_de" value="{{ page.title.de }}" required>
+      </label>
+      <label>Seitentitel Englisch
+        <input name="title_en" value="{{ page.title.en }}" required>
+      </label>
+    </div>
+    <div class="bar"><button type="submit">Seitentitel speichern</button></div>
+  </form>
+
+  {% if rows %}
+  <form method="post" action="{{ url_for('cities_reorder') }}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div data-sortable>
+      {% for city in rows %}
+        <article class="work-row" data-row>
+          <button type="button" class="handle" draggable="true" aria-label="Ziehen">≡</button>
+          <input type="hidden" name="id" value="{{ city.id }}">
+          {% if city.exists %}
+            <img class="thumb" src="{{ url_for('media', relpath='images/commissions/' ~ city.id ~ '/' ~ city.cover) }}" alt="">
+          {% else %}
+            <span class="thumb empty"></span>
+          {% endif %}
+          <div class="grow">
+            <a href="{{ url_for('city_edit', city_id=city.id) }}"><strong>{{ city.title.de or city.id }}</strong></a>
+            <p class="meta">/images/commissions/{{ city.id }}/ · {{ city.count }} Bilder</p>
+          </div>
+          <div class="row-actions">
+            <button type="button" data-move="up">Hoch</button>
+            <button type="button" data-move="down">Runter</button>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    <div class="bar"><button type="submit">Reihenfolge speichern</button></div>
+  </form>
+  {% else %}
+    <p>Noch keine Stadt.</p>
+  {% endif %}
+
+  <section>
+    <h2>Stadt hinzufügen</h2>
+    <form method="post" action="{{ url_for('cities_add') }}" class="stack">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div class="pair">
+        <label>Name Deutsch
+          <input name="title_de" required>
+        </label>
+        <label>Name Englisch
+          <input name="title_en" required>
+        </label>
+      </div>
+      <div class="pair">
+        <label>Text Deutsch
+          <textarea name="text_de" rows="4"></textarea>
+        </label>
+        <label>Text Englisch
+          <textarea name="text_en" rows="4"></textarea>
+        </label>
+      </div>
+      <p class="meta">Fett mit **Text**. Die Adresse entsteht aus dem englischen Namen.</p>
+      <button type="submit">Stadt hinzufügen</button>
+    </form>
+  </section>
+{% endblock %}

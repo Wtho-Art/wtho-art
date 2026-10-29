@@ -65,6 +65,13 @@ def is_allowed(path: str) -> bool:
     if parts[0] == "images" and len(parts) == 3 and PLACE_ID.fullmatch(parts[1]):
         name = parts[-1]
         return name == "index.html" or name.lower().endswith(IMAGE_SUFFIXES)
+    if (
+        parts[0] == "images"
+        and len(parts) == 4
+        and parts[1] == "commissions"
+        and PLACE_ID.fullmatch(parts[2])
+    ):
+        return parts[-1].lower().endswith(IMAGE_SUFFIXES)
     return False
 
 

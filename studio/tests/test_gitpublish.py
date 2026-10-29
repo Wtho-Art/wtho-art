@@ -10,6 +10,8 @@ def test_allowed_paths():
     assert gitpublish.is_allowed("images/portrait.jpg")
     assert gitpublish.is_allowed("images/portrait/index.html")
     assert gitpublish.is_allowed("images/portrait/portrait-2.jpg")
+    assert gitpublish.is_allowed("images/commissions/index.html")
+    assert gitpublish.is_allowed("images/commissions/london/london.jpg")
     assert gitpublish.is_allowed("sitemap.xml")
     assert gitpublish.is_allowed(".gitignore")
     assert not gitpublish.is_allowed("studio/app.py")
@@ -19,6 +21,8 @@ def test_allowed_paths():
     assert not gitpublish.is_allowed("works/a/file.tif")
     assert not gitpublish.is_allowed("images/evil.php")
     assert not gitpublish.is_allowed("images/portrait/notes.txt")
+    assert not gitpublish.is_allowed("images/commissions/london/notes.txt")
+    assert not gitpublish.is_allowed("images/commissions/london/index.html")
 
 
 def test_directory_expands_to_safe_files_only(tmp_path):

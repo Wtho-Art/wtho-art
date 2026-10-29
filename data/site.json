@@ -32,6 +32,7 @@
       "aboutQuote": "Alles beginnt mit einem Gefühl.",
       "aboutQuoteLink": ">> Mehr zu Biografie & Weg",
       "aboutAtelierLink": ">> Einblicke & Atelierbesuch",
+      "aboutCommissionsLink": ">> Aufträge & Residenzen",
       "pathTitle": "Werdegang",
       "exhibitionsKicker": "Ausstellungen",
       "exhibitionsTitle": "Ausstellungen",
@@ -93,6 +94,7 @@
       "aboutQuote": "It all starts with a feeling.",
       "aboutQuoteLink": ">> More about Biography & Journey",
       "aboutAtelierLink": ">> Studio Insights & Visit",
+      "aboutCommissionsLink": ">> Commissions & Residencies",
       "pathTitle": "Path",
       "exhibitionsKicker": "Exhibitions",
       "exhibitionsTitle": "Exhibitions",
@@ -245,5 +247,29 @@
         "atelier-11.jpg"
       ]
     }
-  ]
+  ],
+  "commissions": {
+    "title": {
+      "de": "Aufträge & Residenzen",
+      "en": "Commissions & Residencies"
+    },
+    "cities": [
+      {
+        "id": "london",
+        "title": {
+          "de": "London",
+          "en": "London"
+        },
+        "text": {
+          "de": "London ist ein Beispiel auf dieser Seite. Diesen Text kann man im Studio ersetzen.\n\n**Aufträge und Residenzen** bekommen hier jeweils einen eigenen Text und eigene Bilder. Die Bilder stehen links, der Text rechts.",
+          "en": "London is an example on this page. This text can be replaced in the studio.\n\n**Commissions and residencies** each have their own text and their own pictures. The pictures sit on the left and the text on the right."
+        },
+        "images": [
+          "london.jpg",
+          "london-2.jpg",
+          "london-3.jpg"
+        ]
+      }
+    ]
+  }
 }

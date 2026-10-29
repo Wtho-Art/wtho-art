@@ -12,7 +12,10 @@ from pathlib import Path
 ID_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 FALLBACK_PAGE = Path(__file__).resolve().parent / "fallback_work.html"
 FALLBACK_PLACE = Path(__file__).resolve().parent / "fallback_place.html"
+FALLBACK_COMMISSIONS = Path(__file__).resolve().parent / "fallback_commissions.html"
 MAX_IMAGES = 12
+RESERVED_CITY_IDS = {"neu", "titel", "reihenfolge", "hinzufuegen"}
+COMMISSIONS_URL = "https://wtho.art/images/commissions/"
 
 COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
     (
@@ -68,6 +71,7 @@ COPY_GROUPS: list[tuple[str, list[tuple[str, str, bool]]]] = [
             ("aboutQuote", "Zitat", True),
             ("aboutQuoteLink", "Link unter dem Zitat", False),
             ("aboutAtelierLink", "Link zum Atelier", False),
+            ("aboutCommissionsLink", "Link zu Aufträgen und Residenzen", False),
             ("pathTitle", "Überschrift Werdegang", False),
         ],
     ),
@@ -813,7 +817,12 @@ def rebuild_sitemap(root: Path, works: list) -> None:
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-    urls = ["https://wtho.art/"] + [f"https://wtho.art/works/{work['id']}/" for work in works] + _place_urls(root)
+    urls = (
+        ["https://wtho.art/"]
+        + [f"https://wtho.art/works/{work['id']}/" for work in works]
+        + _place_urls(root)
+        + _commissions_urls(root)
+    )
     for index, loc in enumerate(urls):
         if index == 0:
             freq, priority = "weekly", "1.0"
@@ -860,9 +869,9 @@ def rebuild_llms(root: Path, works: list, site: dict | None = None) -> None:
     text = _PLACE_LINE.sub("", text)
     marker = "\n## Works\n"
     head = text.split(marker, 1)[0].rstrip() if marker in text else text.rstrip()
-    place_lines = _place_llms_lines(site)
-    if place_lines:
-        head = head + "\n" + place_lines
+    extra = "\n".join(line for line in (_place_llms_lines(site), _commissions_llms_line(site)) if line)
+    if extra:
+        head = head + "\n" + extra
     lines = [head, "", "## Works"]
     for work in works:
         title = work["title"].get("en") or work["title"].get("de") or work["id"]
@@ -874,6 +883,351 @@ def rebuild_llms(root: Path, works: list, site: dict | None = None) -> None:
         detail = ", ".join(bit for bit in (medium, size, year) if bit)
         lines.append(f"- [{title}](https://wtho.art/works/{work['id']}/): {detail}")
     write_text(path, "\n".join(lines) + "\n")
+
+
+def commissions_view(site: dict) -> dict:
+    block = site.get("commissions") if isinstance(site.get("commissions"), dict) else {}
+    title = block.get("title") if isinstance(block.get("title"), dict) else {}
+    cities = block.get("cities") if isinstance(block.get("cities"), list) else []
+    return {
+        "title": {
+            "de": (title.get("de") or "Aufträge & Residenzen").strip() or "Aufträge & Residenzen",
+            "en": (title.get("en") or "Commissions & Residencies").strip() or "Commissions & Residencies",
+        },
+        "cities": [city for city in cities if isinstance(city, dict) and city.get("id")],
+    }
+
+
+def _commissions_description(page: dict) -> str:
+    parts = []
+    for city in page["cities"]:
+        text = " ".join(_strip_inline((city.get("text") or {}).get("de") or "").split())
+        if text:
+            parts.append(text)
+    body = " ".join(parts) or page["title"]["de"]
+    if len(body) > 300:
+        body = body[:299].rstrip() + "…"
+    return body
+
+
+def _commissions_image(page: dict) -> str:
+    for city in page["cities"]:
+        images = [name for name in (city.get("images") or []) if isinstance(name, str) and name]
+        if images:
+            return f"https://wtho.art/images/commissions/{city['id']}/{images[0]}"
+    return "https://wtho.art/og.jpg"
+
+
+def _city_markup(city: dict) -> str:
+    city_id = str(city["id"])
+    title = (city.get("title") or {}).get("de") or city_id
+    text = (city.get("text") or {}).get("de") or ""
+    images = [name for name in (city.get("images") or []) if isinstance(name, str) and name]
+    heading = f"<h2>{_esc(title)}</h2>"
+    statement = f'<p class="statement">{_format_inline(text)}</p>'
+    if not images:
+        return f'<section class="city city-text" id="{_esc(city_id)}">{heading}{statement}</section>'
+    buttons = []
+    for index, name in enumerate(images):
+        src = _esc(f"{city_id}/{name}")
+        selected = ' class="on"' if index == 0 else ""
+        buttons.append(f'<button type="button"{selected}><img src="{src}" alt="" /></button>')
+    thumbs_class = "thumbs show" if len(images) > 1 else "thumbs"
+    gallery = (
+        "<div>"
+        f'<div class="gallery-main" tabindex="0"><img src="{_esc(city_id + "/" + images[0])}" alt="{_esc(title)}" /></div>'
+        f'<div class="{thumbs_class}">{"".join(buttons) if len(images) > 1 else ""}</div>'
+        "</div>"
+    )
+    return f'<section class="layout city" id="{_esc(city_id)}">{gallery}<div>{heading}{statement}</div></section>'
+
+
+def _cities_markup(cities: list) -> str:
+    if not cities:
+        return '<p class="statement" id="empty">Noch keine Stadt.</p>'
+    return "".join(_city_markup(city) for city in cities)
+
+
+def _replace_cities(html: str, inner: str) -> str:
+    pattern = r"<!-- CITIES:START -->.*?<!-- CITIES:END -->"
+    block = "<!-- CITIES:START -->" + inner + "<!-- CITIES:END -->"
+    return _sub_once(pattern, lambda _match: block, html, "cities")
+
+
+def render_commissions_html(html: str, page: dict) -> str:
+    title_de = page["title"]["de"]
+    page_title = f"{title_de} — wtho.art"
+    description = _commissions_description(page)
+    image_url = _commissions_image(page)
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": title_de,
+        "description": description,
+        "url": COMMISSIONS_URL,
+        "image": image_url,
+        "isPartOf": {"@type": "WebSite", "name": "wtho.art", "url": "https://wtho.art/"},
+    }
+    raw = json.dumps(payload, ensure_ascii=False, indent=2).replace("<", "\\u003c")
+    block = '<script type="application/ld+json">\n' + raw + "\n  </script>"
+    html = _sub_once(r"<title>.*?</title>", lambda _m: f"<title>{_esc(page_title)}</title>", html, "title")
+    html = _set_meta(html, "name", "description", description)
+    html = _sub_once(
+        r'(<link rel="canonical" href=")([^"]*)(")',
+        lambda match: match.group(1) + COMMISSIONS_URL + match.group(3),
+        html,
+        "canonical",
+    )
+    html = _set_meta(html, "property", "og:title", page_title)
+    html = _set_meta(html, "property", "og:description", description)
+    html = _set_meta(html, "property", "og:image", image_url)
+    html = _set_meta(html, "property", "og:url", COMMISSIONS_URL)
+    html = _set_meta(html, "name", "twitter:title", page_title)
+    html = _set_meta(html, "name", "twitter:image", image_url)
+    html = _sub_once(
+        r'<script type="application/ld\+json">.*?</script>',
+        lambda _m: block,
+        html,
+        "json-ld",
+    )
+    html = _replace_id_text(html, "title", title_de)
+    html = _replace_cities(html, _cities_markup(page["cities"]))
+    html = _ensure_statement_strong(html)
+    return html
+
+
+def write_commissions_page(root: Path, site: dict) -> None:
+    if not FALLBACK_COMMISSIONS.is_file():
+        raise ContentError("Es gibt keine Vorlage für die Auftragsseite.")
+    root = root.resolve()
+    folder = (root / "images" / "commissions").resolve()
+    if folder.parent != (root / "images").resolve():
+        raise ContentError("Die Auftragsseite liegt außerhalb der Bilder.")
+    folder.mkdir(parents=True, exist_ok=True)
+    html = render_commissions_html(
+        FALLBACK_COMMISSIONS.read_text(encoding="utf-8"),
+        commissions_view(site),
+    )
+    write_text(folder / "index.html", html)
+
+
+def save_commissions(root: Path, site: dict) -> None:
+    save_site(root, site)
+    write_commissions_page(root, site)
+    works_path = root / "data" / "works.json"
+    works = load_json(works_path) if works_path.is_file() else []
+    rebuild_sitemap(root, works)
+    rebuild_llms(root, works, site)
+
+
+def _commissions_urls(root: Path) -> list[str]:
+    path = root / "data" / "site.json"
+    if not path.is_file():
+        return []
+    site = load_json(path)
+    if isinstance(site.get("commissions"), dict):
+        return [COMMISSIONS_URL]
+    return []
+
+
+def _commissions_llms_line(site: dict | None) -> str:
+    if not site or not isinstance(site.get("commissions"), dict):
+        return ""
+    view = commissions_view(site)
+    title = view["title"]["en"] or view["title"]["de"]
+    bits = []
+    for city in view["cities"]:
+        name = (city.get("title") or {}).get("en") or (city.get("title") or {}).get("de") or city.get("id") or ""
+        text = " ".join(_strip_inline((city.get("text") or {}).get("en") or "").split())
+        if name and text:
+            bits.append(f"{name}: {text}")
+        elif name:
+            bits.append(str(name))
+    line = f"- [{title}]({COMMISSIONS_URL}):"
+    body = " ".join(bits)
+    if body:
+        line += " " + body
+    return line
+
+
+def find_city(site: dict, city_id: str) -> dict | None:
+    if not ID_RE.fullmatch(city_id or ""):
+        return None
+    for city in commissions_view(site)["cities"]:
+        if city.get("id") == city_id:
+            return city
+    return None
+
+
+def city_folder(root: Path, city_id: str) -> Path:
+    if not ID_RE.fullmatch(city_id or ""):
+        raise ContentError("Die Stadt-ID ist ungültig.")
+    root = root.resolve()
+    folder = (root / "images" / "commissions" / city_id).resolve()
+    parent = (root / "images" / "commissions").resolve()
+    if folder.parent != parent:
+        raise ContentError("Die Stadt-ID ist ungültig.")
+    return folder
+
+
+def unique_city_id(cities: list, slug: str) -> str:
+    taken = {city.get("id") for city in cities} | set(RESERVED_CITY_IDS)
+    if slug not in taken:
+        return slug
+    number = 2
+    while f"{slug}-{number}" in taken:
+        number += 1
+    return f"{slug}-{number}"
+
+
+def apply_commissions_title(site: dict, form) -> None:
+    title_de = form.get("title_de", "").strip()
+    title_en = form.get("title_en", "").strip()
+    if not title_de or not title_en:
+        raise ContentError("Titel auf Deutsch und Englisch eintragen.")
+    block = site.get("commissions")
+    if not isinstance(block, dict):
+        block = {"cities": []}
+        site["commissions"] = block
+    block["title"] = {"de": title_de, "en": title_en}
+    block.setdefault("cities", [])
+
+
+def apply_city_fields(city: dict, form) -> dict:
+    title_de = form.get("title_de", "").strip()
+    title_en = form.get("title_en", "").strip()
+    if not title_de or not title_en:
+        raise ContentError("Titel auf Deutsch und Englisch eintragen.")
+    city.setdefault("title", {})
+    city.setdefault("text", {})
+    city["title"]["de"] = title_de
+    city["title"]["en"] = title_en
+    city["text"]["de"] = form.get("text_de", "").strip()
+    city["text"]["en"] = form.get("text_en", "").strip()
+    return city
+
+
+def add_city(root: Path, form) -> dict:
+    title_de = form.get("title_de", "").strip()
+    title_en = form.get("title_en", "").strip()
+    if not title_de or not title_en:
+        raise ContentError("Titel auf Deutsch und Englisch eintragen.")
+    site = load_site(root)
+    block = site.get("commissions")
+    if not isinstance(block, dict):
+        block = {
+            "title": {"de": "Aufträge & Residenzen", "en": "Commissions & Residencies"},
+            "cities": [],
+        }
+        site["commissions"] = block
+    block.setdefault("title", {"de": "Aufträge & Residenzen", "en": "Commissions & Residencies"})
+    cities = [city for city in (block.get("cities") or []) if isinstance(city, dict)]
+    city = {
+        "id": unique_city_id(cities, slugify(title_en)),
+        "title": {"de": title_de, "en": title_en},
+        "text": {
+            "de": form.get("text_de", "").strip(),
+            "en": form.get("text_en", "").strip(),
+        },
+        "images": [],
+    }
+    cities.append(city)
+    block["cities"] = cities
+    save_commissions(root, site)
+    return city
+
+
+def upsert_city(root: Path, city: dict) -> None:
+    city_id = city.get("id") or ""
+    if not ID_RE.fullmatch(city_id):
+        raise ContentError("Die Stadt-ID ist ungültig.")
+    site = load_site(root)
+    block = site.get("commissions")
+    if not isinstance(block, dict):
+        raise ContentError("Diese Stadt gibt es nicht.")
+    cities = list(block.get("cities") or [])
+    for index, item in enumerate(cities):
+        if isinstance(item, dict) and item.get("id") == city_id:
+            cities[index] = city
+            break
+    else:
+        raise ContentError("Diese Stadt gibt es nicht.")
+    block["cities"] = cities
+    save_commissions(root, site)
+
+
+def reorder_cities(root: Path, ids: list[str]) -> None:
+    site = load_site(root)
+    block = site.get("commissions")
+    if not isinstance(block, dict):
+        raise ContentError("Die Städteliste ist unvollständig.")
+    cities = [city for city in (block.get("cities") or []) if isinstance(city, dict)]
+    current = [city.get("id") for city in cities]
+    if sorted(ids) != sorted(current) or len(ids) != len(current):
+        raise ContentError("Die Städteliste ist unvollständig.")
+    by_id = {city["id"]: city for city in cities}
+    block["cities"] = [by_id[city_id] for city_id in ids]
+    save_commissions(root, site)
+
+
+def delete_city(root: Path, city_id: str) -> None:
+    site = load_site(root)
+    block = site.get("commissions")
+    if not isinstance(block, dict):
+        raise ContentError("Diese Stadt gibt es nicht.")
+    cities = list(block.get("cities") or [])
+    kept = [city for city in cities if not (isinstance(city, dict) and city.get("id") == city_id)]
+    if len(kept) == len(cities):
+        raise ContentError("Diese Stadt gibt es nicht.")
+    block["cities"] = kept
+    folder = city_folder(root, city_id)
+    if folder.is_dir():
+        shutil.rmtree(folder)
+    save_commissions(root, site)
+
+
+def sync_city_images(root: Path, city: dict) -> None:
+    folder = city_folder(root, city["id"])
+    folder.mkdir(parents=True, exist_ok=True)
+    city["images"] = normalize_image_names(folder, city["id"], list(city.get("images") or []))
+    prune_extra_images(folder, city["images"])
+
+
+def add_city_jpeg(root: Path, city: dict, jpeg: bytes) -> None:
+    if len(city.get("images") or []) >= MAX_IMAGES:
+        raise ContentError("Höchstens 12 Bilder pro Stadt.")
+    folder = city_folder(root, city["id"])
+    folder.mkdir(parents=True, exist_ok=True)
+    name = f"upload-{secrets.token_hex(4)}.jpg"
+    write_bytes(folder / name, jpeg)
+    city.setdefault("images", []).append(name)
+    sync_city_images(root, city)
+    upsert_city(root, city)
+
+
+def remove_city_image(root: Path, city: dict, name: str) -> None:
+    safe_image_name(name)
+    images = list(city.get("images") or [])
+    if name not in images:
+        raise ContentError("Das Bild gehört nicht zu dieser Stadt.")
+    images.remove(name)
+    city["images"] = images
+    path = city_folder(root, city["id"]) / name
+    if path.is_file():
+        path.unlink()
+    sync_city_images(root, city)
+    upsert_city(root, city)
+
+
+def reorder_city_images(root: Path, city: dict, names: list[str]) -> None:
+    current = list(city.get("images") or [])
+    if sorted(names) != sorted(current) or len(names) != len(current):
+        raise ContentError("Die Bilderliste ist unvollständig.")
+    for name in names:
+        safe_image_name(name)
+    city["images"] = names
+    sync_city_images(root, city)
+    upsert_city(root, city)
 
 
 def copy_groups(site: dict) -> list[dict]:

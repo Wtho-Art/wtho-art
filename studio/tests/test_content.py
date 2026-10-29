@@ -253,3 +253,112 @@ def test_place_keeps_last_image_and_renames_cover(tmp_path):
     assert "https://wtho.art/images/atelier/" not in sitemap
     assert "[Portrait](https://wtho.art/images/portrait/):" in llms
     assert "## Works" in llms
+
+
+def _commissions_root(tmp_path):
+    data = tmp_path / "data"
+    data.mkdir()
+    site = {
+        "contactEmail": "a@b.c",
+        "instagram": "https://instagram.com/x",
+        "copy": {"de": {}, "en": {}},
+        "places": [],
+        "commissions": {
+            "title": {"de": "Aufträge & Residenzen", "en": "Commissions & Residencies"},
+            "cities": [
+                {
+                    "id": "london",
+                    "title": {"de": "London", "en": "London"},
+                    "text": {
+                        "de": "**Aufträge** stehen links.\nZweite Zeile.",
+                        "en": "Pictures on the left.",
+                    },
+                    "images": ["london.jpg", "london-2.jpg"],
+                }
+            ],
+        },
+    }
+    (data / "site.json").write_text(content.dumps_json(site), encoding="utf-8")
+    (data / "works.json").write_text("[]\n", encoding="utf-8")
+    (tmp_path / "llms.txt").write_text("# wtho\n\n## Site\n- [Homepage](https://wtho.art/)\n\n## Works\n", encoding="utf-8")
+    folder = tmp_path / "images" / "commissions" / "london"
+    folder.mkdir(parents=True)
+    return site, folder
+
+
+def test_render_commissions_page_bold_and_image():
+    page = {
+        "title": {"de": "Aufträge & Residenzen", "en": "Commissions & Residencies"},
+        "cities": [
+            {
+                "id": "london",
+                "title": {"de": "London", "en": "London"},
+                "text": {"de": "**Aufträge** & mehr", "en": "A line."},
+                "images": ["london.jpg", "london-2.jpg"],
+            }
+        ],
+    }
+    html = content.render_commissions_html(content.FALLBACK_COMMISSIONS.read_text(encoding="utf-8"), page)
+    assert "<h2>London</h2>" in html
+    assert 'src="london/london.jpg"' in html
+    assert "<strong>Aufträge</strong>" in html
+    assert "&amp; mehr" in html
+    assert "https://wtho.art/images/commissions/" in html
+    assert "https://wtho.art/images/commissions/london/london.jpg" in html
+    again = content.render_commissions_html(html, page)
+    assert again == html
+
+
+def test_city_add_edit_reorder_and_delete(tmp_path):
+    _site, folder = _commissions_root(tmp_path)
+    (folder / "london.jpg").write_bytes(b"cover")
+    (folder / "london-2.jpg").write_bytes(b"second")
+    content.write_commissions_page(tmp_path, content.load_site(tmp_path))
+
+    paris = content.add_city(
+        tmp_path,
+        {
+            "title_de": "Paris",
+            "title_en": "Paris",
+            "text_de": "Ein Satz.",
+            "text_en": "A line.",
+        },
+    )
+    assert paris["id"] == "paris"
+    page = (tmp_path / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
+    assert "<h2>Paris</h2>" in page
+    assert 'class="city city-text" id="paris"' in page
+
+    city = content.find_city(content.load_site(tmp_path), "london")
+    content.apply_city_fields(city, {"title_de": "London", "title_en": "London", "text_de": "Neu.", "text_en": "New."})
+    content.upsert_city(tmp_path, city)
+    saved = content.load_site(tmp_path)
+    assert content.find_city(saved, "london")["text"]["de"] == "Neu."
+
+    content.reorder_city_images(tmp_path, content.find_city(saved, "london"), ["london-2.jpg", "london.jpg"])
+    renamed = content.load_site(tmp_path)
+    assert content.find_city(renamed, "london")["images"] == ["london.jpg", "london-2.jpg"]
+    assert (folder / "london.jpg").read_bytes() == b"second"
+
+    content.remove_city_image(tmp_path, content.find_city(content.load_site(tmp_path), "london"), "london.jpg")
+    content.remove_city_image(tmp_path, content.find_city(content.load_site(tmp_path), "london"), "london.jpg")
+    emptied = content.find_city(content.load_site(tmp_path), "london")
+    assert emptied["images"] == []
+    bare = (tmp_path / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
+    assert 'class="city city-text" id="london"' in bare
+
+    content.reorder_cities(tmp_path, ["paris", "london"])
+    ordered = [city["id"] for city in content.load_site(tmp_path)["commissions"]["cities"]]
+    assert ordered == ["paris", "london"]
+
+    content.delete_city(tmp_path, "paris")
+    left = content.load_site(tmp_path)
+    assert [city["id"] for city in left["commissions"]["cities"]] == ["london"]
+    assert not (tmp_path / "images" / "commissions" / "paris").exists()
+    sitemap = (tmp_path / "sitemap.xml").read_text(encoding="utf-8")
+    llms = (tmp_path / "llms.txt").read_text(encoding="utf-8")
+    assert "https://wtho.art/images/commissions/" in sitemap
+    assert "[Commissions &amp; Residencies]" not in llms
+    assert "[Commissions & Residencies](https://wtho.art/images/commissions/):" in llms
+    assert "London: New." in llms
+    assert "## Works" in llms
