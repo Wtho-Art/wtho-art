@@ -12,6 +12,8 @@ EXACT = {
     "data/works.json",
     "sitemap.xml",
     "llms.txt",
+    "robots.txt",
+    "index.html",
     "MAINTAIN.md",
     ".gitignore",
     "og.jpg",

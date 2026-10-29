@@ -1313,3 +1313,320 @@ def _rows(form, prefix: str) -> list[dict]:
 def apply_lists(site: dict, form) -> None:
     site["exhibits"] = _rows(form, "ex")
     site["path"] = _rows(form, "path")
+
+
+SEO_FIELDS = (
+    "title",
+    "description",
+    "keywords",
+    "author",
+    "robots",
+    "ogTitle",
+    "ogDescription",
+    "jobTitle",
+    "personDescription",
+    "addressLocality",
+)
+ROBOTS_CHOICES = ("index, follow", "noindex, nofollow")
+SEO_LIMITS = {
+    "title": 180,
+    "description": 400,
+    "keywords": 400,
+    "author": 80,
+    "robots": 40,
+    "ogTitle": 180,
+    "ogDescription": 400,
+    "jobTitle": 80,
+    "personDescription": 400,
+    "addressLocality": 80,
+}
+LLMS_FIELDS = ("heading", "summary", "preferredName", "studio", "homepage", "instagramBlurb")
+SITEMAP_LINE = "Sitemap: https://wtho.art/sitemap.xml"
+OG_IMAGE_URL = "https://wtho.art/og.jpg"
+MAX_ROBOTS_CHARS = 4000
+
+
+def seo_view(site: dict) -> dict:
+    raw = site.get("seo") if isinstance(site.get("seo"), dict) else {}
+    view = {key: str(raw.get(key) or "").strip() for key in SEO_FIELDS}
+    if view["robots"] not in ROBOTS_CHOICES:
+        view["robots"] = "index, follow"
+    return view
+
+
+def apply_seo(site: dict, form) -> None:
+    seo = {}
+    for key in SEO_FIELDS:
+        value = form.get(key, "")
+        value = value.strip() if isinstance(value, str) else ""
+        if not value:
+            raise ContentError("Alle SEO-Felder ausfüllen.")
+        if "\n" in value or "\r" in value:
+            raise ContentError("Die SEO-Felder bleiben einzeilig.")
+        if len(value) > SEO_LIMITS[key]:
+            raise ContentError("Ein SEO-Feld ist zu lang.")
+        seo[key] = value
+    if seo["robots"] not in ROBOTS_CHOICES:
+        raise ContentError("Robots ist ungültig.")
+    site["seo"] = seo
+
+
+def work_search_blurb(work: dict) -> str:
+    title = (work.get("title") or {}).get("de") or work.get("id") or ""
+    medium = (work.get("medium") or {}).get("de") or ""
+    size = work.get("size") or ""
+    if size and size != "—":
+        return f"{title} — {medium}, {size}. Thorsten Weitz, wtho.art."
+    return f"{title} — {medium}. Thorsten Weitz, wtho.art."
+
+
+def _brief(text: str, limit: int = 180) -> str:
+    flat = " ".join((text or "").split())
+    if len(flat) <= limit:
+        return flat
+    return flat[: limit - 1].rstrip() + "…"
+
+
+def seo_rows(site: dict, works: list) -> list[dict]:
+    seo = seo_view(site) if isinstance(site.get("seo"), dict) else {"title": "", "description": ""}
+    rows = [
+        {
+            "kind": "home",
+            "id": "",
+            "label": "Startseite",
+            "title": seo.get("title", ""),
+            "description": _brief(seo.get("description", ""), 240),
+        }
+    ]
+    for work in works:
+        title = (work.get("title") or {}).get("de") or work.get("id") or ""
+        rows.append(
+            {
+                "kind": "work",
+                "id": work.get("id") or "",
+                "label": title,
+                "title": f"{title} — wtho.art",
+                "description": work_search_blurb(work),
+            }
+        )
+    for place in site.get("places") or []:
+        if place.get("id") not in PLACE_IDS:
+            continue
+        title = (place.get("title") or {}).get("de") or place["id"]
+        text = " ".join(_strip_inline((place.get("text") or {}).get("de") or "").split())
+        rows.append(
+            {
+                "kind": "place",
+                "id": place["id"],
+                "label": title,
+                "title": f"{title} — wtho.art",
+                "description": _brief(text),
+            }
+        )
+    if isinstance(site.get("commissions"), dict):
+        page = commissions_view(site)
+        rows.append(
+            {
+                "kind": "cities",
+                "id": "",
+                "label": page["title"]["de"],
+                "title": page["title"]["de"],
+                "description": _brief(_commissions_description(page)),
+            }
+        )
+        for city in page["cities"]:
+            title = (city.get("title") or {}).get("de") or city["id"]
+            text = " ".join(_strip_inline((city.get("text") or {}).get("de") or "").split())
+            rows.append(
+                {
+                    "kind": "city",
+                    "id": city["id"],
+                    "label": title,
+                    "title": title,
+                    "description": _brief(text),
+                }
+            )
+    return rows
+
+
+def sitemap_locs(root: Path) -> list[str]:
+    path = root / "sitemap.xml"
+    if not path.is_file():
+        return []
+    return re.findall(r"<loc>(.*?)</loc>", path.read_text(encoding="utf-8"))
+
+
+def _homepage_person(html: str) -> tuple[dict, re.Match]:
+    match = re.search(r'<script type="application/ld\+json">.*?</script>', html, flags=re.S)
+    if not match:
+        raise ContentError("Die Startseite hat kein JSON-LD.")
+    raw = match.group(0)
+    body = raw.split(">", 1)[1].rsplit("</script>", 1)[0]
+    try:
+        data = json.loads(body)
+    except json.JSONDecodeError as exc:
+        raise ContentError("Das JSON-LD der Startseite ist ungültig.") from exc
+    person = next((node for node in data.get("@graph") or [] if node.get("@type") == "Person"), None)
+    if person is None:
+        raise ContentError("Die Startseite hat keine Person im JSON-LD.")
+    return data, match
+
+
+def _write_jsonld(html: str, match: re.Match, data: dict) -> str:
+    raw = json.dumps(data, ensure_ascii=False, indent=2).replace("<", "\\u003c")
+    block = '<script type="application/ld+json">\n' + raw + "\n  </script>"
+    return html[: match.start()] + block + html[match.end() :]
+
+
+def _apply_identity(person: dict, site: dict) -> None:
+    email = (site.get("contactEmail") or "").strip()
+    instagram = (site.get("instagram") or "").strip()
+    if email:
+        person["email"] = f"mailto:{email}"
+    if instagram:
+        person["sameAs"] = [instagram]
+
+
+def patch_homepage_seo(html: str, site: dict) -> str:
+    seo = seo_view(site)
+    if not seo["title"]:
+        raise ContentError("Alle SEO-Felder ausfüllen.")
+    html = _sub_once(r"<title>.*?</title>", lambda _m: f"<title>{_esc(seo['title'])}</title>", html, "title")
+    html = _set_meta(html, "name", "description", seo["description"])
+    html = _set_meta(html, "name", "keywords", seo["keywords"])
+    html = _set_meta(html, "name", "author", seo["author"])
+    html = _set_meta(html, "name", "robots", seo["robots"])
+    html = _set_meta(html, "property", "og:title", seo["ogTitle"])
+    html = _set_meta(html, "property", "og:description", seo["ogDescription"])
+    html = _set_meta(html, "property", "og:image", OG_IMAGE_URL)
+    html = _set_meta(html, "name", "twitter:title", seo["ogTitle"])
+    html = _set_meta(html, "name", "twitter:description", seo["ogDescription"])
+    html = _set_meta(html, "name", "twitter:image", OG_IMAGE_URL)
+    data, match = _homepage_person(html)
+    person = next(node for node in data["@graph"] if node.get("@type") == "Person")
+    person["jobTitle"] = seo["jobTitle"]
+    person["description"] = seo["personDescription"]
+    address = person.setdefault("address", {"@type": "PostalAddress", "addressCountry": "DE"})
+    address["addressLocality"] = seo["addressLocality"]
+    address.setdefault("addressCountry", "DE")
+    _apply_identity(person, site)
+    return _write_jsonld(html, match, data)
+
+
+def write_homepage_seo(root: Path, site: dict) -> None:
+    path = root / "index.html"
+    if not path.is_file():
+        raise ContentError("Die Startseite fehlt.")
+    write_text(path, patch_homepage_seo(path.read_text(encoding="utf-8"), site))
+
+
+def sync_homepage_identity(root: Path, site: dict) -> None:
+    path = root / "index.html"
+    if not path.is_file():
+        return
+    html = path.read_text(encoding="utf-8")
+    if isinstance(site.get("seo"), dict) and str(site["seo"].get("title") or "").strip():
+        write_text(path, patch_homepage_seo(html, site))
+        return
+    data, match = _homepage_person(html)
+    person = next(node for node in data["@graph"] if node.get("@type") == "Person")
+    _apply_identity(person, site)
+    write_text(path, _write_jsonld(html, match, data))
+
+
+def save_og_jpeg(root: Path, jpeg: bytes) -> None:
+    write_bytes(root / "og.jpg", jpeg)
+
+
+def save_robots(root: Path, text: str) -> str:
+    if not isinstance(text, str) or "\x00" in text or "<" in text or ">" in text:
+        raise ContentError("robots.txt bleibt reiner Text.")
+    lines = []
+    for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+        if line.strip().lower().startswith("sitemap:"):
+            continue
+        lines.append(line.rstrip())
+    while lines and not lines[-1].strip():
+        lines.pop()
+    body = "\n".join(lines).strip()
+    if len(body) > MAX_ROBOTS_CHARS:
+        raise ContentError("robots.txt ist zu lang.")
+    result = (body + "\n\n" if body else "") + SITEMAP_LINE + "\n"
+    write_text(root / "robots.txt", result)
+    return result
+
+
+def read_llms_fields(text: str) -> dict:
+    fields = {key: "" for key in LLMS_FIELDS}
+    for line in text.splitlines():
+        if not fields["heading"] and line.startswith("# ") and not line.startswith("## "):
+            fields["heading"] = line[2:].strip()
+        elif not fields["summary"] and line.startswith("> "):
+            fields["summary"] = line[2:].strip()
+        elif not fields["preferredName"] and line.startswith("Preferred name:"):
+            fields["preferredName"] = line.split(":", 1)[1].strip()
+        elif not fields["studio"] and line.startswith("Studio:"):
+            fields["studio"] = line.split(":", 1)[1].strip()
+        elif not fields["homepage"] and line.startswith("- [Homepage]("):
+            fields["homepage"] = line.split("):", 1)[1].strip() if "):" in line else ""
+        elif not fields["instagramBlurb"] and line.startswith("- [Instagram]("):
+            fields["instagramBlurb"] = line.split("):", 1)[1].strip() if "):" in line else ""
+    return fields
+
+
+def llms_locked(text: str) -> str:
+    kept = []
+    in_works = False
+    for line in text.splitlines():
+        if line.startswith("## Works"):
+            in_works = True
+        if in_works or ("/images/" in line and line.startswith("- [")):
+            kept.append(line)
+    return "\n".join(kept).strip()
+
+
+def apply_llms_fields(text: str, form, site: dict) -> str:
+    fields = {}
+    for key in LLMS_FIELDS:
+        value = form.get(key, "")
+        value = value.strip() if isinstance(value, str) else ""
+        if not value:
+            raise ContentError("Alle llms.txt-Felder ausfüllen.")
+        if "## Works" in value:
+            raise ContentError("„## Works“ ist für die Werkliste reserviert.")
+        if "\n" in value or "\r" in value:
+            raise ContentError("Diese Zeilen bleiben einzeilig.")
+        fields[key] = value
+    instagram = (site.get("instagram") or "").strip()
+    if not instagram.startswith("https://"):
+        raise ContentError("Instagram muss mit https:// beginnen.")
+    lines = text.splitlines()
+    replaced = {key: False for key in LLMS_FIELDS}
+    for index, line in enumerate(lines):
+        if not replaced["heading"] and line.startswith("# ") and not line.startswith("## "):
+            lines[index] = "# " + fields["heading"]
+            replaced["heading"] = True
+        elif not replaced["summary"] and line.startswith("> "):
+            lines[index] = "> " + fields["summary"]
+            replaced["summary"] = True
+        elif not replaced["preferredName"] and line.startswith("Preferred name:"):
+            lines[index] = "Preferred name: " + fields["preferredName"]
+            replaced["preferredName"] = True
+        elif not replaced["studio"] and line.startswith("Studio:"):
+            lines[index] = "Studio: " + fields["studio"]
+            replaced["studio"] = True
+        elif not replaced["homepage"] and line.startswith("- [Homepage]("):
+            lines[index] = "- [Homepage](https://wtho.art/): " + fields["homepage"]
+            replaced["homepage"] = True
+        elif not replaced["instagramBlurb"] and line.startswith("- [Instagram]("):
+            lines[index] = f"- [Instagram]({instagram}): " + fields["instagramBlurb"]
+            replaced["instagramBlurb"] = True
+    if not all(replaced.values()):
+        raise ContentError("llms.txt hat nicht die erwarteten Zeilen.")
+    return "\n".join(lines) + "\n"
+
+
+def save_llms_fields(root: Path, form, site: dict) -> None:
+    path = root / "llms.txt"
+    current = path.read_text(encoding="utf-8") if path.is_file() else ""
+    write_text(path, apply_llms_fields(current, form, site))

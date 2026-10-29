@@ -274,3 +274,40 @@ def test_cities_can_be_added_edited_and_removed(tmp_path):
     assert not (root / "images" / "commissions" / "paris").exists()
     assert "London" in (root / "images" / "commissions" / "index.html").read_text(encoding="utf-8")
     assert "https://wtho.art/images/commissions/" in (root / "sitemap.xml").read_text(encoding="utf-8")
+
+
+def test_seo_page_saves_tags_and_shows_preview(tmp_path):
+    client, root, _calls = _site(tmp_path)
+    shutil.copy(REPO / "index.html", root / "index.html")
+    _login(client)
+    page = client.get("/seo")
+    html = page.get_data(as_text=True)
+    assert page.status_code == 200
+    assert "Vorschau" in html
+    saved = client.post(
+        "/seo/meta",
+        data={
+            "csrf": _csrf(html),
+            "title": "SEO Titel",
+            "description": "SEO Beschreibung für die Vorschau",
+            "keywords": "probe, kunst",
+            "author": "Thorsten Weitz",
+            "robots": "index, follow",
+            "ogTitle": "SEO OG",
+            "ogDescription": "SEO OG Text",
+            "jobTitle": "Maler",
+            "personDescription": "Ein Kurztext",
+            "addressLocality": "Freiburg",
+        },
+        follow_redirects=True,
+    )
+    body = saved.get_data(as_text=True)
+    assert saved.status_code == 200
+    assert "SEO Beschreibung für die Vorschau" in body
+    home = (root / "index.html").read_text(encoding="utf-8")
+    assert "<title>SEO Titel</title>" in home
+    assert 'name="keywords" content="probe, kunst"' in home
+    assert 'property="og:title" content="SEO OG"' in home
+    assert '"jobTitle": "Maler"' in home
+    site = json.loads((root / "data" / "site.json").read_text(encoding="utf-8"))
+    assert site["seo"]["description"] == "SEO Beschreibung für die Vorschau"

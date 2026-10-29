@@ -52,4 +52,22 @@
     });
     list.addEventListener("dragend", function () { drag = null; });
   });
+
+  document.querySelectorAll("[data-count]").forEach(function (field) {
+    var note = field.parentElement.querySelector("[data-count-note]");
+    var limit = Number(field.getAttribute("data-count"));
+    function paint() {
+      if (!note) return;
+      var count = field.value.length;
+      note.textContent = count + " Zeichen" + (count > limit ? " · etwas lang für die Vorschau" : "");
+    }
+    field.addEventListener("input", paint);
+    paint();
+  });
+
+  document.querySelectorAll("[data-preview]").forEach(function (field) {
+    var out = document.querySelector('[data-preview-out="' + field.getAttribute("data-preview") + '"]');
+    if (!out) return;
+    field.addEventListener("input", function () { out.textContent = field.value; });
+  });
 })();

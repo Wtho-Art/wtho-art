@@ -240,6 +240,7 @@ def create_app(site_root: Path, auth_dir: Path, preview_origin: str = "http://12
                 content.apply_copy(site, request.form)
                 content.save_site(root, site)
                 content.rebuild_llms(root, content.load_works(root), site)
+                content.sync_homepage_identity(root, site)
             except content.ContentError as exc:
                 flash(str(exc), "error")
                 return render_template("texts.html", site=site, groups=content.copy_groups(site)), 400
@@ -426,6 +427,76 @@ def create_app(site_root: Path, auth_dir: Path, preview_origin: str = "http://12
         flash("Stadt entfernt. Noch nicht veröffentlicht.")
         return redirect(url_for("cities"))
 
+    @app.get("/seo")
+    def seo():
+        root = _root()
+        site = content.load_site(root)
+        llms_path = root / "llms.txt"
+        llms_text = llms_path.read_text(encoding="utf-8") if llms_path.is_file() else ""
+        robots_path = root / "robots.txt"
+        robots = robots_path.read_text(encoding="utf-8") if robots_path.is_file() else ""
+        return render_template(
+            "seo.html",
+            site=site,
+            seo=content.seo_view(site),
+            rows=content.seo_rows(site, content.load_works(root)),
+            sitemap=content.sitemap_locs(root),
+            llms=content.read_llms_fields(llms_text),
+            llms_locked=content.llms_locked(llms_text),
+            robots=robots,
+            og_exists=(root / "og.jpg").is_file(),
+        )
+
+    @app.post("/seo/meta")
+    def seo_meta():
+        root = _root()
+        site = content.load_site(root)
+        try:
+            content.apply_seo(site, request.form)
+            content.save_site(root, site)
+            content.write_homepage_seo(root, site)
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("SEO gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("seo"))
+
+    @app.post("/seo/bild")
+    def seo_image():
+        storage = request.files.get("image")
+        if not storage or not storage.filename:
+            flash("Bitte ein Bild wählen.", "error")
+            return redirect(url_for("seo"))
+        try:
+            jpeg = images.prepare_jpeg(storage.read())
+            content.save_og_jpeg(_root(), jpeg)
+        except (images.ImageError, content.ContentError) as exc:
+            flash(str(exc), "error")
+        else:
+            flash("Vorschaubild gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("seo"))
+
+    @app.post("/seo/robots")
+    def seo_robots():
+        try:
+            content.save_robots(_root(), request.form.get("robots") or "")
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("robots.txt gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("seo"))
+
+    @app.post("/seo/llms")
+    def seo_llms():
+        root = _root()
+        try:
+            content.save_llms_fields(root, request.form, content.load_site(root))
+        except content.ContentError as exc:
+            flash(str(exc), "error")
+        else:
+            flash("llms.txt gespeichert. Noch nicht veröffentlicht.")
+        return redirect(url_for("seo"))
+
     @app.route("/veroeffentlichen", methods=["GET", "POST"])
     def publish():
         root = _root()
@@ -487,6 +558,13 @@ def create_app(site_root: Path, auth_dir: Path, preview_origin: str = "http://12
     def media(relpath):
         root = Path(app.config["SITE_ROOT"]).resolve()
         rel = Path(relpath)
+        if relpath.replace("\\", "/") == "og.jpg":
+            full = (root / "og.jpg").resolve()
+            if full.parent != root or not full.is_file():
+                abort(404)
+            response = send_file(full)
+            response.headers["Cache-Control"] = "no-store"
+            return response
         if rel.is_absolute() or ".." in rel.parts or not rel.parts or rel.parts[0] not in {"works", "images"}:
             abort(404)
         full = (root / rel).resolve()

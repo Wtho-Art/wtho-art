@@ -1,4 +1,5 @@
 import json
+import shutil
 from pathlib import Path
 
 import content
@@ -362,3 +363,147 @@ def test_city_add_edit_reorder_and_delete(tmp_path):
     assert "[Commissions & Residencies](https://wtho.art/images/commissions/):" in llms
     assert "London: New." in llms
     assert "## Works" in llms
+
+
+def test_homepage_seo_patches_tags_and_identity(tmp_path):
+    shutil.copy(REPO / "index.html", tmp_path / "index.html")
+    data = tmp_path / "data"
+    data.mkdir()
+    site = {
+        "contactEmail": "a@b.c",
+        "instagram": "https://instagram.com/x",
+        "copy": {"de": {}, "en": {}},
+        "seo": {
+            "title": "Neuer Titel",
+            "description": "Neue Beschreibung",
+            "keywords": "alpha, beta",
+            "author": "Thorsten Weitz",
+            "robots": "index, follow",
+            "ogTitle": "OG Titel",
+            "ogDescription": "OG Text",
+            "jobTitle": "Maler",
+            "personDescription": "Kurztext",
+            "addressLocality": "Basel",
+        },
+    }
+    (data / "site.json").write_text(content.dumps_json(site), encoding="utf-8")
+    (data / "works.json").write_text("[]\n", encoding="utf-8")
+    content.apply_seo(site, site["seo"])
+    content.write_homepage_seo(tmp_path, site)
+    html = (tmp_path / "index.html").read_text(encoding="utf-8")
+    assert "<title>Neuer Titel</title>" in html
+    assert 'name="description" content="Neue Beschreibung"' in html
+    assert 'name="keywords" content="alpha, beta"' in html
+    assert 'property="og:title" content="OG Titel"' in html
+    assert 'property="og:description" content="OG Text"' in html
+    assert 'name="twitter:title" content="OG Titel"' in html
+    assert 'name="twitter:description" content="OG Text"' in html
+    assert '"jobTitle": "Maler"' in html
+    assert '"addressLocality": "Basel"' in html
+    assert '"description": "Kurztext"' in html
+    assert "mailto:a@b.c" in html
+
+    site["contactEmail"] = "neu@b.c"
+    site["instagram"] = "https://instagram.com/neu"
+    content.save_site(tmp_path, site)
+    (tmp_path / "llms.txt").write_text(
+        "# Heading\n\n> Summary stays\n\nPreferred name: N\nStudio: S\nEmail: a@b.c\n"
+        "Instagram: https://instagram.com/x\n\n## Site\n- [Homepage](https://wtho.art/): Home\n\n## Works\n",
+        encoding="utf-8",
+    )
+    content.rebuild_llms(tmp_path, [], site)
+    content.sync_homepage_identity(tmp_path, site)
+    html = (tmp_path / "index.html").read_text(encoding="utf-8")
+    llms = (tmp_path / "llms.txt").read_text(encoding="utf-8")
+    assert "mailto:neu@b.c" in html
+    assert "https://instagram.com/neu" in html
+    assert "<title>Neuer Titel</title>" in html
+    assert "Email: neu@b.c" in llms
+    assert "Instagram: https://instagram.com/neu" in llms
+    assert "> Summary stays" in llms
+
+
+def test_robots_keeps_sitemap_and_rejects_junk(tmp_path):
+    saved = content.save_robots(tmp_path, "User-agent: *\nAllow: /\nSitemap: https://evil.example/\n")
+    assert saved.endswith("Sitemap: https://wtho.art/sitemap.xml\n")
+    assert "evil" not in saved
+    assert (tmp_path / "robots.txt").read_text(encoding="utf-8") == saved
+    for bad in ("<script>", "x" * 5001, "a\x00b"):
+        try:
+            content.save_robots(tmp_path, bad)
+        except content.ContentError:
+            continue
+        raise AssertionError(bad[:12])
+
+
+def test_llms_summary_survives_rebuild(tmp_path):
+    text = "\n".join(
+        [
+            "# Old heading",
+            "",
+            "> Old summary",
+            "",
+            "Preferred name: A",
+            "Studio: B",
+            "Email: a@b.c",
+            "Instagram: https://instagram.com/x",
+            "",
+            "## Site",
+            "- [Homepage](https://wtho.art/): Home line",
+            "- [Instagram](https://instagram.com/x): IG line",
+            "- [Portrait](https://wtho.art/images/portrait/): old place",
+            "",
+            "## Works",
+            "- [Blue](https://wtho.art/works/blue/): hand note",
+            "",
+        ]
+    )
+    site = {
+        "contactEmail": "a@b.c",
+        "instagram": "https://instagram.com/x",
+        "places": [],
+        "copy": {"de": {}, "en": {}},
+    }
+    fields = {
+        "heading": "New heading",
+        "summary": "New summary",
+        "preferredName": "Thorsten Weitz",
+        "studio": "Freiburg",
+        "homepage": "Artist and studio",
+        "instagramBlurb": "Process",
+    }
+    updated = content.apply_llms_fields(text, fields, site)
+    assert "> New summary" in updated
+    assert "- [Homepage](https://wtho.art/): Artist and studio" in updated
+    assert "- [Instagram](https://instagram.com/x): Process" in updated
+    assert "- [Blue](https://wtho.art/works/blue/): hand note" in updated
+    try:
+        content.apply_llms_fields(text, {**fields, "summary": "bad ## Works"}, site)
+    except content.ContentError:
+        pass
+    else:
+        raise AssertionError("works marker was accepted")
+
+    data = tmp_path / "data"
+    data.mkdir()
+    (data / "site.json").write_text(content.dumps_json(site), encoding="utf-8")
+    (data / "works.json").write_text(
+        content.dumps_json(
+            [
+                {
+                    "id": "blue",
+                    "title": {"en": "Blue", "de": "Blau"},
+                    "medium": {"en": "Oil", "de": "Öl"},
+                    "size": "10 cm",
+                    "year": "2026",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "llms.txt").write_text(updated, encoding="utf-8")
+    content.rebuild_llms(tmp_path, content.load_works(tmp_path), site)
+    llms = (tmp_path / "llms.txt").read_text(encoding="utf-8")
+    assert "> New summary" in llms
+    assert "[Blue](https://wtho.art/works/blue/): Oil, 10 cm, 2026" in llms
+    assert "hand note" not in llms

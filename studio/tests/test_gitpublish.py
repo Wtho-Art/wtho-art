@@ -13,11 +13,13 @@ def test_allowed_paths():
     assert gitpublish.is_allowed("images/commissions/index.html")
     assert gitpublish.is_allowed("images/commissions/london/london.jpg")
     assert gitpublish.is_allowed("sitemap.xml")
+    assert gitpublish.is_allowed("index.html")
+    assert gitpublish.is_allowed("robots.txt")
     assert gitpublish.is_allowed(".gitignore")
     assert not gitpublish.is_allowed("studio/app.py")
+    assert not gitpublish.is_allowed("js/content.js")
     assert not gitpublish.is_allowed("originals/a.jpg")
     assert not gitpublish.is_allowed("works/../../data/site.json")
-    assert not gitpublish.is_allowed("index.html")
     assert not gitpublish.is_allowed("works/a/file.tif")
     assert not gitpublish.is_allowed("images/evil.php")
     assert not gitpublish.is_allowed("images/portrait/notes.txt")
@@ -31,9 +33,9 @@ def test_directory_expands_to_safe_files_only(tmp_path):
     (folder / "index.html").write_text("x", encoding="utf-8")
     (folder / "blue.jpg").write_bytes(b"jpg")
     (folder / "notes.txt").write_text("no", encoding="utf-8")
-    allowed, blocked = gitpublish.files_to_commit(tmp_path, "?? works/blue/\n M index.html\n")
+    allowed, blocked = gitpublish.files_to_commit(tmp_path, "?? works/blue/\n M js/content.js\n")
     assert allowed == ["works/blue/blue.jpg", "works/blue/index.html"]
-    assert "index.html" in blocked
+    assert "js/content.js" in blocked
     assert "works/blue/notes.txt" in blocked
     images = tmp_path / "images" / "portrait"
     images.mkdir(parents=True)
@@ -60,19 +62,19 @@ def test_publish_push_has_no_force_and_skips_blocked(tmp_path):
     def runner(args, root):
         calls.append(list(args))
         if args[1] == "status":
-            return " M data/site.json\n M index.html\n?? studio/app.py\n"
+            return " M data/site.json\n M js/content.js\n?? studio/app.py\n"
         if args[1] == "reset":
             state["resets"] += 1
             return ""
         if args[:3] == ["git", "diff", "--cached"]:
             if state["resets"]:
                 return "data/site.json\n"
-            return "data/site.json\nindex.html\n"
+            return "data/site.json\njs/content.js\n"
         return ""
 
     result = gitpublish.publish(tmp_path, "Add a line", runner=runner, ssh_ok=True)
     assert result["committed"] == ["data/site.json"]
-    assert "index.html" in result["blocked"]
+    assert "js/content.js" in result["blocked"]
     assert ["git", "pull", "--ff-only", "origin", "main"] in calls
     assert ["git", "push", "origin", "main"] in calls
     assert not any("--force" in arg or arg == "-f" for command in calls for arg in command)

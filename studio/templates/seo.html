@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}SEO{% endblock %}
+{% block body %}
+  <p class="kicker">Suche</p>
+  <h1>SEO</h1>
+  <p class="lead">Die Startseite hat einen Satz Tags. Die Adresse bleibt https://wtho.art/. Impressum, Datenschutz und die Dankeseite bleiben unsichtbar für Suchmaschinen.</p>
+
+  <section id="seo-meta">
+    <h2>Startseite</h2>
+    <div class="seo-grid">
+      <form method="post" action="{{ url_for('seo_meta') }}" class="stack">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <label>Titel
+          <input name="title" value="{{ seo.title }}" data-count="60" data-preview="title" required>
+          <span class="meta" data-count-note></span>
+        </label>
+        <label>Beschreibung
+          <textarea name="description" rows="3" data-count="160" data-preview="description" required>{{ seo.description }}</textarea>
+          <span class="meta" data-count-note></span>
+        </label>
+        <label>Schlüsselwörter
+          <input name="keywords" value="{{ seo.keywords }}" required>
+        </label>
+        <div class="pair">
+          <label>Autor
+            <input name="author" value="{{ seo.author }}" required>
+          </label>
+          <label>Robots
+            <select name="robots">
+              <option value="index, follow" {% if seo.robots == 'index, follow' %}selected{% endif %}>index, follow</option>
+              <option value="noindex, nofollow" {% if seo.robots == 'noindex, nofollow' %}selected{% endif %}>noindex, nofollow</option>
+            </select>
+          </label>
+        </div>
+        <label>Titel für die Vorschau
+          <input name="ogTitle" value="{{ seo.ogTitle }}" data-count="60" required>
+          <span class="meta" data-count-note></span>
+        </label>
+        <label>Text für die Vorschau
+          <textarea name="ogDescription" rows="2" data-count="160" required>{{ seo.ogDescription }}</textarea>
+          <span class="meta" data-count-note></span>
+        </label>
+        <div class="pair">
+          <label>Berufsbezeichnung
+            <input name="jobTitle" value="{{ seo.jobTitle }}" required>
+          </label>
+          <label>Ort
+            <input name="addressLocality" value="{{ seo.addressLocality }}" required>
+          </label>
+        </div>
+        <label>Kurztext zur Person
+          <textarea name="personDescription" rows="3" required>{{ seo.personDescription }}</textarea>
+        </label>
+        <p class="meta">E-Mail und Instagram in den Daten kommen aus den Kontaktfeldern. Kanonische Adresse: https://wtho.art/</p>
+        <div class="bar"><button type="submit">Tags speichern</button></div>
+      </form>
+      <aside class="preview-card">
+        <p class="kicker">Vorschau</p>
+        {% if og_exists %}
+          <img src="{{ url_for('media', relpath='og.jpg') }}" alt="">
+        {% endif %}
+        <p class="preview-title" data-preview-out="title">{{ seo.title }}</p>
+        <p class="preview-url">https://wtho.art/</p>
+        <p class="preview-desc" data-preview-out="description">{{ seo.description }}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section>
+    <h2>Bild für die Vorschau</h2>
+    <p class="lead">Dieses Bild nutzen Suche und Chat-Vorschau. Es bleibt unter https://wtho.art/og.jpg.</p>
+    {% if og_exists %}
+      <img class="preview" src="{{ url_for('media', relpath='og.jpg') }}" alt="">
+    {% else %}
+      <p>Noch kein Vorschaubild.</p>
+    {% endif %}
+    <form method="post" action="{{ url_for('seo_image') }}" enctype="multipart/form-data" class="stack narrow">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>Neues Bild
+        <input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/tiff" required>
+      </label>
+      <button type="submit">Bild speichern</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>robots.txt</h2>
+    <p class="lead">Die Sitemap-Zeile wird beim Speichern auf https://wtho.art/sitemap.xml gesetzt.</p>
+    <form method="post" action="{{ url_for('seo_robots') }}" class="stack">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>Regeln
+        <textarea name="robots" rows="8">{{ robots }}</textarea>
+      </label>
+      <div class="bar"><button type="submit">robots.txt speichern</button></div>
+    </form>
+  </section>
+
+  <section>
+    <h2>llms.txt</h2>
+    <p class="lead">Diese Zeilen bleiben stehen. E-Mail und die Instagram-Adresse kommen aus den Kontaktfeldern. Biografie, Atelier, Aufträge und die Werkliste schreibt das Studio neu.</p>
+    <form method="post" action="{{ url_for('seo_llms') }}" class="stack">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label>Überschrift
+        <input name="heading" value="{{ llms.heading }}" required>
+      </label>
+      <label>Zusammenfassung
+        <textarea name="summary" rows="4" required>{{ llms.summary }}</textarea>
+      </label>
+      <div class="pair">
+        <label>Bevorzugter Name
+          <input name="preferredName" value="{{ llms.preferredName }}" required>
+        </label>
+        <label>Atelierzeile
+          <input name="studio" value="{{ llms.studio }}" required>
+        </label>
+      </div>
+      <label>Satz zur Startseite
+        <input name="homepage" value="{{ llms.homepage }}" required>
+      </label>
+      <label>Satz zu Instagram
+        <input name="instagramBlurb" value="{{ llms.instagramBlurb }}" required>
+      </label>
+      <p class="meta">Kontakt: {{ site.contactEmail }} · {{ site.instagram }}</p>
+      <div class="bar"><button type="submit">llms.txt speichern</button></div>
+    </form>
+    {% if llms_locked %}
+      <h3>Wird neu geschrieben</h3>
+      <pre class="seo-generated">{{ llms_locked }}</pre>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Seiten</h2>
+    <p class="lead">Titel und Beschreibung, wie sie jetzt aus den Texten entstehen.</p>
+    {% for row in rows %}
+      <article class="work-row">
+        <div class="grow">
+          {% if row.kind == 'work' %}
+            <a href="{{ url_for('work_edit', work_id=row.id) }}"><strong>{{ row.label }}</strong></a>
+          {% elif row.kind == 'place' %}
+            <a href="{{ url_for('place_edit', place_id=row.id) }}"><strong>{{ row.label }}</strong></a>
+          {% elif row.kind == 'cities' %}
+            <a href="{{ url_for('cities') }}"><strong>{{ row.label }}</strong></a>
+          {% elif row.kind == 'city' %}
+            <a href="{{ url_for('city_edit', city_id=row.id) }}"><strong>{{ row.label }}</strong></a>
+          {% else %}
+            <strong>{{ row.label }}</strong>
+          {% endif %}
+          <p class="meta">{{ row.title }}</p>
+          <p>{{ row.description }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>Sitemap</h2>
+    <p class="lead">Die Liste ändert sich, wenn ein Werk, ein Ort oder eine Stadt gespeichert wird.</p>
+    <ul class="sitemap">
+      {% for loc in sitemap %}
+        <li><a href="{{ loc }}">{{ loc }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

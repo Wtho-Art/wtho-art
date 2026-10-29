@@ -24,6 +24,7 @@
       <a href="{{ url_for('lists') }}" {% if request.endpoint == 'lists' %}class="on"{% endif %}>Ausstellungen</a>
       <a href="{{ url_for('photos') }}" {% if request.endpoint in ['photos', 'place_edit'] %}class="on"{% endif %}>Bilder</a>
       <a href="{{ url_for('cities') }}" {% if request.endpoint in ['cities', 'city_edit'] %}class="on"{% endif %}>Städte</a>
+      <a href="{{ url_for('seo') }}" {% if request.endpoint == 'seo' %}class="on"{% endif %}>SEO</a>
       <a href="{{ url_for('publish') }}" {% if request.endpoint == 'publish' %}class="on"{% endif %}>Veröffentlichen{% if change_count %} ({{ change_count }}){% endif %}</a>
       <a href="{{ url_for('password') }}">Passwort</a>
       <form method="post" action="{{ url_for('logout') }}">
